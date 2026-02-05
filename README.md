@@ -14,9 +14,10 @@
 **Локально**
 1. Клонируйте репозиторий:
    git clone https://github.com/PM-YandexPracticum/SkillSwap_45_2.git
-2. Перейдите в папку проекта:
+2. Перейдите в папку проекта и в ветку develop:
 ```
    cd SkillSwap_45_2
+   git checkout develop
 ```
 3. Установите зависимости:
 ``` 
@@ -32,5 +33,56 @@ npm run dev
 ```
    
 Приложение будет доступно по адресу http://localhost:5173
+
+## Работа над задачами
+0) **Никогда Не трогаем main**
+Каждая новая задача выполняется в **новой** ветке, созданной от **develop**.
+
+1) **Перейди в develop:**
+```
+git checkout develop  
+git pull    # стянуть актуальный код develop (делается перед каждым выполнением задачи)  
+```
+
+2) **Создай ветку для задачи:**  
+Формат названия ветки: 
+<тип>/<короткое-описание-задачи>
+
+**Используемые типы веток:**
+feature/ — новая фича или компонент
+fix/ — исправление бага
+refactor/ — улучшение существующего кода без изменения функционала
+docs/ — изменения в документации
+chore/ — служебные обновления (зависимости, конфиги и т.д.)
+
+**Примеры:**
+feature/add-header
+fix/fix-button-alignment
+refactor/cleanup-home-page
+docs/update-readme
+
+```
+git checkout -b feature/add-footer  # пример
+```
+
+3) **Сделай коммиты по ходу работы**  
+```
+git add <название файла либо . для всех измененных>
+git commit -m 'feat: add example component'
+```  
+
+Формат коммита (Conventional Commits (https://www.conventionalcommits.org/en/v1.0.0/)):  
+feat: добавлен компонент Footer  
+fix: поправлен отступ у блока Services  
+
+4) **Запушь ветку**
+```
+git push -u origin feature/add-footer
+```
+
+5) **Открой Pull Request в GitHub**
+из ветки **feature/...** → в ветку **develop**
+
+
 
 
