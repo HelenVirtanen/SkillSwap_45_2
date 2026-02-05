@@ -1,0 +1,182 @@
+{
+  "Бизнес и карьера": [
+    {
+      "id": "team_management",
+      "title": "Управление командой"
+    },
+    {
+      "id": "marketing_and_advertising",
+      "title": "Маркетинг и реклама"
+    },
+    {
+      "id": "sales_and_negotiation",
+      "title": "Продажи и переговоры"
+    },
+    {
+      "id": "personal_brand",
+      "title": "Личный бренд"
+    },
+    {
+      "id": "resume_and_interview",
+      "title": "Резюме и собеседование"
+    },
+    {
+      "id": "time_management",
+      "title": "Тайм-менеджмент"
+    },
+    {
+      "id": "project_management",
+      "title": "Проектное управление"
+    },
+    {
+      "id": "entrepreneurship",
+      "title": "Предпринимательство"
+    }
+  ],
+  "Иностранные языки": [
+    {
+      "id": "english",
+      "title": "Английский"
+    },
+    {
+      "id": "french",
+      "title": "Французский"
+    },
+    {
+      "id": "spanish",
+      "title": "Испанский"
+    },
+    {
+      "id": "german",
+      "title": "Немецкий"
+    },
+    {
+      "id": "chinese",
+      "title": "Китайский"
+    },
+    {
+      "id": "japanese",
+      "title": "Японский"
+    },
+    {
+      "id": "exam_preparation",
+      "title": "Подготовка к экзаменам (IELTS, TOEFL)"
+    }
+  ],
+  "Дом и уют": [
+    {
+      "id": "cleaning_and_organization",
+      "title": "Уборка и организация"
+    },
+    {
+      "id": "home_finance",
+      "title": "Домашние финансы"
+    },
+    {
+      "id": "cooking",
+      "title": "Приготовление еды"
+    },
+    {
+      "id": "houseplants",
+      "title": "Домашние растения"
+    },
+    {
+      "id": "repair",
+      "title": "Ремонт"
+    },
+    {
+      "id": "storage",
+      "title": "Хранение вещей"
+    }
+  ],
+  "Творчество и искусство": [
+    {
+      "id": "drawing_and_illustration",
+      "title": "Рисование и иллюстрация"
+    },
+    {
+      "id": "photography",
+      "title": "Фотография"
+    },
+    {
+      "id": "video_editing",
+      "title": "Видеомонтаж"
+    },
+    {
+      "id": "music_and_sound",
+      "title": "Музыка и звук"
+    },
+    {
+      "id": "acting",
+      "title": "Актёрское мастерство"
+    },
+    {
+      "id": "creative_writing",
+      "title": "Креативное письмо"
+    },
+    {
+      "id": "art_therapy",
+      "title": "Арт-терапия"
+    },
+    {
+      "id": "decor_and_diy",
+      "title": "Декор и DIY"
+    }
+  ],
+  "Образование и развитие": [
+    {
+      "id": "personal_development",
+      "title": "Личностное развитие"
+    },
+    {
+      "id": "learning_skills",
+      "title": "Навыки обучения"
+    },
+    {
+      "id": "cognitive_techniques",
+      "title": "Когнитивные техники"
+    },
+    {
+      "id": "speed_reading",
+      "title": "Скорочтение"
+    },
+    {
+      "id": "teaching_skills",
+      "title": "Навыки преподавания"
+    },
+    {
+      "id": "coaching",
+      "title": "Коучинг"
+    }
+  ],
+  "Здоровье и лайфстайл": [
+    {
+      "id": "yoga_and_meditation",
+      "title": "Йога и медитация"
+    },
+    {
+      "id": "nutrition_and_healthy_lifestyle",
+      "title": "Питание и ЗОЖ"
+    },
+    {
+      "id": "mental_health",
+      "title": "Ментальное здоровье"
+    },
+    {
+      "id": "mindfulness",
+      "title": "Осознанность"
+    },
+    {
+      "id": "physical_training",
+      "title": "Физические тренировки"
+    },
+    {
+      "id": "sleep_and_recovery",
+      "title": "Сон и восстановление"
+    },
+    {
+      "id": "work_life_balance",
+      "title": "Баланс жизни и работы"
+    }
+  ]
+}
