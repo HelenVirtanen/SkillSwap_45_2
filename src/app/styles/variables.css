@@ -1,0 +1,67 @@
+:root {
+  /* -Зеленный стек- */
+  --green-dark: #253017;
+  --green: #508826;
+  --green-muted: #69735d;
+  --green-light: #9ca197;
+  --green-soft: #b2b9a9;
+  --green-pale: #deebc5;
+  --green-lime: #abd27a;
+
+  /* -Натуральный цветовой стек- */
+  --white: #ffffff;
+  --off-white: #f9faf7;
+  --gray-light: #e4e8df;
+
+  /* -Красный стек */
+  --coral: #e0796e;
+  --red-dark: #bf3920;
+
+  /* -Пастельный цветовой стек- */
+  --lavender: #eeeff7;
+  --pink-light: #f7e7f2;
+  --beige: #ebe5c5;
+  --blue-light: #e7f2f6;
+  --peach: #f7ebe5;
+  --mint: #e9f7e7;
+  --blue-soft: #e8ecf7;
+
+  /* -Типографика- */
+
+  /* -Фонт фемили - */
+  --ff-heading:
+    'Jost', system-ui, -apple-system, 'Segoe UI', roboto, arial, sans-serif;
+  --ff-body: 'Roboto', system-ui, -apple-system, 'Segoe UI', arial, sans-serif;
+
+  /* -ширина- */
+  --fw-regular: 400;
+  --fw-medium: 500;
+
+  /* -Первый заголовок- */
+  --fs-h1: 32px;
+  --lh-h1: 40px;
+
+  /* -Второй заголовок- */
+  --fs-h2: 24px;
+  --lh-h2: 32px;
+
+  /* -Третий загловок- */
+  --fs-h3: 20px;
+  --lh-h3: 24px;
+
+  /* -Четвертый заголовок- */
+  --fs-h4: 16px;
+  --lh-h4: 24px;
+
+  /* -Основной текст- */
+  --fs-body: 16px;
+  --lh-body: 24px;
+
+  /* -Текст для доп инфы */
+  --fs-caption: 12px;
+  --lh-caption: 16px;
+
+  /* -Обводка- */
+  --border-width: 1px;
+  --border-radius: 12px;
+}
