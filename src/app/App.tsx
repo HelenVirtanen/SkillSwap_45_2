@@ -1,9 +1,13 @@
-import './App.css'
+import './App.css';
+import MainLayout from './layout/MainLayout/MainLayout';
+import MainPage from '../pages/MainPage/MainPage';
 
 function App() {
   return (
     <div>
-      <h1>SkillSwap</h1>
+      <MainLayout> 
+        <MainPage />
+      </MainLayout>
     </div>
   );
 }
