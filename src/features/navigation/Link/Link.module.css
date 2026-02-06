@@ -1,0 +1,57 @@
+.link {
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px;
+  letter-spacing: 2%;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+}
+
+/* default — обычный текстовый линк (стили по умолчанию браузера) */
+
+/* primary — зелёная кнопка (Зарегистрироваться, Далее, Подробнее) */
+.link.primary {
+  color: #213547;
+  background-color: #ABD27A;
+  font-weight: 400;
+  padding: 12px 24px;
+  border-radius: 12px;
+  width: 208px;
+}
+
+.link.primary:hover {
+  background-color: #9ac95a;
+}
+
+.link.primary:active {
+  background-color: #89c04a;
+}
+
+/* secondary — кнопка с прозрачным фоном (Войти, Назад) */
+.link.secondary {
+  color: #213547;
+  background: #FFFFFF;
+  border: 1px solid #ABD27A;
+  font-weight: 400;
+  padding: 12px 24px;
+  border-radius: 12px;
+  width: 92px;
+}
+
+.link.secondary:hover {
+  background-color: #f5f5f5;
+  border-color: #9ac95a;
+}
+
+.link.secondary:active {
+  background-color: #e8e8e8;
+  border-color: #89c04a;
+}
