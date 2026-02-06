@@ -1,5 +1,9 @@
 .link {
-  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Roboto',
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   font-style: normal;
@@ -9,6 +13,7 @@
   transition: color 0.2s ease;
   cursor: pointer;
   border-radius: 4px;
+  color: var(--clr-text-primary);
 }
 
 .link:hover {
