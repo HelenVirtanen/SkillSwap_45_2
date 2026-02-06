@@ -1,24 +1,17 @@
-import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './Link.module.css';
 
-// описал интерфейс для Link
 interface LinkProps {
   title: string;
-  href?: string;
-  isActive?: boolean;
-  variant?: 'default' | 'primary' | 'secondary'; 
-  // default  обычный текстовый линк для навигации
-  // primary  основная кнопка с зелёным фоном (Зарегистрироваться, Далее, Продолжить, Подробнее)
-  // secondary   второстепенная кнопка (Войти, Назад — обычно без фона)
-
+  to?: string;  // это наша ссылочка 
 }
 
-const Link: React.FC<LinkProps> = ({title, href = '/', isActive = false, variant = 'default',}) => {
+const Link = ({ title, to = '/' }: LinkProps) => {
   return (
-    <a href={href}
-       className={`${styles.link} ${styles[variant]} ${isActive ? styles.active : ''}`}>
-        {title}
-      </a>
+    <NavLink to={to} className={styles.link}>
+      {title}
+    </NavLink>
   );
-}
+};
+
 export default Link;
