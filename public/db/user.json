@@ -5,8 +5,7 @@
       "name": "Иван",
       "email": "ivan1992@example.com",
       "city": "Санкт-Петербург",
-      "birthDate": "15-07-1992",
-      "age": 34,
+      "birthDate": "1992-07-15",
       "gender": "мужской",
       "teach_skills": {
         "title": "Творчество и искусство",
@@ -27,8 +26,7 @@
       "name": "Алла",
       "email": "alla.smirnova@example.com",
       "city": "Москва",
-      "birthDate": "22-03-1995",
-      "age": 29,
+      "birthDate": "1995-03-22",
       "gender": "женский",
       "teach_skills": {
         "title": "Иностранные языки",
@@ -48,8 +46,7 @@
       "name": "Константин",
       "email": "konstantin.k@example.com",
       "city": "Новосибирск",
-      "birthDate": "10-11-1988",
-      "age": 35,
+      "birthDate": "1988-11-10",
       "gender": "мужской",
       "teach_skills": {
         "title": "Бизнес и карьера",
@@ -68,8 +65,7 @@
       "name": "Екатерина",
       "email": "katya.ivanova@example.com",
       "city": "Екатеринбург",
-      "birthDate": "05-09-1990",
-      "age": 33,
+      "birthDate": "1990-09-05",
       "gender": "женский",
       "teach_skills": {
         "title": "Здоровье и лайфстайл",
@@ -81,7 +77,6 @@
       "photosOnAbout": [
         "https://www.rupixel.ru/files/preview/1280x853/21670525602i1oosivtzrpxqbxrtkui6mni3lggryjpsb0ulpl15a6wlsr5ne2yrdvamohmrwjzmyltmmliaihhzjgx8fc7djkzfsy686qiu7ca.jpg",
         "https://www.rupixel.ru/files/preview/1280x854/21670525714szbb88ms4lotosjqxm5bjgzwwmvnybotcab3ur5dhgvozzce8gj4pkwsojuv9oyt13ts9ghaiiview3n8brmgqr1uiyzy7nfi7ft.jpg"
-
       ],
       "isFavourite": false
     },
@@ -90,15 +85,14 @@
       "name": "Максим",
       "email": "max.petrov@example.com",
       "city": "Нижний Новгород",
-      "birthDate": "18-12-1993",
-      "age": 30,
+      "birthDate": "1993-12-18",
       "gender": "мужской",
       "teach_skills": {
         "title": "Дом и уют",
         "skills": "Ремонт"
       },
       "learn_skills": ["Проектное управление", "Немецкий", "Фотография"],
-      "avatar":  "../src/assets/avatars/maksim.png",
+      "avatar": "../src/assets/avatars/maksim.png",
       "about": "Строитель по профессии, мастер на все руки. Помогу с любым ремонтом",
       "photosOnAbout": [
         "https://www.rupixel.ru/files/preview/1280x800/21723540870u7n70aoqnbh3pvtkpoxbfmtmb9ee3io2gwua5niufnxsgummtmh53r0ytlpsqdk1b6mjudplrggbc7iwaj1cmbksgcf1mfdg5cnf.jpg"
@@ -110,8 +104,7 @@
       "name": "Анна",
       "email": "anna.sidorova@example.com",
       "city": "Казань",
-      "birthDate": "30-01-1987",
-      "age": 37,
+      "birthDate": "1987-01-30",
       "gender": "женский",
       "teach_skills": {
         "title": "Творчество и искусство",
@@ -121,10 +114,9 @@
       "avatar": "../src/assets/avatars/anna.png",
       "about": "Художник-иллюстратор. Провожу мастер-классы по акварели",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/900x506/13381758041337ifr0dglckci6agjeql6hwflbm11s9azzzlcxc5r985pui5jlev08xu4fsufudeptesggh04xbzhbzd1ofy6cfjrpopu04wzopz61.png", 
+        "https://www.rupixel.ru/files/preview/900x506/13381758041337ifr0dglckci6agjeql6hwflbm11s9azzzlcxc5r985pui5jlev08xu4fsufudeptesggh04xbzhbzd1ofy6cfjrpopu04wzopz61.png",
         "https://www.rupixel.ru/files/preview/1280x853/21665133535zjhjyzu4xawnqzqb53cvqiyd3i6ey91ifaiixboscw0uwk24uchuwrxbflj8c2jlts4mcr4pb7hx0eplk4jgoub1bndq3wijmm5p.jpg",
         "https://www.rupixel.ru/files/preview/1280x853/21665133893bwfhinaatfwktqgqjkf2hya8kpkyrexynl7kx3irqilc6tbngyb3qgc54f7bqzryylpmecpa5xxwzyo256mgx8jhkmyijvvihbhd.jpg"
-
       ],
       "isFavourite": true
     },
@@ -133,8 +125,7 @@
       "name": "Михаил",
       "email": "mikhail.volkov@example.com",
       "city": "Челябинск",
-      "birthDate": "14-06-1991",
-      "age": 32,
+      "birthDate": "1991-06-14",
       "gender": "мужской",
       "teach_skills": {
         "title": "Образование и развитие",
@@ -143,8 +134,9 @@
       "learn_skills": ["Предпринимательство", "Японский", "Декор и DIY"],
       "avatar": "../src/assets/avatars/mikhail.png",
       "about": "Life-коуч, помогаю людям находить свой путь. Люблю философию и восточные практики",
-      "photosOnAbout": ["https://www.rupixel.ru/files/preview/900x506/13381758355357vdaaii9qgnkzcqkyhmxlif5s0gloc5hyvkpje4ia0cguzqnvbkaa85xr1swzksgzpyvelpwuvjoacdp7q1ovipprmi788krqirqs.png",
-      "https://www.rupixel.ru/files/preview/960x1200/21694748880bc4zecm4vxiu8bsriqrkjhpkk19guoadyozux4dnsudetypb8falfeakgg6sngmycaujhm3kkqt2wsvhu6js6q932sjuhyoqvlkv.jpg"
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/900x506/13381758355357vdaaii9qgnkzcqkyhmxlif5s0gloc5hyvkpje4ia0cguzqnvbkaa85xr1swzksgzpyvelpwuvjoacdp7q1ovipprmi788krqirqs.png",
+        "https://www.rupixel.ru/files/preview/960x1200/21694748880bc4zecm4vxiu8bsriqrkjhpkk19guoadyozux4dnsudetypb8falfeakgg6sngmycaujhm3kkqt2wsvhu6js6q932sjuhyoqvlkv.jpg"
       ],
       "isFavourite": false
     },
@@ -153,8 +145,7 @@
       "name": "Дарья",
       "email": "daria.morozova@example.com",
       "city": "Омск",
-      "birthDate": "25-04-1994",
-      "age": 29,
+      "birthDate": "1994-04-25",
       "gender": "женский",
       "teach_skills": {
         "title": "Иностранные языки",
@@ -175,8 +166,7 @@
       "name": "Алексей",
       "email": "alex.popov@example.com",
       "city": "Самара",
-      "birthDate": "08-08-1989",
-      "age": 34,
+      "birthDate": "1989-08-08",
       "gender": "мужской",
       "teach_skills": {
         "title": "Творчество и искусство",
@@ -186,9 +176,9 @@
       "avatar": "",
       "about": "Профессиональный фотограф. Специализация - портретная и предметная съемка",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/1280x960/1041761619438zuiqasyxpteykonj9mymjz454s2y0ktuy240pzk7s1ymhfqhi6nnr441pd7sa4ldgi6ihpjvyirkepmqxo1dovm1fkgojjwuymsr.jpg", "https://www.rupixel.ru/files/preview/1280x853/21670480944iiea9xgexkjq1x370elg4tz8soji8g1jrw2xvf0lbhcf3c6mi19gu7k3d9lug5kwhdbetki39b3y3takxpv0wzhdhxbulujkdae4.jpg",
+        "https://www.rupixel.ru/files/preview/1280x960/1041761619438zuiqasyxpteykonj9mymjz454s2y0ktuy240pzk7s1ymhfqhi6nnr441pd7sa4ldgi6ihpjvyirkepmqxo1dovm1fkgojjwuymsr.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21670480944iiea9xgexkjq1x370elg4tz8soji8g1jrw2xvf0lbhcf3c6mi19gu7k3d9lug5kwhdbetki39b3y3takxpv0wzhdhxbulujkdae4.jpg",
         "https://www.rupixel.ru/files/preview/960x1441/1041750251373vsjbfja9mgyudicuwfcddgxubrr5kga2mtpgtnp7vl7nyqkmctwgwtbqetljwq6w6r0zaax0gzuqhfznbzoealm3gspzzny5zlyj.jpg"
-
       ],
       "isFavourite": true
     },
@@ -197,8 +187,7 @@
       "name": "Илона",
       "email": "ilona.kuznetsova@example.com",
       "city": "Ростов-на-Дону",
-      "birthDate": "12-11-1996",
-      "age": 27,
+      "birthDate": "1996-11-12",
       "gender": "женский",
       "teach_skills": {
         "title": "Дом и уют",
@@ -218,8 +207,7 @@
       "name": "Артем",
       "email": "artem.fedorov@example.com",
       "city": "Уфа",
-      "birthDate": "03-05-1992",
-      "age": 31,
+      "birthDate": "1992-05-03",
       "gender": "мужской",
       "teach_skills": {
         "title": "Здоровье и лайфстайл",
@@ -239,8 +227,7 @@
       "name": "Елена",
       "email": "elena.orlova@example.com",
       "city": "Красноярск",
-      "birthDate": "19-02-1993",
-      "age": 31,
+      "birthDate": "1993-02-19",
       "gender": "женский",
       "teach_skills": {
         "title": "Бизнес и карьера",
@@ -259,8 +246,7 @@
       "name": "Павел",
       "email": "pavel.nikitin@example.com",
       "city": "Пермь",
-      "birthDate": "27-07-1985",
-      "age": 38,
+      "birthDate": "1985-07-27",
       "gender": "мужской",
       "teach_skills": {
         "title": "Образование и развитие",
@@ -270,10 +256,10 @@
       "avatar": "",
       "about": "Педагог-методист. Помогаю студентам и взрослым эффективно осваивать новые навыки",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/1280x853/216651344114bpfeww42zmiehnufl3dfopdlbncdcxcurfauyrtwnuwmvkkr7iopcvptoeqwt6xgizxsaw53kwn9emutfi5dtbzskzxixw4kg6e.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/216651344114bpfeww42zmiehnufl3dfopdlbncdcxcurfauyrtwnuwmvkkr7iopcvptoeqwt6xgizxsaw53kwn9emutfi5dtbzskzxixw4kg6e.jpg",
         "https://www.rupixel.ru/files/preview/1280x717/21665134361qq48aws4ttibtxqidihydamxb7gticngb3lzywty58i5r13czji5pqoc3narmrfd81gekbajkxhpqzcb7tpnvtt96wkr9xmwdput.jpg",
         "https://www.rupixel.ru/files/preview/1280x848/216651337842g2pnrm4nukvnvhcyphromacbcrhdjdov81frah9y1unpr5zy8nrv9ykp6m7ddmzdr73lsbhcklhodkei4dlpzuhwiqywcnautsc.jpg"
-        ],
+      ],
       "isFavourite": false
     },
     {
@@ -281,8 +267,7 @@
       "name": "Елизавета",
       "email": "elizaveta.belova@example.com",
       "city": "Воронеж",
-      "birthDate": "16-10-1990",
-      "age": 33,
+      "birthDate": "1990-10-16",
       "gender": "женский",
       "teach_skills": {
         "title": "Здоровье и лайфстайл",
@@ -291,8 +276,10 @@
       "learn_skills": ["Управление командой", "Японский", "Декор и DIY"],
       "avatar": "../src/assets/avatars/elizaveta.png",
       "about": "Нутрициолог. Помогаю составлять сбалансированный рацион для разных целей",
-      "photosOnAbout": ["https://www.rupixel.ru/files/preview/1280x853/216704119134imsticpnfhopke6bsud909rqono0ey8vqgr92nrndobjrwwgsvk9fymwl978yigsde1swmyzkotwscqcuxialhsqfok1nicgxhi.jpg", 
-      "https://www.rupixel.ru/files/preview/1280x853/21670411907s5gks0gi8awv1yvssgo44gmnae9xuzwrrwey4m6qki5fi9if5znevajaq2aiaku1twmlsehaf6phohkgjce8mor7cwpyuoelx9jm.jpg"],
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/216704119134imsticpnfhopke6bsud909rqono0ey8vqgr92nrndobjrwwgsvk9fymwl978yigsde1swmyzkotwscqcuxialhsqfok1nicgxhi.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21670411907s5gks0gi8awv1yvssgo44gmnae9xuzwrrwey4m6qki5fi9if5znevajaq2aiaku1twmlsehaf6phohkgjce8mor7cwpyuoelx9jm.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -300,8 +287,7 @@
       "name": "Владимир",
       "email": "vladimir.sokolov@example.com",
       "city": "Волгоград",
-      "birthDate": "09-03-1983",
-      "age": 40,
+      "birthDate": "1983-03-09",
       "gender": "мужской",
       "teach_skills": {
         "title": "Бизнес и карьера",
@@ -311,8 +297,8 @@
       "avatar": "",
       "about": "Руководитель отдела в IT-компании. 15 лет опыта управления командами разного размера",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/1280x853/21665041693ii5iwfborra07shc0h3xmavgyhf7hpztnxe5grw7bvpnhyaqgy3kbgofyjwmgr0gwvmwzzm6thalvutusw5rwq1z2g4fdcqmjngn.jpg", 
-        "https://www.rupixel.ru/files/preview/1280x853/21665035291irgax1zzifammncugw0bxd7oi0sapf2czpxuywueop3qtkwmrycdgm9akfqwzehhtiibim2gzhhpqxoev1dtnhimwtusoqycezyo.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/21665041693ii5iwfborra07shc0h3xmavgyhf7hpztnxe5grw7bvpnhyaqgy3kbgofyjwmgr0gwvmwzzm6thalvutusw5rwq1z2g4fdcqmjngn.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21665035291irgax1zzifammncugw0bxd7oi0sapf2czpxuywueop3qtkwmrycdgm9akfqwzehhtiibim2gzhhpqxoev1dtnhimwtusoqycezyo.jpg",
         "https://www.rupixel.ru/files/preview/1280x853/216649470448yqvrqeqmrzwvwmwvj04rvucgg8uir2g3hu1pyfzeiwakslmx9yl9eavwg8lg7d8syb50gsdjx82gdgrbdz0nfqsrzyiihflwrc3.jpg"
       ],
       "isFavourite": true
@@ -322,8 +308,7 @@
       "name": "Мария",
       "email": "mari.vorobieva@example.com",
       "city": "Краснодар",
-      "birthDate": "21-06-1995",
-      "age": 28,
+      "birthDate": "1995-06-21",
       "gender": "женский",
       "teach_skills": {
         "title": "Иностранные языки",
@@ -332,9 +317,11 @@
       "learn_skills": ["Тайм-менеджмент", "Арт-терапия", "Приготовление еды"],
       "avatar": "../src/assets/avatars/maria.png",
       "about": "Преподаватель французского языка и культуры. Жила в Париже 3 года",
-      "photosOnAbout": ["https://www.rupixel.ru/files/preview/1280x848/21694269805yzlvrlty5li1bn1nqbu1o8hpaimtjtvlhlayizw1rwr8i5fi2jopop7do1nkvpplni0yxcplasbyzjiuwxzdpzjz46yrr4y7rfva.jpg", 
-      "https://www.rupixel.ru/files/preview/1280x959/21694265138flcmkufspqury1gwyz2umd5t4jbny3acepov44wj6j1elwwggamzxf9adekake7dkcft9kpq7kgntodmwzmzkj05mgbrqumrlqkd.jpg", 
-      "https://www.rupixel.ru/files/preview/1280x720/21694271877bsf0asbesipxg96fqfm2gqt2oxhxqfhygdnvfvpj1ogsbtxxc4kmog8d8yxc526soadlajquxssmikjjby2gjpb81m3yncvf6vpf.jpg"],
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x848/21694269805yzlvrlty5li1bn1nqbu1o8hpaimtjtvlhlayizw1rwr8i5fi2jopop7do1nkvpplni0yxcplasbyzjiuwxzdpzjz46yrr4y7rfva.jpg",
+        "https://www.rupixel.ru/files/preview/1280x959/21694265138flcmkufspqury1gwyz2umd5t4jbny3acepov44wj6j1elwwggamzxf9adekake7dkcft9kpq7kgntodmwzmzkj05mgbrqumrlqkd.jpg",
+        "https://www.rupixel.ru/files/preview/1280x720/21694271877bsf0asbesipxg96fqfm2gqt2oxhxqfhygdnvfvpj1ogsbtxxc4kmog8d8yxc526soadlajquxssmikjjby2gjpb81m3yncvf6vpf.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -342,8 +329,7 @@
       "name": "Михаил",
       "email": "mikhail.egorov@example.com",
       "city": "Саратов",
-      "birthDate": "14-09-1988",
-      "age": 35,
+      "birthDate": "1988-09-14",
       "gender": "мужской",
       "teach_skills": {
         "title": "Творчество и искусство",
@@ -352,8 +338,9 @@
       "learn_skills": ["Продажи и переговоры", "Когнитивные техники", "Немецкий"],
       "avatar": "",
       "about": "Видео-монтажер для YouTube и соцсетей. Работал с блогерами и брендами",
-      "photosOnAbout": ["https://www.rupixel.ru/files/preview/1280x647/21664948481ryrixhzuofld3klfcmiljg22cu7t2d6jstgfrwdzkp7wafd3u2fjpecwmouxwhnj8eau75wuwfjv1xe3kisvjm6ij90cmcmie97n.jpg", 
-      "https://www.rupixel.ru/files/preview/1280x853/21664890924a5rplqyrjqldcnbmdaleawf483xak7dlktyvvspknmpwxrlgutneegn30enl0sugmpguk67v6wfjxaoksnhbzpenk5kuumuxfetf.jpg"
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x647/21664948481ryrixhzuofld3klfcmiljg22cu7t2d6jstgfrwdzkp7wafd3u2fjpecwmouxwhnj8eau75wuwfjv1xe3kisvjm6ij90cmcmie97n.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21664890924a5rplqyrjqldcnbmdaleawf483xak7dlktyvvspknmpwxrlgutneegn30enl0sugmpguk67v6wfjxaoksnhbzpenk5kuumuxfetf.jpg"
       ],
       "isFavourite": false
     },
@@ -362,8 +349,7 @@
       "name": "Алиса",
       "email": "alisa.romanova@example.com",
       "city": "Тольятти",
-      "birthDate": "07-12-1997",
-      "age": 26,
+      "birthDate": "1997-12-07",
       "gender": "женский",
       "teach_skills": {
         "title": "Дом и уют",
@@ -373,8 +359,8 @@
       "avatar": "../src/assets/avatars/user-photo.png",
       "about": "Профессиональный организатор пространства. Помогаю наводить порядок в доме и в голове",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/960x1449/21665130541cjhdgnabwsqiyjj878pxvcgmppcaepec9x3jrqmqd2kvnkxjqde0vhftyxdatbtkf5imienfqbpmc5jh8dcc4imraofvgxokjut0.jpg", 
-        "https://www.rupixel.ru/files/preview/1280x853/216651330756byrt3g7y723v9yk34hlyuo3xofqmd6atdwikmv1wiclhgumvs2pspgctdiiclk5qc2ex1ylgsggparex00acxrwhadvxti4vufj.jpg", 
+        "https://www.rupixel.ru/files/preview/960x1449/21665130541cjhdgnabwsqiyjj878pxvcgmppcaepec9x3jrqmqd2kvnkxjqde0vhftyxdatbtkf5imienfqbpmc5jh8dcc4imraofvgxokjut0.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/216651330756byrt3g7y723v9yk34hlyuo3xofqmd6atdwikmv1wiclhgumvs2pspgctdiiclk5qc2ex1ylgsggparex00acxrwhadvxti4vufj.jpg",
         "https://www.rupixel.ru/files/preview/1280x857/21670573145wceioobgiy2ufskpzsfkkyl9i8vey2h7ryv3kaj95riqrhmubzhmeu1ariose24z5jjbvpcesumbdhrrgjt4bz0n8z2ggwycxr8j.jpg"
       ],
       "isFavourite": true
@@ -384,8 +370,7 @@
       "name": "Андрей",
       "email": "andrey.mikhailov@example.com",
       "city": "Ижевск",
-      "birthDate": "29-01-1991",
-      "age": 33,
+      "birthDate": "1991-01-29",
       "gender": "мужской",
       "teach_skills": {
         "title": "Образование и развитие",
@@ -395,9 +380,10 @@
       "avatar": "",
       "about": "Психолог, веду тренинги по личностному росту и саморазвитию",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/1280x854/2591698669744cwdle94e2xgye7fet9uznzk6dzjlymcheb9iip4uiqleect7cm5r9ou6ysdvitq0lks2mcdeuc1g92rpa5arxadlpbphqztmg7zn.jpg", 
-      "https://www.rupixel.ru/files/preview/1280x857/21664953414veb5kv3q5w1euf7g8uw1t0fwohrvxvuon3hafwtbj5qsvtlecpjh9x8oef1qggqearsx4g5pvxpex4cpvn7vv0ta9tyyimvdqumk.jpg", 
-      "https://www.rupixel.ru/files/preview/1280x853/21664948652xjk3todmh9oub8wsxrepweb6y7csexgbtciuofxadbre8pypro07k2q39omytvem3rywxu7wnwxincdm22pf5rgjnczxqrcn6mqf.jpg"],
+        "https://www.rupixel.ru/files/preview/1280x854/2591698669744cwdle94e2xgye7fet9uznzk6dzjlymcheb9iip4uiqleect7cm5r9ou6ysdvitq0lks2mcdeuc1g92rpa5arxadlpbphqztmg7zn.jpg",
+        "https://www.rupixel.ru/files/preview/1280x857/21664953414veb5kv3q5w1euf7g8uw1t0fwohrvxvuon3hafwtbj5qsvtlecpjh9x8oef1qggqearsx4g5pvxpex4cpvn7vv0ta9tyyimvdqumk.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21664948652xjk3todmh9oub8wsxrepweb6y7csexgbtciuofxadbre8pypro07k2q39omytvem3rywxu7wnwxincdm22pf5rgjnczxqrcn6mqf.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -405,8 +391,7 @@
       "name": "Виктория",
       "email": "viktoria.pavlova@example.com",
       "city": "Ульяновск",
-      "birthDate": "03-08-1994",
-      "age": 29,
+      "birthDate": "1994-08-03",
       "gender": "женский",
       "teach_skills": {
         "title": "Творчество и искусство",
@@ -416,9 +401,10 @@
       "avatar": "../src/assets/avatars/viktoria_30.png",
       "about": "Дизайнер интерьеров. Люблю превращать обычные вещи в произведения искусства",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/900x506/13381770218811rj3c8knn7kwktiqe8x74idvkqx3gc3fbejpmwx4asje18tnr5nlplmazpdhaj5pshfgtlg4idykpmyelc6wfqyweah8jfrinn28g.png", 
-      "https://www.rupixel.ru/files/preview/1280x853/21666946306kumxybeqmvzb5wr1ch44uad9itviihkaypuj1o55ba6sdb8i7eijknbuxhdiywxxhec936g4sv3ubls0cmtupmbiz90leabonjus.jpg", 
-      "https://www.rupixel.ru/files/preview/1280x853/216669519390aitzcla3o7mi40hpwvuddlzamcjlkfp3ygrrfasnqftojo1imkamheiupli1t7qmkxdqeayrx95gqm4ev4jgzce1d2ekorluhkh.jpg"],
+        "https://www.rupixel.ru/files/preview/900x506/13381770218811rj3c8knn7kwktiqe8x74idvkqx3gc3fbejpmwx4asje18tnr5nlplmazpdhaj5pshfgtlg4idykpmyelc6wfqyweah8jfrinn28g.png",
+        "https://www.rupixel.ru/files/preview/1280x853/21666946306kumxybeqmvzb5wr1ch44uad9itviihkaypuj1o55ba6sdb8i7eijknbuxhdiywxxhec936g4sv3ubls0cmtupmbiz90leabonjus.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/216669519390aitzcla3o7mi40hpwvuddlzamcjlkfp3ygrrfasnqftojo1imkamheiupli1t7qmkxdqeayrx95gqm4ev4jgzce1d2ekorluhkh.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -426,8 +412,7 @@
       "name": "Кирилл",
       "email": "kirill.lebedev@example.com",
       "city": "Иркутск",
-      "birthDate": "25-05-1989",
-      "age": 34,
+      "birthDate": "1989-05-25",
       "gender": "мужской",
       "teach_skills": {
         "title": "Бизнес и карьера",
@@ -446,8 +431,7 @@
       "name": "Виктория",
       "email": "tori.semina@example.com",
       "city": "Хабаровск",
-      "birthDate": "11-04-1996",
-      "age": 28,
+      "birthDate": "1996-04-11",
       "gender": "женский",
       "teach_skills": {
         "title": "Иностранные языки",
@@ -457,9 +441,10 @@
       "avatar": "../src/assets/avatars/viktoria_31.png",
       "about": "Носитель испанского языка. Преподаю с акцентом на разговорную практику",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/1280x853/21694268758bqenlpv4fkfpy4dj6ltghbpjmmy6njwwqrghm9bnguvoarpjqt7egm5e93v4ir9hehvbj4p9s3pions0wxiufrmrhtu0ibanq49d.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/21694268758bqenlpv4fkfpy4dj6ltghbpjmmy6njwwqrghm9bnguvoarpjqt7egm5e93v4ir9hehvbj4p9s3pions0wxiufrmrhtu0ibanq49d.jpg",
         "https://www.rupixel.ru/files/preview/1280x853/216942667596rn9xcikd9bymc6nj4hdqz7daycx286y26suifk31qa7hh7yqqfyfoqbvddfhv7whjuf3h1b7k9pp51yctsy1tygtcqq8edyjofk.jpg",
-        "https://www.rupixel.ru/files/preview/1280x852/21694266448m6m93ylvk8s6tnvdx2ufjbjcwrvvpi2qwjjcy0kyitvtfugjznx7hzdbq7zhdf7s6bkthnjhatn3yicyp4hdpposdeaaxuidnjr6.jpg"],
+        "https://www.rupixel.ru/files/preview/1280x852/21694266448m6m93ylvk8s6tnvdx2ufjbjcwrvvpi2qwjjcy0kyitvtfugjznx7hzdbq7zhdf7s6bkthnjhatn3yicyp4hdpposdeaaxuidnjr6.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -467,8 +452,7 @@
       "name": "Игорь",
       "email": "igor.vasiliev@example.com",
       "city": "Ярославль",
-      "birthDate": "17-10-1992",
-      "age": 31,
+      "birthDate": "1992-10-17",
       "gender": "мужской",
       "teach_skills": {
         "title": "Здоровье и лайфстайл",
@@ -478,7 +462,7 @@
       "avatar": "",
       "about": "Психотерапевт. Работаю с тревожностью и выгоранием. Практикую КБТ",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/1280x852/21666946614dsxi2uxijowbvygptnqkoc4gkzq9nisx0zkn29qpy0fjva52axe7outgcvm0hsqxxrbhl8r9fa5qh0asahad7gbobg0gjwgelf4r.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x852/21666946614dsxi2uxijowbvygptnqkoc4gkzq9nisx0zkn29qpy0fjva52axe7outgcvm0hsqxxrbhl8r9fa5qh0asahad7gbobg0gjwgelf4r.jpg",
         "https://www.rupixel.ru/files/preview/1280x719/21670525706h0whfyfyvqkpypmqp72ounlj4u6j2fna9pm70l5y2s79xo78aoy0ykegzrafjhlmtx9npfa4lq1ija9ura2mjpepvpcopqu4drls.jpg"
       ],
       "isFavourite": false
@@ -488,8 +472,7 @@
       "name": "София",
       "email": "sofia.fomina@example.com",
       "city": "Владивосток",
-      "birthDate": "22-07-1986",
-      "age": 37,
+      "birthDate": "1986-07-22",
       "gender": "женский",
       "teach_skills": {
         "title": "Дом и уют",
@@ -499,7 +482,7 @@
       "avatar": "../src/assets/avatars/sophia.png",
       "about": "Биолог по образованию. Выращиваю экзотические растения дома уже 10 лет",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/960x1440/14441762873274cdvkpfel8thpm3nnnjzlwl4aur5azqylibq6sh90tpbwqc96h6mbblbqr1rx92uhyd8n7sufjift1jypvnvu4hfaoenvwhddmkea.jpeg", 
+        "https://www.rupixel.ru/files/preview/960x1440/14441762873274cdvkpfel8thpm3nnnjzlwl4aur5azqylibq6sh90tpbwqc96h6mbblbqr1rx92uhyd8n7sufjift1jypvnvu4hfaoenvwhddmkea.jpeg",
         "https://www.rupixel.ru/files/preview/1280x853/14441762873028exgx2sgemam9x4w6ood9iuilxjb7nvgghv3fvsze9afq5emzzcec1mwelveabmk9tct2enbscxu8qk3ic94ch27ke4bbjomfwnrx.jpeg"
       ],
       "isFavourite": true
@@ -509,8 +492,7 @@
       "name": "Роман",
       "email": "roman.zaitsev@example.com",
       "city": "Махачкала",
-      "birthDate": "05-02-1993",
-      "age": 31,
+      "birthDate": "1993-02-05",
       "gender": "мужской",
       "teach_skills": {
         "title": "Образование и развитие",
@@ -522,7 +504,8 @@
       "photosOnAbout": [
         "https://www.rupixel.ru/files/preview/1280x854/21670485247c3iiowcuu9vjctmxd10fmvnkrjpsppeboaw4yieiukm62bc5tkzg3fk5ekcc3ssefmnxa7eszerjfb4nkmafrfa98mqk5rrysvxl.jpg",
         "https://www.rupixel.ru/files/preview/1280x853/21665134364fstpwptlrzedoy51snojvp4zhcnnergxaskinbnrgyasbqtsjplwnhipqui1sz10edafc3kxd9ambkawxezeei2ffv8viqx6hfb0.jpg",
-        "https://www.rupixel.ru/files/preview/1280x960/21665133597uzayzeb6eoxrepbka9gae8ww7zwyfo5xsiddvvjkotlqjbqedr97vula4c6rdbyusekn6nxuyf5c9ib1r5usii76txdisqsfj9lo.jpg"],
+        "https://www.rupixel.ru/files/preview/1280x960/21665133597uzayzeb6eoxrepbka9gae8ww7zwyfo5xsiddvvjkotlqjbqedr97vula4c6rdbyusekn6nxuyf5c9ib1r5usii76txdisqsfj9lo.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -530,8 +513,7 @@
       "name": "Дарья",
       "email": "darya.krylova@example.com",
       "city": "Томск",
-      "birthDate": "19-03-1998",
-      "age": 26,
+      "birthDate": "1998-03-19",
       "gender": "женский",
       "teach_skills": {
         "title": "Творчество и искусство",
@@ -551,8 +533,7 @@
       "name": "Никита",
       "email": "nikita.baranov@example.com",
       "city": "Оренбург",
-      "birthDate": "13-11-1990",
-      "age": 33,
+      "birthDate": "1990-11-13",
       "gender": "мужской",
       "teach_skills": {
         "title": "Бизнес и карьера",
@@ -573,8 +554,7 @@
       "name": "Валерия",
       "email": "lera.medvedeva@example.com",
       "city": "Кемерово",
-      "birthDate": "08-06-1995",
-      "age": 29,
+      "birthDate": "1995-06-08",
       "gender": "женский",
       "teach_skills": {
         "title": "Иностранные языки",
@@ -586,7 +566,8 @@
       "photosOnAbout": [
         "https://www.rupixel.ru/files/preview/1280x720/21694271175jqmuttlmxsvlawijrydxxodou1umhccr14dpj62w0x8l1xx7v2szobl3y8t4oyemznph2ifhd8bnm1pievv0bkxuygbpp3eud3ns.jpg",
         "https://www.rupixel.ru/files/preview/1280x853/21673840967cykgmuoqpx7ky63adjrkvv1ziednjgipwcn9agl2am3med8pa0unekwdjbxzblq3z9zkn0ungr7hfdf1nstjxhqpo5cbh2ergfd7.jpg",
-      "https://www.rupixel.ru/files/preview/1280x853/21670566113s8ell8thd1vyxf02gplgdpyxpv98ze2nrue7fdgumfss5zencrsb57dwfhfexgawo2uwoo5i4suco5bj9smaw5jqplwhib3yvs83.jpg"],
+        "https://www.rupixel.ru/files/preview/1280x853/21670566113s8ell8thd1vyxf02gplgdpyxpv98ze2nrue7fdgumfss5zencrsb57dwfhfexgawo2uwoo5i4suco5bj9smaw5jqplwhib3yvs83.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -594,8 +575,7 @@
       "name": "Георгий",
       "email": "georgiy.davydov@example.com",
       "city": "Рязань",
-      "birthDate": "30-09-1987",
-      "age": 36,
+      "birthDate": "1987-09-30",
       "gender": "мужской",
       "teach_skills": {
         "title": "Здоровье и лайфстайл",
@@ -605,9 +585,10 @@
       "avatar": "",
       "about": "Консультант по work-life balance. Помогаю найти гармонию между карьерой и личной жизнью",
       "photosOnAbout": [
-        "https://www.rupixel.ru/files/preview/960x1200/21723696212ag36cscr0dcudt2dn7q2huq50ryvmnjw1n0iavlntp6rbisbyorkren1tbdy5jxnwo27ukb6tt4kn2udtldwceand2sw3iak395w.jpg", 
-        "https://www.rupixel.ru/files/preview/960x1301/2167042291262d9xc9tr6x7xwzohglbufrnpwcdx7lzgsrnqqslakphir8rq0tro1p1rrnr7uqzrwmocfangqdevju0tapgkecvwujpp2r257tj.jpg", 
-        "https://www.rupixel.ru/files/preview/1280x853/21670423472spyrovyphkiituupvhmjzsstozb0yz1areodcbeztit9bqtidfvem5ywo5ypgber25afvbxqfbtu1twp07ixyjhq5zf6wzmnindw.jpg"],
+        "https://www.rupixel.ru/files/preview/960x1200/21723696212ag36cscr0dcudt2dn7q2huq50ryvmnjw1n0iavlntp6rbisbyorkren1tbdy5jxnwo27ukb6tt4kn2udtldwceand2sw3iak395w.jpg",
+        "https://www.rupixel.ru/files/preview/960x1301/2167042291262d9xc9tr6x7xwzohglbufrnpwcdx7lzgsrnqqslakphir8rq0tro1p1rrnr7uqzrwmocfangqdevju0tapgkecvwujpp2r257tj.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21670423472spyrovyphkiituupvhmjzsstozb0yz1areodcbeztit9bqtidfvem5ywo5ypgber25afvbxqfbtu1twp07ixyjhq5zf6wzmnindw.jpg"
+      ],
       "isFavourite": false
     },
     {
@@ -615,8 +596,7 @@
       "name": "Полина",
       "email": "polina.soloveva@example.com",
       "city": "Тюмень",
-      "birthDate": "14-01-1999",
-      "age": 25,
+      "birthDate": "1999-01-14",
       "gender": "женский",
       "teach_skills": {
         "title": "Дом и уют",
@@ -627,7 +607,7 @@
       "about": "Финансовый консультант для семьи. Помогаю оптимизировать бюджет и копить на мечты",
       "photosOnAbout": [
         "https://www.rupixel.ru/files/preview/1280x862/21665130220wtxig0paill5rmjgol08ub7czctjablh5hb8wwpstclmay1dnu3xtk8pzu6qkyppkcpikcmacefyi1s4s6o7xvnxneqfju2q66zx.jpg",
-        "https://www.rupixel.ru/files/preview/1280x853/14471763017317za5qek33bm3lisftwt0cmakstnpgayyk1fzyeffj1xnmm5cdzn8v2fnmfh2nfegsxgxhe6bbpizxrxulwaog9bknbigswwaz2hag.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/14471763017317za5qek33bm3lisftwt0cmakstnpgayyk1fzyeffj1xnmm5cdzn8v2fnmfh2nfegsxgxhe6bbpizxrxulwaog9bknbigswwaz2hag.jpg",
         "https://www.rupixel.ru/files/preview/1280x854/21725421485wj2chqxf6nqfnk9e8bcmqrvnoshc5mayovjehlvvzy9c5qtgtmszpw4yuyldiqryx39840zej226q9qjp84xo3d6n4spfgeonfpu.jpg"
       ],
       "isFavourite": true
