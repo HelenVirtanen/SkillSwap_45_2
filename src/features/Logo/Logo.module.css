@@ -1,0 +1,30 @@
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 159px;
+  height: 40px;
+  text-decoration: none;
+}
+/* Стили для иконки внутри логотипа */
+.logoIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 60px;
+  padding: 6px;
+  background: #ABD27A;
+  object-fit: contain;
+}
+/* Стили для текста логотипа */
+.logoText {
+  width: 107px;
+  height: 28px;
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -1.1%;
+  color: #0C0C0C;
+  display: flex;
+  align-items: center;
+}
