@@ -1,0 +1,142 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 12px 24px;
+  color: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary {
+  color: #253017;
+  background-color: #abd27a;
+}
+
+.primary:disabled {
+  color: #69735d;
+  background-color: #e4e8df;
+  cursor: not-allowed;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: #dcedc8;
+}
+
+.primary:active:not(:disabled) {
+  color: #ffffff;
+  background-color: #508826;
+}
+
+.secondary {
+  color: #253017;
+  background-color: #ffffff;
+  border: 1px solid #abd27a;
+}
+
+.secondary:disabled {
+  color: #9ca197;
+  background-color: #ffffff;
+  border-color: #e4e8df;
+  cursor: not-allowed;
+}
+
+.secondary:hover:not(:disabled) {
+  color: #69735d;
+  background-color: #ffffff;
+  border-color: #deebc5;
+}
+
+.secondary:active:not(:disabled) {
+  color: #253017;
+  background-color: #ffffff;
+  border-color: #508826;
+}
+
+.tertiary {
+  color: #253017;
+  background-color: #ffffff;
+  border: none;
+}
+
+.tertiary:disabled {
+  color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.tertiary:hover:not(:disabled) {
+  color: #495057;
+  background-color: #f5f5f5;
+}
+
+.tertiary:active:not(:disabled) {
+  color: #495057;
+  background-color: #e0e0e0;
+}
+
+.social {
+  width: 436px;
+  color: #253017;
+  background-color: #ffffff;
+  border: 1px solid #404040;
+}
+
+.social:disabled {
+  color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.social:hover:not(:disabled) {
+  color: #495057;
+  background-color: #f5f5f5;
+}
+
+.social:active:not(:disabled) {
+  color: #495057;
+  background-color: #e0e0e0;
+}
+
+.submit {
+  width: 100%;
+  color: #253017;
+  background-color: #abd27a;
+}
+
+.submit:disabled {
+  color: #69735d;
+  background-color: #e4e8df;
+  cursor: not-allowed;
+}
+
+.submit:hover:not(:disabled) {
+  background-color: #dcedc8;
+}
+
+.submit:active:not(:disabled) {
+  color: #ffffff;
+  background-color: #508826;
+}
+
+.iconLeft {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.iconRight {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
