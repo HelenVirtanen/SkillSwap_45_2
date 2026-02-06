@@ -1,0 +1,636 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Иван",
+      "email": "ivan1992@example.com",
+      "city": "Санкт-Петербург",
+      "birthDate": "15-07-1992",
+      "age": 34,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Творчество и искусство",
+        "skills": "Музыка и звук"
+      },
+      "learn_skills": ["Тайм-менеджмент", "Медитация", "Личный бренд"],
+      "avatar": "../src/assets/avatars/ivan.png",
+      "about": "Привет! Люблю ритм, кофе по утрам и людей, которые не боятся пробовать новое",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21694754752iovs6mqwrtfifuwdwoumzqhmzgemtrz7npmnjrlhfwbruzgbtjb2mm23kpy7jjsk3xsymkemebl0ekqgmziasbk5d8i1mkh57ecp.jpg?type=free",
+        "https://www.rupixel.ru/files/preview/960x1440/21694754641ugvsciea9zg7vt0che0ubgopv4cmix0eowy9bczuxhewo4ibxkdhm5pwzw4np0eua9x4uamkmwiizpmvb7oz3lasoyyltydnyxpk.jpg?type=free",
+        "https://www.rupixel.ru/files/preview/1280x854/216947546398x85ipy2lsuttte3i0d53rkbw0ukpnapj4u7yewccyrxngcn2czzxflwl4dmta4obpiyxnuooa0pv3032p8f6pionzxix06cs40z.jpg?type=free"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 2,
+      "name": "Алла",
+      "email": "alla.smirnova@example.com",
+      "city": "Москва",
+      "birthDate": "22-03-1995",
+      "age": 29,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Иностранные языки",
+        "skills": "Английский"
+      },
+      "learn_skills": ["Управление командой", "Йога и медитация", "Рисование и иллюстрация"],
+      "avatar": "../src/assets/avatars/alla.png",
+      "about": "Преподаватель английского с 7-летним стажем. Люблю путешествия и кулинарию",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x850/216651340445009v3eh2pt2lddlwyxh0mtkbnuydebbhgseint6qe5zqpxudkvfvax5acykxojq86hopyf7ycvjgtfy0wx6yxkqcuvodyjgttcn.jpg",
+        "https://www.rupixel.ru/files/preview/1280x854/21670421173nszd1ai8gnzyai0jeezclaqgj2xvvxpe0cq6yzgf06vudyycppvswh9pokq9xzqniqtaxoyis3jfcwlahntjmuaw2ci3dukdiyed.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 3,
+      "name": "Константин",
+      "email": "konstantin.k@example.com",
+      "city": "Новосибирск",
+      "birthDate": "10-11-1988",
+      "age": 35,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Бизнес и карьера",
+        "skills": "Продажи и переговоры"
+      },
+      "learn_skills": ["Китайский", "Приготовление еды", "Видеомонтаж"],
+      "avatar": "../src/assets/avatars/konstantin.png",
+      "about": "Бизнес-тренер, провел более 200 тренингов. Увлекаюсь азиатской культурой",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21665130374jioa0cbeejezy69xwesmzrcyusrm8blbmzw5rmahgh1crhkia08i2ygcs2twgktt2nyfwa1pmaidhlkfqnbvawz33cfn9pegg1ta.jpg"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 4,
+      "name": "Екатерина",
+      "email": "katya.ivanova@example.com",
+      "city": "Екатеринбург",
+      "birthDate": "05-09-1990",
+      "age": 33,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Здоровье и лайфстайл",
+        "skills": "Йога и медитация"
+      },
+      "learn_skills": ["Домашние растения", "Креативное письмо", "Испанский"],
+      "avatar": "../src/assets/avatars/ekaterina.png",
+      "about": "Сертифицированный инструктор по йоге. Верю в баланс тела и разума",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21670525602i1oosivtzrpxqbxrtkui6mni3lggryjpsb0ulpl15a6wlsr5ne2yrdvamohmrwjzmyltmmliaihhzjgx8fc7djkzfsy686qiu7ca.jpg",
+        "https://www.rupixel.ru/files/preview/1280x854/21670525714szbb88ms4lotosjqxm5bjgzwwmvnybotcab3ur5dhgvozzce8gj4pkwsojuv9oyt13ts9ghaiiview3n8brmgqr1uiyzy7nfi7ft.jpg"
+
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 5,
+      "name": "Максим",
+      "email": "max.petrov@example.com",
+      "city": "Нижний Новгород",
+      "birthDate": "18-12-1993",
+      "age": 30,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Дом и уют",
+        "skills": "Ремонт"
+      },
+      "learn_skills": ["Проектное управление", "Немецкий", "Фотография"],
+      "avatar":  "../src/assets/avatars/maksim.png",
+      "about": "Строитель по профессии, мастер на все руки. Помогу с любым ремонтом",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x800/21723540870u7n70aoqnbh3pvtkpoxbfmtmb9ee3io2gwua5niufnxsgummtmh53r0ytlpsqdk1b6mjudplrggbc7iwaj1cmbksgcf1mfdg5cnf.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 6,
+      "name": "Анна",
+      "email": "anna.sidorova@example.com",
+      "city": "Казань",
+      "birthDate": "30-01-1987",
+      "age": 37,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Творчество и искусство",
+        "skills": "Рисование и иллюстрация"
+      },
+      "learn_skills": ["Питание и ЗОЖ", "Маркетинг и реклама", "Скорочтение"],
+      "avatar": "../src/assets/avatars/anna.png",
+      "about": "Художник-иллюстратор. Провожу мастер-классы по акварели",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/900x506/13381758041337ifr0dglckci6agjeql6hwflbm11s9azzzlcxc5r985pui5jlev08xu4fsufudeptesggh04xbzhbzd1ofy6cfjrpopu04wzopz61.png", 
+        "https://www.rupixel.ru/files/preview/1280x853/21665133535zjhjyzu4xawnqzqb53cvqiyd3i6ey91ifaiixboscw0uwk24uchuwrxbflj8c2jlts4mcr4pb7hx0eplk4jgoub1bndq3wijmm5p.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21665133893bwfhinaatfwktqgqjkf2hya8kpkyrexynl7kx3irqilc6tbngyb3qgc54f7bqzryylpmecpa5xxwzyo256mgx8jhkmyijvvihbhd.jpg"
+
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 7,
+      "name": "Михаил",
+      "email": "mikhail.volkov@example.com",
+      "city": "Челябинск",
+      "birthDate": "14-06-1991",
+      "age": 32,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Образование и развитие",
+        "skills": "Коучинг"
+      },
+      "learn_skills": ["Предпринимательство", "Японский", "Декор и DIY"],
+      "avatar": "../src/assets/avatars/mikhail.png",
+      "about": "Life-коуч, помогаю людям находить свой путь. Люблю философию и восточные практики",
+      "photosOnAbout": ["https://www.rupixel.ru/files/preview/900x506/13381758355357vdaaii9qgnkzcqkyhmxlif5s0gloc5hyvkpje4ia0cguzqnvbkaa85xr1swzksgzpyvelpwuvjoacdp7q1ovipprmi788krqirqs.png",
+      "https://www.rupixel.ru/files/preview/960x1200/21694748880bc4zecm4vxiu8bsriqrkjhpkk19guoadyozux4dnsudetypb8falfeakgg6sngmycaujhm3kkqt2wsvhu6js6q932sjuhyoqvlkv.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 8,
+      "name": "Дарья",
+      "email": "daria.morozova@example.com",
+      "city": "Омск",
+      "birthDate": "25-04-1994",
+      "age": 29,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Иностранные языки",
+        "skills": "Китайский"
+      },
+      "learn_skills": ["Уборка и организация", "Актёрское мастерство", "Тайм-менеджмент"],
+      "avatar": "../src/assets/avatars/daria.png",
+      "about": "Жила 5 лет в Китае. Преподаю китайский для начинающих и продвинутых",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x956/21727330837yjosd6lgza75ynn7rppqm776oa2cnz0bxdspjzbu5bhocdcnhau1xuup1vtkswojyysfvfukbav7uxs9brfqxbvuuuhotf2i14zx.jpg",
+        "https://www.rupixel.ru/files/preview/960x1280/21694271732js8vpghlstmyj8w9jo3jeksy9pgplckessiqzyvroh5fwk40qx8mf0lrhkfkjmgllmphmtnxt92wiam3r6yoxhco8yhywzazolxg.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21670572039oc9zaen9eudwlqnfy31kxvyzhpeueysrlszukgnqjuhnawyrdjcxrsosswf7usjn1glwiy7noionsruklmwqp6bdjftj1cbqw0ee.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 9,
+      "name": "Алексей",
+      "email": "alex.popov@example.com",
+      "city": "Самара",
+      "birthDate": "08-08-1989",
+      "age": 34,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Творчество и искусство",
+        "skills": "Фотография"
+      },
+      "learn_skills": ["Домашние финансы", "Личностное развитие", "Французский"],
+      "avatar": "",
+      "about": "Профессиональный фотограф. Специализация - портретная и предметная съемка",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x960/1041761619438zuiqasyxpteykonj9mymjz454s2y0ktuy240pzk7s1ymhfqhi6nnr441pd7sa4ldgi6ihpjvyirkepmqxo1dovm1fkgojjwuymsr.jpg", "https://www.rupixel.ru/files/preview/1280x853/21670480944iiea9xgexkjq1x370elg4tz8soji8g1jrw2xvf0lbhcf3c6mi19gu7k3d9lug5kwhdbetki39b3y3takxpv0wzhdhxbulujkdae4.jpg",
+        "https://www.rupixel.ru/files/preview/960x1441/1041750251373vsjbfja9mgyudicuwfcddgxubrr5kga2mtpgtnp7vl7nyqkmctwgwtbqetljwq6w6r0zaax0gzuqhfznbzoealm3gspzzny5zlyj.jpg"
+
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 10,
+      "name": "Илона",
+      "email": "ilona.kuznetsova@example.com",
+      "city": "Ростов-на-Дону",
+      "birthDate": "12-11-1996",
+      "age": 27,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Дом и уют",
+        "skills": "Приготовление еды"
+      },
+      "learn_skills": ["Подготовка к экзаменам (IELTS, TOEFL)", "Видеомонтаж", "Проектное управление"],
+      "avatar": "../src/assets/avatars/ilona.png",
+      "about": "Шеф-повар в ресторане. Провожу кулинарные мастер-классы для домашних поваров",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/154317701937016acymprtmkhpzdvehsujiohq8ssg35108ndujbfjvxh1ig1iv4impyije64k60yrmcx2vpurijbepayzmhhgibg3m2wgukciktql.jpg",
+        "https://www.rupixel.ru/files/preview/1280x1707/13631757975367dmozrcegmkctykof316hmj68yvalnarv268wnc9ghqvdwmn7zuginqb2ko3gua63jtjj1sgytpp2g8ocyesr9zzauobsic3dzby9.jpeg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 11,
+      "name": "Артем",
+      "email": "artem.fedorov@example.com",
+      "city": "Уфа",
+      "birthDate": "03-05-1992",
+      "age": 31,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Здоровье и лайфстайл",
+        "skills": "Физические тренировки"
+      },
+      "learn_skills": ["Маркетинг и реклама", "Испанский", "Креативное письмо"],
+      "avatar": "",
+      "about": "Персональный тренер. Специализируюсь на функциональных тренировках и коррекции осанки",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21723096975spa3zy4faagfxmc1hm8kghlcxe6acw6sqgsmgyku5kv4fg1rgheswy37tyo0qenxgvusrrzhx2hi9cjakcm28dctwx8np2kzvnie.jpg",
+        "https://www.rupixel.ru/files/preview/960x1440/21727329667mpyvqooqwxwvsu1xits8dm0vrlfhwsbsqnthgdmonrggnl4gvyq2ynapztiuxzfhdqevbsozemngzqhfdu0xjyshziarhhg28tvo.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 12,
+      "name": "Елена",
+      "email": "elena.orlova@example.com",
+      "city": "Красноярск",
+      "birthDate": "19-02-1993",
+      "age": 31,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Бизнес и карьера",
+        "skills": "Маркетинг и реклама"
+      },
+      "learn_skills": ["Рисование и иллюстрация", "Ментальное здоровье", "Хранение вещей"],
+      "avatar": "../src/assets/avatars/elena.png",
+      "about": "Digital-маркетолог с опытом работы в международных компаниях. Люблю аналитику и творчество",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x960/21670420875mf4upni2qpmoozquoj8rhovn1i83jf19bi3vmcwoudzzhrlqeaukw5n33xmyi6yhfkfctlv23sjqeqcjs8rtjy1c1vsajtcz2rhk.jpg"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 13,
+      "name": "Павел",
+      "email": "pavel.nikitin@example.com",
+      "city": "Пермь",
+      "birthDate": "27-07-1985",
+      "age": 38,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Образование и развитие",
+        "skills": "Навыки обучения"
+      },
+      "learn_skills": ["Ремонт", "Музыка и звук", "Предпринимательство"],
+      "avatar": "",
+      "about": "Педагог-методист. Помогаю студентам и взрослым эффективно осваивать новые навыки",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/216651344114bpfeww42zmiehnufl3dfopdlbncdcxcurfauyrtwnuwmvkkr7iopcvptoeqwt6xgizxsaw53kwn9emutfi5dtbzskzxixw4kg6e.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x717/21665134361qq48aws4ttibtxqidihydamxb7gticngb3lzywty58i5r13czji5pqoc3narmrfd81gekbajkxhpqzcb7tpnvtt96wkr9xmwdput.jpg",
+        "https://www.rupixel.ru/files/preview/1280x848/216651337842g2pnrm4nukvnvhcyphromacbcrhdjdov81frah9y1unpr5zy8nrv9ykp6m7ddmzdr73lsbhcklhodkei4dlpzuhwiqywcnautsc.jpg"
+        ],
+      "isFavourite": false
+    },
+    {
+      "id": 14,
+      "name": "Елизавета",
+      "email": "elizaveta.belova@example.com",
+      "city": "Воронеж",
+      "birthDate": "16-10-1990",
+      "age": 33,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Здоровье и лайфстайл",
+        "skills": "Питание и ЗОЖ"
+      },
+      "learn_skills": ["Управление командой", "Японский", "Декор и DIY"],
+      "avatar": "../src/assets/avatars/elizaveta.png",
+      "about": "Нутрициолог. Помогаю составлять сбалансированный рацион для разных целей",
+      "photosOnAbout": ["https://www.rupixel.ru/files/preview/1280x853/216704119134imsticpnfhopke6bsud909rqono0ey8vqgr92nrndobjrwwgsvk9fymwl978yigsde1swmyzkotwscqcuxialhsqfok1nicgxhi.jpg", 
+      "https://www.rupixel.ru/files/preview/1280x853/21670411907s5gks0gi8awv1yvssgo44gmnae9xuzwrrwey4m6qki5fi9if5znevajaq2aiaku1twmlsehaf6phohkgjce8mor7cwpyuoelx9jm.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 15,
+      "name": "Владимир",
+      "email": "vladimir.sokolov@example.com",
+      "city": "Волгоград",
+      "birthDate": "09-03-1983",
+      "age": 40,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Бизнес и карьера",
+        "skills": "Управление командой"
+      },
+      "learn_skills": ["Фотография", "Осознанность", "Домашние растения"],
+      "avatar": "",
+      "about": "Руководитель отдела в IT-компании. 15 лет опыта управления командами разного размера",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21665041693ii5iwfborra07shc0h3xmavgyhf7hpztnxe5grw7bvpnhyaqgy3kbgofyjwmgr0gwvmwzzm6thalvutusw5rwq1z2g4fdcqmjngn.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/21665035291irgax1zzifammncugw0bxd7oi0sapf2czpxuywueop3qtkwmrycdgm9akfqwzehhtiibim2gzhhpqxoev1dtnhimwtusoqycezyo.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/216649470448yqvrqeqmrzwvwmwvj04rvucgg8uir2g3hu1pyfzeiwakslmx9yl9eavwg8lg7d8syb50gsdjx82gdgrbdz0nfqsrzyiihflwrc3.jpg"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 16,
+      "name": "Мария",
+      "email": "mari.vorobieva@example.com",
+      "city": "Краснодар",
+      "birthDate": "21-06-1995",
+      "age": 28,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Иностранные языки",
+        "skills": "Французский"
+      },
+      "learn_skills": ["Тайм-менеджмент", "Арт-терапия", "Приготовление еды"],
+      "avatar": "../src/assets/avatars/maria.png",
+      "about": "Преподаватель французского языка и культуры. Жила в Париже 3 года",
+      "photosOnAbout": ["https://www.rupixel.ru/files/preview/1280x848/21694269805yzlvrlty5li1bn1nqbu1o8hpaimtjtvlhlayizw1rwr8i5fi2jopop7do1nkvpplni0yxcplasbyzjiuwxzdpzjz46yrr4y7rfva.jpg", 
+      "https://www.rupixel.ru/files/preview/1280x959/21694265138flcmkufspqury1gwyz2umd5t4jbny3acepov44wj6j1elwwggamzxf9adekake7dkcft9kpq7kgntodmwzmzkj05mgbrqumrlqkd.jpg", 
+      "https://www.rupixel.ru/files/preview/1280x720/21694271877bsf0asbesipxg96fqfm2gqt2oxhxqfhygdnvfvpj1ogsbtxxc4kmog8d8yxc526soadlajquxssmikjjby2gjpb81m3yncvf6vpf.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 17,
+      "name": "Михаил",
+      "email": "mikhail.egorov@example.com",
+      "city": "Саратов",
+      "birthDate": "14-09-1988",
+      "age": 35,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Творчество и искусство",
+        "skills": "Видеомонтаж"
+      },
+      "learn_skills": ["Продажи и переговоры", "Когнитивные техники", "Немецкий"],
+      "avatar": "",
+      "about": "Видео-монтажер для YouTube и соцсетей. Работал с блогерами и брендами",
+      "photosOnAbout": ["https://www.rupixel.ru/files/preview/1280x647/21664948481ryrixhzuofld3klfcmiljg22cu7t2d6jstgfrwdzkp7wafd3u2fjpecwmouxwhnj8eau75wuwfjv1xe3kisvjm6ij90cmcmie97n.jpg", 
+      "https://www.rupixel.ru/files/preview/1280x853/21664890924a5rplqyrjqldcnbmdaleawf483xak7dlktyvvspknmpwxrlgutneegn30enl0sugmpguk67v6wfjxaoksnhbzpenk5kuumuxfetf.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 18,
+      "name": "Алиса",
+      "email": "alisa.romanova@example.com",
+      "city": "Тольятти",
+      "birthDate": "07-12-1997",
+      "age": 26,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Дом и уют",
+        "skills": "Уборка и организация"
+      },
+      "learn_skills": ["Китайский", "Личный бренд", "Физические тренировки"],
+      "avatar": "../src/assets/avatars/user-photo.png",
+      "about": "Профессиональный организатор пространства. Помогаю наводить порядок в доме и в голове",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/960x1449/21665130541cjhdgnabwsqiyjj878pxvcgmppcaepec9x3jrqmqd2kvnkxjqde0vhftyxdatbtkf5imienfqbpmc5jh8dcc4imraofvgxokjut0.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/216651330756byrt3g7y723v9yk34hlyuo3xofqmd6atdwikmv1wiclhgumvs2pspgctdiiclk5qc2ex1ylgsggparex00acxrwhadvxti4vufj.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x857/21670573145wceioobgiy2ufskpzsfkkyl9i8vey2h7ryv3kaj95riqrhmubzhmeu1ariose24z5jjbvpcesumbdhrrgjt4bz0n8z2ggwycxr8j.jpg"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 19,
+      "name": "Андрей",
+      "email": "andrey.mikhailov@example.com",
+      "city": "Ижевск",
+      "birthDate": "29-01-1991",
+      "age": 33,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Образование и развитие",
+        "skills": "Личностное развитие"
+      },
+      "learn_skills": ["Ремонт", "Рисование и иллюстрация", "Маркетинг и реклама"],
+      "avatar": "",
+      "about": "Психолог, веду тренинги по личностному росту и саморазвитию",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x854/2591698669744cwdle94e2xgye7fet9uznzk6dzjlymcheb9iip4uiqleect7cm5r9ou6ysdvitq0lks2mcdeuc1g92rpa5arxadlpbphqztmg7zn.jpg", 
+      "https://www.rupixel.ru/files/preview/1280x857/21664953414veb5kv3q5w1euf7g8uw1t0fwohrvxvuon3hafwtbj5qsvtlecpjh9x8oef1qggqearsx4g5pvxpex4cpvn7vv0ta9tyyimvdqumk.jpg", 
+      "https://www.rupixel.ru/files/preview/1280x853/21664948652xjk3todmh9oub8wsxrepweb6y7csexgbtciuofxadbre8pypro07k2q39omytvem3rywxu7wnwxincdm22pf5rgjnczxqrcn6mqf.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 20,
+      "name": "Виктория",
+      "email": "viktoria.pavlova@example.com",
+      "city": "Ульяновск",
+      "birthDate": "03-08-1994",
+      "age": 29,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Творчество и искусство",
+        "skills": "Декор и DIY"
+      },
+      "learn_skills": ["Домашние финансы", "Английский", "Питание и ЗОЖ"],
+      "avatar": "../src/assets/avatars/viktoria_30.png",
+      "about": "Дизайнер интерьеров. Люблю превращать обычные вещи в произведения искусства",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/900x506/13381770218811rj3c8knn7kwktiqe8x74idvkqx3gc3fbejpmwx4asje18tnr5nlplmazpdhaj5pshfgtlg4idykpmyelc6wfqyweah8jfrinn28g.png", 
+      "https://www.rupixel.ru/files/preview/1280x853/21666946306kumxybeqmvzb5wr1ch44uad9itviihkaypuj1o55ba6sdb8i7eijknbuxhdiywxxhec936g4sv3ubls0cmtupmbiz90leabonjus.jpg", 
+      "https://www.rupixel.ru/files/preview/1280x853/216669519390aitzcla3o7mi40hpwvuddlzamcjlkfp3ygrrfasnqftojo1imkamheiupli1t7qmkxdqeayrx95gqm4ev4jgzce1d2ekorluhkh.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 21,
+      "name": "Кирилл",
+      "email": "kirill.lebedev@example.com",
+      "city": "Иркутск",
+      "birthDate": "25-05-1989",
+      "age": 34,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Бизнес и карьера",
+        "skills": "Личный бренд"
+      },
+      "learn_skills": ["Йога и медитация", "Испанский", "Фотография"],
+      "avatar": "",
+      "about": "SMM-специалист. Помогаю экспертам и бизнесу строить сильный личный бренд",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21665035360xnsbctegsm3rsysytwttomtdklctkwybkdccagamc2npqbsriihehjqbfuhuoalpgrbkqqjlwb7xxf264uqlzr7lkzadgrbtqxgk.jpg"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 22,
+      "name": "Виктория",
+      "email": "tori.semina@example.com",
+      "city": "Хабаровск",
+      "birthDate": "11-04-1996",
+      "age": 28,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Иностранные языки",
+        "skills": "Испанский"
+      },
+      "learn_skills": ["Управление командой", "Видеомонтаж", "Домашние растения"],
+      "avatar": "../src/assets/avatars/viktoria_31.png",
+      "about": "Носитель испанского языка. Преподаю с акцентом на разговорную практику",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21694268758bqenlpv4fkfpy4dj6ltghbpjmmy6njwwqrghm9bnguvoarpjqt7egm5e93v4ir9hehvbj4p9s3pions0wxiufrmrhtu0ibanq49d.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/216942667596rn9xcikd9bymc6nj4hdqz7daycx286y26suifk31qa7hh7yqqfyfoqbvddfhv7whjuf3h1b7k9pp51yctsy1tygtcqq8edyjofk.jpg",
+        "https://www.rupixel.ru/files/preview/1280x852/21694266448m6m93ylvk8s6tnvdx2ufjbjcwrvvpi2qwjjcy0kyitvtfugjznx7hzdbq7zhdf7s6bkthnjhatn3yicyp4hdpposdeaaxuidnjr6.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 23,
+      "name": "Игорь",
+      "email": "igor.vasiliev@example.com",
+      "city": "Ярославль",
+      "birthDate": "17-10-1992",
+      "age": 31,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Здоровье и лайфстайл",
+        "skills": "Ментальное здоровье"
+      },
+      "learn_skills": ["Предпринимательство", "Французский", "Приготовление еды"],
+      "avatar": "",
+      "about": "Психотерапевт. Работаю с тревожностью и выгоранием. Практикую КБТ",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x852/21666946614dsxi2uxijowbvygptnqkoc4gkzq9nisx0zkn29qpy0fjva52axe7outgcvm0hsqxxrbhl8r9fa5qh0asahad7gbobg0gjwgelf4r.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x719/21670525706h0whfyfyvqkpypmqp72ounlj4u6j2fna9pm70l5y2s79xo78aoy0ykegzrafjhlmtx9npfa4lq1ija9ura2mjpepvpcopqu4drls.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 24,
+      "name": "София",
+      "email": "sofia.fomina@example.com",
+      "city": "Владивосток",
+      "birthDate": "22-07-1986",
+      "age": 37,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Дом и уют",
+        "skills": "Домашние растения"
+      },
+      "learn_skills": ["Коучинг", "Китайский", "Рисование и иллюстрация"],
+      "avatar": "../src/assets/avatars/sophia.png",
+      "about": "Биолог по образованию. Выращиваю экзотические растения дома уже 10 лет",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/960x1440/14441762873274cdvkpfel8thpm3nnnjzlwl4aur5azqylibq6sh90tpbwqc96h6mbblbqr1rx92uhyd8n7sufjift1jypvnvu4hfaoenvwhddmkea.jpeg", 
+        "https://www.rupixel.ru/files/preview/1280x853/14441762873028exgx2sgemam9x4w6ood9iuilxjb7nvgghv3fvsze9afq5emzzcec1mwelveabmk9tct2enbscxu8qk3ic94ch27ke4bbjomfwnrx.jpeg"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 25,
+      "name": "Роман",
+      "email": "roman.zaitsev@example.com",
+      "city": "Махачкала",
+      "birthDate": "05-02-1993",
+      "age": 31,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Образование и развитие",
+        "skills": "Скорочтение"
+      },
+      "learn_skills": ["Продажи и переговоры", "Йога и медитация", "Декор и DIY"],
+      "avatar": "",
+      "about": "Тренер по скорочтению и развитию памяти. Провел более 50 курсов",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x854/21670485247c3iiowcuu9vjctmxd10fmvnkrjpsppeboaw4yieiukm62bc5tkzg3fk5ekcc3ssefmnxa7eszerjfb4nkmafrfa98mqk5rrysvxl.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21665134364fstpwptlrzedoy51snojvp4zhcnnergxaskinbnrgyasbqtsjplwnhipqui1sz10edafc3kxd9ambkawxezeei2ffv8viqx6hfb0.jpg",
+        "https://www.rupixel.ru/files/preview/1280x960/21665133597uzayzeb6eoxrepbka9gae8ww7zwyfo5xsiddvvjkotlqjbqedr97vula4c6rdbyusekn6nxuyf5c9ib1r5usii76txdisqsfj9lo.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 26,
+      "name": "Дарья",
+      "email": "darya.krylova@example.com",
+      "city": "Томск",
+      "birthDate": "19-03-1998",
+      "age": 26,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Творчество и искусство",
+        "skills": "Креативное письмо"
+      },
+      "learn_skills": ["Маркетинг и реклама", "Немецкий", "Физические тренировки"],
+      "avatar": "",
+      "about": "Копирайтер и писатель. Помогу научиться писать тексты, которые продают",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x854/21665134273i5jfmwh2c1dxmzvyj65bxqoadf6vcgpmuffjmvx8eo2qozsfmqbgmpjszs3vmk1webciocosdi4uryukwkqyt8dhjnf4fjyyxou1.jpg",
+        "https://www.rupixel.ru/files/preview/1280x905/21665134478fgmgdn9i2ssvmuxnjfrazdvbc1xoe4npr5xhkhkvngice7fzryfluobv6agtfcz8eum0cugncgohqfykdfolyuxq0yfehdv2f1cb.jpg"
+      ],
+      "isFavourite": false
+    },
+    {
+      "id": 27,
+      "name": "Никита",
+      "email": "nikita.baranov@example.com",
+      "city": "Оренбург",
+      "birthDate": "13-11-1990",
+      "age": 33,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Бизнес и карьера",
+        "skills": "Предпринимательство"
+      },
+      "learn_skills": ["Ментальное здоровье", "Японский", "Фотография"],
+      "avatar": "",
+      "about": "Основатель двух стартапов. Делимся опытом построения бизнеса с нуля",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x853/21665134107ukimvoj0b8odyvfoprtld7k2ajlxkfrhzfnlxqhi7bf1xtloykxlmtsljxukgtqnzrglz0xnknir1piemuviy8l5zifrgvkqtrtf.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21665130228hkyi1a5xxwvc5gzoxmcmyibcfd4bfngjot2tvbxqor8ytlbr3dtv6o5n1jk9cz2hxqx0otoiwewbw4vj7ndkdz74rxcktbxas6tg.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21665041022smnaikarmposaz3gtpxl7weajjvhdpiechske02xc4wvzm4zrqgiwtor74iqozxpwkcgyigbxeexp50l3uoxpyjceybgeryoewoo.jpg"
+      ],
+      "isFavourite": true
+    },
+    {
+      "id": 28,
+      "name": "Валерия",
+      "email": "lera.medvedeva@example.com",
+      "city": "Кемерово",
+      "birthDate": "08-06-1995",
+      "age": 29,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Иностранные языки",
+        "skills": "Немецкий"
+      },
+      "learn_skills": ["Личный бренд", "Арт-терапия", "Ремонт"],
+      "avatar": "",
+      "about": "Преподаватель немецкого с дипломом Гёте-Института. Жила в Берлине 2 года",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x720/21694271175jqmuttlmxsvlawijrydxxodou1umhccr14dpj62w0x8l1xx7v2szobl3y8t4oyemznph2ifhd8bnm1pievv0bkxuygbpp3eud3ns.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/21673840967cykgmuoqpx7ky63adjrkvv1ziednjgipwcn9agl2am3med8pa0unekwdjbxzblq3z9zkn0ungr7hfdf1nstjxhqpo5cbh2ergfd7.jpg",
+      "https://www.rupixel.ru/files/preview/1280x853/21670566113s8ell8thd1vyxf02gplgdpyxpv98ze2nrue7fdgumfss5zencrsb57dwfhfexgawo2uwoo5i4suco5bj9smaw5jqplwhib3yvs83.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 29,
+      "name": "Георгий",
+      "email": "georgiy.davydov@example.com",
+      "city": "Рязань",
+      "birthDate": "30-09-1987",
+      "age": 36,
+      "gender": "мужской",
+      "teach_skills": {
+        "title": "Здоровье и лайфстайл",
+        "skills": "Баланс жизни и работы"
+      },
+      "learn_skills": ["Управление командой", "Креативное письмо", "Китайский"],
+      "avatar": "",
+      "about": "Консультант по work-life balance. Помогаю найти гармонию между карьерой и личной жизнью",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/960x1200/21723696212ag36cscr0dcudt2dn7q2huq50ryvmnjw1n0iavlntp6rbisbyorkren1tbdy5jxnwo27ukb6tt4kn2udtldwceand2sw3iak395w.jpg", 
+        "https://www.rupixel.ru/files/preview/960x1301/2167042291262d9xc9tr6x7xwzohglbufrnpwcdx7lzgsrnqqslakphir8rq0tro1p1rrnr7uqzrwmocfangqdevju0tapgkecvwujpp2r257tj.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x853/21670423472spyrovyphkiituupvhmjzsstozb0yz1areodcbeztit9bqtidfvem5ywo5ypgber25afvbxqfbtu1twp07ixyjhq5zf6wzmnindw.jpg"],
+      "isFavourite": false
+    },
+    {
+      "id": 30,
+      "name": "Полина",
+      "email": "polina.soloveva@example.com",
+      "city": "Тюмень",
+      "birthDate": "14-01-1999",
+      "age": 25,
+      "gender": "женский",
+      "teach_skills": {
+        "title": "Дом и уют",
+        "skills": "Домашние финансы"
+      },
+      "learn_skills": ["Актёрское мастерство", "Предпринимательство", "Английский"],
+      "avatar": "",
+      "about": "Финансовый консультант для семьи. Помогаю оптимизировать бюджет и копить на мечты",
+      "photosOnAbout": [
+        "https://www.rupixel.ru/files/preview/1280x862/21665130220wtxig0paill5rmjgol08ub7czctjablh5hb8wwpstclmay1dnu3xtk8pzu6qkyppkcpikcmacefyi1s4s6o7xvnxneqfju2q66zx.jpg",
+        "https://www.rupixel.ru/files/preview/1280x853/14471763017317za5qek33bm3lisftwt0cmakstnpgayyk1fzyeffj1xnmm5cdzn8v2fnmfh2nfegsxgxhe6bbpizxrxulwaog9bknbigswwaz2hag.jpg", 
+        "https://www.rupixel.ru/files/preview/1280x854/21725421485wj2chqxf6nqfnk9e8bcmqrvnoshc5mayovjehlvvzy9c5qtgtmszpw4yuyldiqryx39840zej226q9qjp84xo3d6n4spfgeonfpu.jpg"
+      ],
+      "isFavourite": true
+    }
+  ]
+}
