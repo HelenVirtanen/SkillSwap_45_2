@@ -3,8 +3,8 @@
   align-items: center;
   gap: 8px;
   padding: 0;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
+  font-size: var(--fs-body, 16px);
+  font-family: var(--ff-body, 'Roboto');
   line-height: 24px;
   letter-spacing: 0.02em;
   cursor: pointer;
@@ -31,15 +31,15 @@
   box-sizing: border-box;
   width: 20px;
   height: 20px;
-  border: 1px solid #000000; /* тут цвет обводки если не выбрана кнопка ( !!!Нужно поменять когда будут глобальные переменные) */
+  border: var(--border-width, 1px ) solid var(--clr-ui-border, #000000); /* тут цвет обводки если не выбрана кнопка */
   border-radius: 50%;
   transition: border-color 0.2s ease;
   content: '';
 }
 
-.radioInput:checked + .radioLabel::before { /* тут меняется если кнока выбрана(!!! тут так же не забыть поменять на глобальные переменные)*/
+.radioInput:checked + .radioLabel::before { /* тут меняется если кнока выбрана*/
   padding: 4px;
-  background: #508826;
+  background: var(--clr-primary-pressed, #508826);
   background-clip: content-box;
-  border-color: #508826;
+  border-color: var(--clr-primary-pressed, #508826);
 }
