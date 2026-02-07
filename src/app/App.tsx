@@ -8,66 +8,22 @@ import ServerErrorPage from '../pages/ServerErrorPage/ServerErrorPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
+import AuthLayout from './layout/AuthLayout/AuthLayout';
 
 function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <MainLayout>
-            <MainPage />
-          </MainLayout>
-        }
-      />
-
-      <Route
-        path="/skill"
-        element={
-          <MainLayout>
-            <SkillPage />
-          </MainLayout>       
-        }
-      />
-
-      <Route
-        path="/not-found"
-        element={
-          <MainLayout>
-            <NotFoundPage />
-          </MainLayout>       
-        }
-      />
-
-      <Route
-        path="/server-error"
-        element={
-          <MainLayout>
-            <ServerErrorPage />
-          </MainLayout>       
-        }
-      />
-
-      <Route
-        path="/register"
-        element={
-          <RegisterPage />      
-        }
-      />
-
-      <Route
-        path="/login"
-        element={
-          <LoginPage />      
-        }
-      />
-
-      <Route
-        path="/profile"
-        element={
-          <ProfilePage />      
-        }
-      />
+      <Route path='/' element={<MainLayout />}>
+        <Route index element={<MainPage />} />
+        <Route path='skill/:id' element={<SkillPage />} />
+        <Route path='server-error' element={<ServerErrorPage />} />
+        <Route path='profile' element={<ProfilePage />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Route>
+      <Route path='/' element={<AuthLayout/>}>
+        <Route path='login' element={<LoginPage />} />
+        <Route path='register' element={<RegisterPage />} />
+      </Route>
     </Routes>
   );
 }

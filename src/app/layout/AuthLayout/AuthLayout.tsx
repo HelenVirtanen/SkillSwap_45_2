@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import styles from './MainLayout.module.css';
+import styles from './AuthLayout.module.css';
 import Header from '../Header/Header';
 
-const MainLayout = () => {
+const AuthLayout = () => {
   return (
     <div className={styles.wrapper}>
       <Header />
@@ -11,4 +11,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default AuthLayout;
