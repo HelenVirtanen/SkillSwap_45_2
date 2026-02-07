@@ -1,4 +1,5 @@
 .searchInputContainer {
+<<<<<<< HEAD
   position: relative;
   min-width: 527px;
   min-height: 48px;
@@ -9,11 +10,20 @@
   gap: 8px;
   border-radius: 12px;
   background-color: #fff;
+=======
+  width: 527px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 10px;  
+>>>>>>> d60a549757bdb729e3e240dcf0062c15c293963a
 }
 
 .searchIcon {
   width: 24px;
   height: 24px;
+<<<<<<< HEAD
   background-image: url('../../../assets/icons/search.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -49,3 +59,26 @@
   border: none;
   cursor: pointer;
 }
+=======
+  margin-inline-start: 11px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 16px;
+  padding-inline-start: 8px;
+}
+
+.searchInput::placeholder {
+  color: #69735d;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.65px;
+  vertical-align: middle;
+}
+>>>>>>> d60a549757bdb729e3e240dcf0062c15c293963a
