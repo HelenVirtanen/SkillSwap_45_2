@@ -19,9 +19,13 @@ const FavoriteButtonUI: React.FunctionComponent<FavoriteButtonUIProps> = ({
       onClick={onClick}
       aria-label={isActive ? 'Удалить из избранного' : 'В избранное'}
     >
-      isActive
-        ? (<LikeSelectedIcon className={styles.icon} />)
-        : (<LikeIcon className={styles.icon} />)
+      {isActive ? (
+        <LikeSelectedIcon className={styles.icon} />
+      ) : (
+        <LikeIcon className={styles.icon} />
+      )}
     </button>
   );
 };
+
+export default FavoriteButtonUI;
