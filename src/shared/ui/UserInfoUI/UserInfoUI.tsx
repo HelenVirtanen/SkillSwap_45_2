@@ -1,6 +1,7 @@
-import { type FC } from 'react';
+import { type FC, type MouseEventHandler} from 'react';
 import styles from './UserInfoUI.module.css';
 import { calculateAge, getAgeWithLabel} from '../../utils/calculateAge';
+import FavoriteButtonUI from '../FavoriteButtonUI/FavoriteButtonUI';
 
 // Типизация пропсов
 interface UserInfoProps {
@@ -9,6 +10,7 @@ interface UserInfoProps {
   birthDate: string; // Дата рождения в формате "ГГГГ-ММ-ДД"
   city: string; // Город
   isFavorite?: boolean; // Для будущей интеграции с сердечком
+  onFavoriteToggle: MouseEventHandler<HTMLButtonElement>;
 }
 
 const UserInfoUI: FC<UserInfoProps> = ({
@@ -17,6 +19,7 @@ const UserInfoUI: FC<UserInfoProps> = ({
   birthDate,
   city,
   isFavorite = false,
+  onFavoriteToggle
 }) => {
   // Рассчитываем возраст
   const age = calculateAge(birthDate); 
@@ -42,11 +45,13 @@ const UserInfoUI: FC<UserInfoProps> = ({
             <span className={styles.age}>{ageLabel}</span>
           </div>
         </div>
-
-        {/* место для компонента FavoriteButton*/}
-        {/* <div className={styles.favoriteButton}>
-          <FavoriteButton isFavorite={isFavorite} />
-        </div> */}
+        {/* тут сердечко ))) */}
+         <div className={styles.favoriteButton}>
+          <FavoriteButtonUI 
+          isActive={isFavorite} 
+          onClick={onFavoriteToggle}
+        />
+        </div> 
       </div>
     </div>
   );
