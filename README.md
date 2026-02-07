@@ -74,11 +74,8 @@ git push -u origin feature/add-footer
 ``` 
    npm i
 ```
-4. Если возникла ошибка, переустановите зависимости:
-```
-   npm install --legacy-peer-deps
 ``` 
-5. Запустите приложение:
+4. Запустите приложение:
 ```
 npm run dev
 ```
