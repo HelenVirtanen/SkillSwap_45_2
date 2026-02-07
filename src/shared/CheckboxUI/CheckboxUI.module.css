@@ -1,0 +1,73 @@
+:root {
+  --checkbox-default: url('../../assets/icons/checkbox-Default.svg');
+  --checkbox-done: url('../../assets/icons/checkbox-Done-Active.svg');
+  --checkbox-remove: url('../../assets/icons/checkbox-Remove-Active.svg');
+}
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: opacity 0.2s ease;
+}
+
+/* скрытый, но настоящий checkbox */
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* квадрат с иконкой */
+.icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* hover */
+.root:hover .icon {
+  transform: scale(1.05);
+}
+
+/* состояния */
+.default .icon {
+  background-image: var(--checkbox-default);
+}
+
+.done .icon {
+  background-image: var(--checkbox-done);
+}
+
+.remove .icon {
+  background-image: var(--checkbox-remove);
+}
+
+.label {
+  font-size: 14px;
+  line-height: 1.2;
+  color: #1a1a1a;
+  transition: color 0.2s ease;
+}
+
+/* disabled */
+.root:has(.input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.root:has(.input:disabled) .icon {
+  transform: none;
+}
