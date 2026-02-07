@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 36px 36px 20px;
+  background: #f9faf7;
+  inline-size: 100%;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-width: 222px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
