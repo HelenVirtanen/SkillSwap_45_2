@@ -72,5 +72,5 @@
 }
 
 .favoriteButton {
-  margin-left: auto;
+  align-self: flex-start;
 }
