@@ -1,8 +1,20 @@
+import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import MainLayout from './layout/MainLayout/MainLayout';
+import MainPage from '../pages/MainPage/MainPage';
+
 function App() {
   return (
-    <div>
-      <h1>SkillSwap</h1>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <MainLayout>
+            <MainPage />
+          </MainLayout>
+        }
+      />
+    </Routes>
   );
 }
 
