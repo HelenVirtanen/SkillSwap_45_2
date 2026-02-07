@@ -1,97 +1,63 @@
-import type { FC } from 'react'
-import styles from './CheckboxUI.module.css'
+import type { FC } from 'react';
+import styles from './CheckboxUI.module.css';
 
-export type CheckboxState = 'default' | 'done' | 'remove'
+import CheckboxDefaultIcon from '../../assets/icons/checkbox-Default.svg?react';
+import CheckboxDoneIcon from '../../assets/icons/checkbox-Done-Active.svg?react';
+import CheckboxRemoveIcon from '../../assets/icons/checkbox-Remove-Active.svg?react';
+
+export type CheckboxState = 'default' | 'done' | 'remove';
 
 export interface CheckboxUIProps {
-  label: string
-  state: CheckboxState
-  onChange: (state: CheckboxState) => void
-  disabled?: boolean
-  name?: string
-  className?: string
+  label: string;
+  state: CheckboxState;
+  onChange: (state: CheckboxState) => void;
+  disabled?: boolean;
+  name?: string;
+  className?: string;
 }
+
+const getAriaChecked = (state: CheckboxState): 'true' | 'false' | 'mixed' => {
+  switch (state) {
+    case 'done':
+      return 'true';
+    case 'remove':
+      return 'mixed';
+    default:
+      return 'false';
+  }
+};
 
 export const CheckboxUI: FC<CheckboxUIProps> = ({
   label,
   state,
   onChange,
-  disabled,
+  disabled = false,
   name,
   className,
 }) => {
-  const rootClassName = [
-    styles.root,
-    styles[state],
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ')
-
   return (
-    <label className={rootClassName}>
+    <label
+      className={[styles.root, styles[state], className]
+        .filter(Boolean)
+        .join(' ')}
+    >
       <input
         type="checkbox"
         className={styles.input}
         name={name}
         disabled={disabled}
         checked={state !== 'default'}
-        aria-checked={
-          state === 'remove' ? 'mixed' : state === 'done'
-        }
+        aria-checked={getAriaChecked(state)}
         onChange={() => onChange(state)}
       />
 
-      <span className={styles.icon} />
+      <span className={styles.icon}>
+        {state === 'default' && <img src={CheckboxDefaultIcon} alt="" />}
+        {state === 'done' && <img src={CheckboxDoneIcon} alt="" />}
+        {state === 'remove' && <img src={CheckboxRemoveIcon} alt="" />}
+      </span>
 
       <span className={styles.label}>{label}</span>
     </label>
-  )
-}
-
-
-//ЧТОБ ПРВЕРИТЬ РАБОТУ КОМПОНЕНТА ЗАМЕНИ СОДЕРЖИМОЕ ФАЙЛА MainPage.tsx на следующий код
-// import { useState } from 'react'
-// import { CheckboxUI, type CheckboxState } from '../../shared/CheckboxUI/CheckboxUI'
-
-// const MainPage: React.FC = () => {
-//   const [categoryState, setCategoryState] =
-//     useState<CheckboxState>('default')
-
-//   const [subState, setSubState] =
-//     useState<CheckboxState>('default')
-
-//   const nextCategoryState = (state: CheckboxState): CheckboxState =>
-//     state === 'default' ? 'remove' : 'default'
-
-//   const nextSubState = (state: CheckboxState): CheckboxState =>
-//     state === 'default' ? 'done' : 'default'
-
-//   return (
-//     <div style={{ padding: 24 }}>
-//       <h1>Главная страница</h1>
-
-//       <div style={{ marginTop: 24 }}>
-//         <CheckboxUI
-//           label="Категория"
-//           state={categoryState}
-//           onChange={(current) =>
-//             setCategoryState(nextCategoryState(current))
-//           }
-//         />
-//       </div>
-
-//       <div style={{ marginTop: 16 }}>
-//         <CheckboxUI
-//           label="Подкатегория"
-//           state={subState}
-//           onChange={(current) =>
-//             setSubState(nextSubState(current))
-//           }
-//         />
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default MainPage
+  );
+};
