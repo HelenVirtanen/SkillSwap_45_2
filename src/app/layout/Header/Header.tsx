@@ -6,6 +6,7 @@ import ThemeToggle from '../../../widgets/ThemeToggle/ThemeToggle';
 import SearchInputUI from '../../../shared/ui/SearchInputUI/SearchInputUI';
 import ButtonUI from '../../../shared/ui/ButtonUI';
 import SkillsDropdownUI from '../../../shared/ui/SkillsDropdownUI/SkillsDropdownUI';
+import ButtonUI from '../../../shared/ui/ButtonUI/ButtonUI';
 
 const Header: React.FC = () => {
   return (
