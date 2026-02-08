@@ -4,7 +4,7 @@ import Logo from '../../../features/Logo/Logo';
 import Link from '../../../features/navigation/Link/Link';
 import ThemeToggle from '../../../widgets/ThemeToggle/ThemeToggle';
 import SearchInputUI from '../../../shared/ui/SearchInputUI/SearchInputUI';
-import ButtonUI from '../../../shared/ui/ButtonUI';
+import ButtonUI from '../../../shared/ui/ButtonUI/ButtonUI';
 
 const Header: React.FC = () => {
   return (
