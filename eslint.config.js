@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import js from '@eslint/js';
 import globals from 'globals';
 import react from 'eslint-plugin-react';
@@ -7,29 +10,26 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      react.configs.flat.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-      prettier,
-    ],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
-    rules: {
-      'react/react-in-jsx-scope': 'off',
+export default defineConfig([globalIgnores(['dist']), {
+  files: ['**/*.{ts,tsx}'],
+  extends: [
+    js.configs.recommended,
+    tseslint.configs.recommended,
+    react.configs.flat.recommended,
+    reactHooks.configs.flat.recommended,
+    reactRefresh.configs.vite,
+    prettier,
+  ],
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: globals.browser,
+  },
+  settings: {
+    react: {
+      version: 'detect',
     },
   },
-]);
+  rules: {
+    'react/react-in-jsx-scope': 'off',
+  },
+}, ...storybook.configs["flat/recommended"]]);
