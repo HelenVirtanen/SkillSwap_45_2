@@ -2,7 +2,6 @@
 
 .container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 24px;
   width: 100%;
@@ -28,4 +27,13 @@
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.userName {
+  color: var(--clr-text-primary, #253017);
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-body, 16px);
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
 }
