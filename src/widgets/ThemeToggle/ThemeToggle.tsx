@@ -4,12 +4,12 @@ import MoonIcon from '../../assets/icons/moon.svg?react';
 import SunIcon from '../../assets/icons/sun.svg?react';
 
 interface ThemeToggleProps {
-  isDark: boolean;
+  isLight: boolean;
   onToggle?: () => void;
 }
 
 const ThemeToggle: React.FC<ThemeToggleProps> = ({
-  isDark,
+  isLight,
   onToggle,
 }) => {
   return (
@@ -19,7 +19,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
       aria-label="Сменить тему"
       onClick={onToggle}
     >
-      {isDark ? (
+      {isLight ? (
         <MoonIcon className={styles.themeToggleIcon} />
       ) : (
         <SunIcon className={styles.themeToggleIcon} />
