@@ -1,10 +1,11 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family:
+    var(--ff-body), 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1;
   font-weight: 400;
   color-scheme: light dark;
-  color: #253017;
-  background-color: #f9faf7;
+  color: var(--clr-text-primary);
+  background-color: var(--clr-ui-background);
   font-synthesis: none;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,18 +19,17 @@ body {
 
 a {
   font-weight: 500;
-  color: #abd27a;
+  color: var(--clr-primary);
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #abd27a;
+  color: var(--clr-primary);
 }
-
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #253017;
-    background-color: #f9faf7;
+    color: var(--clr-text-primary);
+    background-color: var(--clr-ui-background);
   }
 }
