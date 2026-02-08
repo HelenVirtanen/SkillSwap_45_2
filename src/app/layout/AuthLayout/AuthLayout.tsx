@@ -1,16 +1,14 @@
 import { Outlet } from 'react-router-dom';
-import styles from './MainLayout.module.css';
+import styles from './AuthLayout.module.css';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
-const MainLayout = () => {
+const AuthLayout = () => {
   return (
     <div className={styles.wrapper}>
       <Header />
       <main className={styles.main}><Outlet/></main>
-      <Footer />
     </div>
   );
 };
 
-export default MainLayout;
+export default AuthLayout;
