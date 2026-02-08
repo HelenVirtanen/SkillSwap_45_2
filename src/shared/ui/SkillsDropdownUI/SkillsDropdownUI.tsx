@@ -1,57 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { Dispatch, SetStateAction, RefObject } from 'react';
 import styles from './SkillsDropdownUI.module.css';
 
-interface SkillCategory {
+export interface SkillCategory {
   title: string;
   icon: string;
   skills: string[];
 }
 
-const SkillsDropdownUI: React.FC = () => {
-  const [skills, setSkills] = useState<SkillCategory[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+interface Props {
+  skills: SkillCategory[];
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  dropdownRef: RefObject<HTMLDivElement | null>;
+}
 
-  useEffect(() => {
-    const fetchSkills = async () => {
-      const response = await fetch('/db/skills.json');
-      if (!response.ok) {
-        throw new Error('Failed to fetch skills');
-      }
-      const data = await response.json();
-      setSkills(data);
-    };
-
-    fetchSkills();
-  }, []);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
+const SkillsDropdownUI: React.FC<Props> = ({ skills, isOpen, setIsOpen, dropdownRef }) => {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <button
-        className={styles.dropdownButton}
+        className={`${styles.dropdownButton} ${isOpen ? styles.dropdownButtonOpen : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
         Все навыки
       </button>
+
       {isOpen && (
         <div className={styles.dropdownContent}>
-          {skills.map((category) => (
+          {skills.map(category => (
             <div key={category.title} className={styles.category}>
               <img
                 src={`src/assets/icons/${category.icon}`}

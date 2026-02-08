@@ -4,7 +4,7 @@ import Logo from '../../../features/Logo/Logo';
 import Link from '../../../features/navigation/Link/Link';
 import ThemeToggle from '../../../widgets/ThemeToggle/ThemeToggle';
 import SearchInputUI from '../../../shared/ui/SearchInputUI/SearchInputUI';
-import SkillsDropdownUI from '../../../shared/ui/SkillsDropdownUI/SkillsDropdownUI';
+import SkillsDropdown from '../../../widgets/SkillDropDown/SkillDropdown';
 import ButtonUI from '../../../shared/ui/ButtonUI/ButtonUI';
 
 const Header: React.FC = () => {
@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       <nav className={styles.nav}>
         <Link to="/" title="О проекте" />
       </nav>
-      <SkillsDropdownUI />
+      <SkillsDropdown />
       <SearchInputUI />
       <ThemeToggle isLight />
       <div className={styles.buttons}>
