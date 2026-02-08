@@ -2,6 +2,7 @@ import React, { type MouseEventHandler } from 'react';
 import styles from './HeaderUserMenuUI.module.css';
 import NotificationBell from '../../../widgets/NotificationBell/NotificationBell';
 import FavoriteButtonUI from '../FavoriteButtonUI/FavoriteButtonUI';
+import ThemeToggle from '../../../widgets/ThemeToggle/ThemeToggle';
 
 interface HeaderUserMenuUIProps {
   hasNewNotifications: boolean;
@@ -23,6 +24,7 @@ const HeaderUserMenuUI: React.FunctionComponent<HeaderUserMenuUIProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.iconsContainer}>
+        <ThemeToggle isLight /> 
         <NotificationBell
           hasNewNotifications={hasNewNotifications}
           onClick={onNotificationBellClick}
