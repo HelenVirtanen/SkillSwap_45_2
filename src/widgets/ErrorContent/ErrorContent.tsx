@@ -6,20 +6,31 @@ interface ErrorContentProps {
   image: React.ReactNode;
   title: string;
   description: string;
+  imageClassName?: string;
+  descriptionClassName?: string;
 }
 
 const ErrorContent: React.FC<ErrorContentProps> = ({
   image,
   title,
   description,
+  imageClassName,
+  descriptionClassName,
 }) => (
   <div className={styles.errorContainer}>
-    <div className={styles.errorImage}>{image}</div>
+    <div className={`${styles.errorImage} ${imageClassName ?? ''}`}>
+      {image}
+    </div>
+
     <h1 className={styles.errorTitle}>{title}</h1>
-    <p className={styles.errorDescription}>{description}</p>
+
+    <p className={`${styles.errorDescription} ${descriptionClassName ?? ''}`}>
+      {description}
+    </p>
+
     <div className={styles.errorActions}>
-      <ButtonUI 
-        onClick={() => alert('Сообщить об ошибке')} 
+      <ButtonUI
+        onClick={() => alert('Сообщить об ошибке')}
         variant="secondary"
         title="Сообщить об ошибке"
       />
