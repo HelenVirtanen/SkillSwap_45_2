@@ -29,6 +29,6 @@
   font-weight: 600;
   font-size: 24px;
   font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: calc(32 / 16);
+  line-height: 32px;
   letter-spacing: -1.1%;
 }

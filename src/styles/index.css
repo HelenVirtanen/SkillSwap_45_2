@@ -1,35 +1,4 @@
-:root {
-  color: #253017;
-  font-weight: 400;
-  font-family: system-ui, "Avenir", "Helvetica", "Arial", sans-serif;
-  line-height: 1;
-  background-color: #f9faf7;
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-a {
-  color: #abd27a;
-  font-weight: 500;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #abd27a;
-}
-
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #253017;
-    background-color: #f9faf7;
-  }
-}
+@import './reset.css';
+@import '../assets/fonts/fonts.css';
+@import './variables.css';
+@import './base.css';

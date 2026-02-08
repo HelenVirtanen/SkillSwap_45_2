@@ -1,0 +1,76 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  user-select: none;
+}
+
+/* скрытый checkbox */
+
+.input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  transition:
+    transform 0.15s ease,
+    0.15s ease;
+}
+
+/* hover */
+
+.root:hover .icon {
+  transform: scale(1.05);
+}
+
+/* SVG иконки */
+
+.icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.default {
+  color: var(--clr-text-primary);
+}
+
+.done,
+.remove {
+  color: var(--clr-primary);
+}
+
+/* disabled */
+
+.root:has(.input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.root:has(.input:disabled) .icon {
+  transform: none;
+}
+
+.label {
+  font-family: var(--ff-body);
+  color: var(--clr-text-primary);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-style: Regular;
+  letter-spacing: 2%;
+  vertical-align: middle;
+}
