@@ -14,7 +14,7 @@ const Header: React.FC = () => {
         <Link to="/" title="О проекте" />
       </nav>
       <SearchInputUI />
-      <ThemeToggle isDark />
+      <ThemeToggle isLight />
       <div className={styles.buttons}>
         <ButtonUI variant="secondary" title="Войти"></ButtonUI>
         <ButtonUI variant="primary" title="Зарегистрироваться"></ButtonUI>
