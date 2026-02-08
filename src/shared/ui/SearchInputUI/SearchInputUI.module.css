@@ -9,6 +9,7 @@
   padding: 12px;
   background-color: var(--clr-ui-surface, #ffffff);
   border-radius: 12px;
+  background-color: var(--clr-ui-surface, #fff);  
 }
 
 .searchIcon {
@@ -31,6 +32,8 @@
 .searchInput::placeholder {
   color: var(--clr-text-secondary, #69735d);
   font-weight: var(--fw-regular, 400);
+  line-height: 24px;
+  letter-spacing: 0.02em;
   font-family: var(--ff-body, 'Roboto', sans-serif);
   line-height: 1.5;
   letter-spacing: 0.04em;
