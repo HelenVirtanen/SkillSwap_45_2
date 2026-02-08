@@ -32,7 +32,7 @@
   color: var(--clr-text-secondary, #69735d);
   font-weight: var(--fw-regular, 400);
   font-family: var(--ff-body, 'Roboto', sans-serif);
-  line-height: 24px;
+  line-height: 1.5;
   letter-spacing: 0.04em;
 }
 
