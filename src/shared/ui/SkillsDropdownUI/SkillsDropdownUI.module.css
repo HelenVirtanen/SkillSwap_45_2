@@ -32,13 +32,13 @@
   background-color: var(--clr-ui-surface, #ffffff);
   z-index: 1;
   padding: 60px;
-  column-gap: 40px;
+  gap: 40px;
   left: -300px;
   min-width: 1136px;
   max-height: 1100px;
 }
 
-.category h3 {
+.categoryTitle {
   font-family: var(
     --ff-heading,
     'Jost',
@@ -53,7 +53,6 @@
   font-style: bold;
   font-size: var(--lh-body, 24px);
   letter-spacing: -0.02em;
-  margin-block-end: 20px;
 }
 
 .category {
@@ -62,15 +61,15 @@
   grid-template-rows: min-content;
   column-gap: 11px;
   min-width: 488px;
-  margin-block-end: 45px;
 }
 
-.category ul {
+.skillList {
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  gap: 20px;
+  gap: 12px;
   grid-column: 2;
+  line-height: 1.5;
 }
 
 .skillItem {
