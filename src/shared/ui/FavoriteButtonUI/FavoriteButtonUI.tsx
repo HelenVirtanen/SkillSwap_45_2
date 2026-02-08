@@ -4,12 +4,12 @@ import LikeIcon from '../../../assets/icons/like.svg?react';
 import LikeSelectedIcon from '../../../assets/icons/like-selected.svg?react';
 
 interface FavoriteButtonUIProps {
-  isActive: boolean;
+  isActive?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const FavoriteButtonUI: React.FunctionComponent<FavoriteButtonUIProps> = ({
-  isActive,
+  isActive = false,
   onClick,
 }) => {
   return (

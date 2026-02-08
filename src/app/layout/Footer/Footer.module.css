@@ -3,6 +3,7 @@
   flex-flow: wrap;
   flex-direction: column;
   padding: 32px 36px;
+  background-color: var(--clr-ui-surface, #ffffff);
 }
 
 .nav {
