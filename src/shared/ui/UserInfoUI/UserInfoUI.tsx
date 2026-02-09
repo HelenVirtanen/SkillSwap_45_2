@@ -1,6 +1,6 @@
-import { type FC, type MouseEventHandler} from 'react';
+import { type FC, type MouseEventHandler } from 'react';
 import styles from './UserInfoUI.module.css';
-import { calculateAge, getAgeWithLabel} from '../../utils/calculateAge';
+import { calculateAge, getAgeWithLabel } from '../../utils/calculateAge';
 import FavoriteButtonUI from '../FavoriteButtonUI/FavoriteButtonUI';
 
 // Типизация пропсов
@@ -19,23 +19,17 @@ const UserInfoUI: FC<UserInfoProps> = ({
   birthDate,
   city,
   isFavorite = false,
-  onFavoriteToggle
+  onFavoriteToggle,
 }) => {
   // Рассчитываем возраст
-  const age = calculateAge(birthDate); 
+  const age = calculateAge(birthDate);
   const ageLabel = getAgeWithLabel(age);
 
   return (
     <div className={styles.userInfo}>
-      <div className={styles.header}>
-        <div className={styles.avatarContainer}>
-          <img
-            src={avatar}
-            alt={name}
-            className={styles.avatar}
-          />
-        </div>
-
+      <div className={styles.avatarContainer}>
+        <img src={avatar} alt={name} className={styles.avatar} />
+      </div>
         <div className={styles.info}>
           <h4 className={styles.name}>{name}</h4>
           <div className={styles.details}>
@@ -46,13 +40,9 @@ const UserInfoUI: FC<UserInfoProps> = ({
           </div>
         </div>
         {/* тут сердечко ))) */}
-         <div className={styles.favoriteButton}>
-          <FavoriteButtonUI 
-          isActive={isFavorite} 
-          onClick={onFavoriteToggle}
-        />
-        </div> 
-      </div>
+
+        <FavoriteButtonUI isActive={isFavorite} onClick={onFavoriteToggle} className={styles.favoriteButton} />
+      
     </div>
   );
 };
