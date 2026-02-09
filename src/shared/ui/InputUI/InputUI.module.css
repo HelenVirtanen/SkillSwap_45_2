@@ -1,0 +1,76 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 93px;
+  max-width: 460px;
+  row-gap: 8px;
+  margin-inline-start: 200px;
+  margin-block-start: 200px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.label {
+  font-family: var(
+    --ff-body,
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-body, 16px);
+  color: var(--clr-text-primary, #253017);
+  letter-spacing: 0.02em;
+}
+
+.input {
+  border: var(--border-width, 1px) solid var(--clr-text-secondary, #69735d);
+  border-radius: var(--border-radius, 12px);
+  min-width: 436px;
+  min-height: 48px;
+  font-family: var(
+    --ff-body,
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-body, 16px);
+  color: var(--clr-text-primary, #253017);
+  letter-spacing: 0.02em;
+  padding-left: 20px;
+}
+
+.eyeButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 38px;
+  top: 55%;
+  transform: translateY(-50%);
+}
+
+.errorText {
+    font-family: var(
+    --ff-body,
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-caption, 12px);
+  color: var(--clr-error, #bf3920);
+  letter-spacing: 0.02em;
+}
