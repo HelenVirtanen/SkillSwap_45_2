@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import styles from './AboutSkill.module.css';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 
-export interface AboutSkillPtops {
+export interface AboutSkillProps {
   title: string;
   category: string;
   subcategory: string;
@@ -11,7 +11,7 @@ export interface AboutSkillPtops {
   onButtonClick: () => void;
 }
 
-export const AboutSkill: FC<AboutSkillPtops> = ({
+export const AboutSkill: FC<AboutSkillProps> = ({
   title,
   category,
   subcategory,
