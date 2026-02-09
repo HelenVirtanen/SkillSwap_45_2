@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AboutSkill } from './AboutSkill';
 
 const meta: Meta<typeof AboutSkill> = {
-  title: 'Widgets/AboutSkill',
+  title: 'Main/Widgets/AboutSkill',
   component: AboutSkill,
   parameters: {
     layout: 'centered',
