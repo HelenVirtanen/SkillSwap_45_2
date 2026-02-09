@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AboutSkill } from './AboutSkill';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 
 const meta: Meta<typeof AboutSkill> = {
   title: 'Main/Widgets/AboutSkill',
@@ -24,9 +25,10 @@ export const Default: Story = {
     subcategory: 'Музыка и звук',
     description:
       'Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене с живыми группами. Научу основам техники (и как не отбить себе пальцы), играть любимые ритмы и разбирать песни, импровизировать и звучать уверенно даже без паритуры',
-    buttonText: 'Предложить обмен',
-    onButtonClick: () => {
-      console.log('click');
-    },
+    actions: <ButtonUI
+      variant="primary"
+      title="Предложить обмен"
+      onClick={() => console.log('click')}
+    />
   },
 };
