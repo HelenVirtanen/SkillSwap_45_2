@@ -12,9 +12,7 @@ const meta = {
   tags: ['autodocs'],
   args: {
     isFavorite: false,
-    onFavoriteClick: fn(),
-    onShareClick: fn(),
-    onMoreClick: fn(),
+    onAction: fn(),
   },
 } satisfies Meta<typeof ActionButtons>;
 
