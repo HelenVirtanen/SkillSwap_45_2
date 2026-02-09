@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ErrorContent.module.css';
-import ButtonUI from '../../shared/ui/ButtonUI/ButtonUI';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 
 interface ErrorContentProps {
   image: React.ReactNode;

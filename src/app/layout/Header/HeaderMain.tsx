@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './HeaderMain.module.css';
-import Logo from '../../../features/Logo/Logo';
-import Link from '../../../features/navigation/Link/Link';
-import ThemeToggle from '../../../widgets/ThemeToggle/ThemeToggle';
-import SearchInputUI from '../../../shared/ui/SearchInputUI/SearchInputUI';
-import SkillsDropdown from '../../../widgets/SkillDropDown/SkillDropdown';
-import ButtonUI from '../../../shared/ui/ButtonUI/ButtonUI';
+import Logo from '@features/Logo/Logo';
+import Link from '@features/navigation/Link/Link';
+import ThemeToggle from '@widgets/ThemeToggle/ThemeToggle';
+import SearchInputUI from '@shared/ui/SearchInputUI/SearchInputUI';
+import SkillsDropdown from '@widgets/SkillDropDown/SkillDropdown';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 
 const HeaderMain: React.FC = () => {
   return (

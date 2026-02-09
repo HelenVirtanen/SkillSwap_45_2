@@ -1,7 +1,7 @@
 import React, { type MouseEventHandler } from 'react';
 import styles from './NotificationBell.module.css';
-import NotificationIcon from '../../assets/icons/notification.svg?react';
-import NotificationNewIcon from '../../assets/icons/notification-new.svg?react';
+import NotificationIcon from '@assets/icons/notification.svg?react';
+import NotificationNewIcon from '@assets/icons/notification-new.svg?react';
 
 interface NotificationBellProps {
 hasNewNotifications: boolean;

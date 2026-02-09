@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import SkillsDropdownUI, { SkillCategory } from '../../shared/ui/SkillsDropdownUI/SkillsDropdownUI';
+import SkillsDropdownUI, { SkillCategory } from '@shared/ui/SkillsDropdownUI/SkillsDropdownUI';
 
 const SkillsDropdown: React.FC = () => {
   const [skills, setSkills] = useState<SkillCategory[]>([]);
