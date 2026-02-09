@@ -1,13 +1,13 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './layout/MainLayout/MainLayout';
-import MainPage from '../pages/MainPage/MainPage';
-import SkillPage from '../pages/SkillPage/SkillPage';
-import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
-import ServerErrorPage from '../pages/ServerErrorPage/ServerErrorPage';
-import RegisterPage from '../pages/RegisterPage/RegisterPage';
-import LoginPage from '../pages/LoginPage/LoginPage';
-import ProfilePage from '../pages/ProfilePage/ProfilePage';
+import MainPage from '@pages/MainPage/MainPage';
+import SkillPage from '@pages/SkillPage/SkillPage';
+import NotFoundPage from '@pages/NotFoundPage/NotFoundPage';
+import ServerErrorPage from '@pages/ServerErrorPage/ServerErrorPage';
+import RegisterPage from '@pages/RegisterPage/RegisterPage';
+import LoginPage from '@pages/LoginPage/LoginPage';
+import ProfilePage from '@pages/ProfilePage/ProfilePage';
 import AuthLayout from './layout/AuthLayout/AuthLayout';
 
 function App() {

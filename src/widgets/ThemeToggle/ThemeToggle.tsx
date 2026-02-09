@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ThemeToggle.module.css';
-import MoonIcon from '../../assets/icons/moon.svg?react';
-import SunIcon from '../../assets/icons/sun.svg?react';
+import MoonIcon from '@assets/icons/moon.svg?react';
+import SunIcon from '@assets/icons/sun.svg?react';
 
 interface ThemeToggleProps {
   isLight: boolean;

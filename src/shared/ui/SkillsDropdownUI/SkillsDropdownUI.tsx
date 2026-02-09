@@ -14,7 +14,12 @@ interface Props {
   dropdownRef: RefObject<HTMLDivElement | null>;
 }
 
-const SkillsDropdownUI: React.FC<Props> = ({ skills, isOpen, setIsOpen, dropdownRef }) => {
+const SkillsDropdownUI: React.FC<Props> = ({
+  skills,
+  isOpen,
+  setIsOpen,
+  dropdownRef,
+}) => {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <button
@@ -24,27 +29,27 @@ const SkillsDropdownUI: React.FC<Props> = ({ skills, isOpen, setIsOpen, dropdown
         Все навыки
       </button>
 
-      {isOpen && (
-        <div className={styles.dropdownContent}>
-          {skills.map(category => (
-            <div key={category.title} className={styles.category}>
-              <img
-                src={`src/assets/icons/${category.icon}`}
-                alt={category.title}
-                className={styles.categoryIcon}
-              />
-              <h3 className={styles.categoryTitle}>{category.title}</h3>
-              <ul className={styles.skillList}>
-                {category.skills.map((skill, index) => (
-                  <li key={index} className={styles.skillItem}>
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      )}
+      <div
+        className={`${styles.dropdownContent} ${isOpen ? styles.open : styles.closed}`}
+      >
+        {skills.map((category) => (
+          <div key={category.title} className={styles.category}>
+            <img
+              src={`src/assets/icons/${category.icon}`}
+              alt={category.title}
+              className={styles.categoryIcon}
+            />
+            <h3 className={styles.categoryTitle}>{category.title}</h3>
+            <ul className={styles.skillList}>
+              {category.skills.map((skill, index) => (
+                <li key={index} className={styles.skillItem}>
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
