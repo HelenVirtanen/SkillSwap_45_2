@@ -13,16 +13,18 @@ import AuthLayout from './layout/AuthLayout/AuthLayout';
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<MainLayout />}>
+      <Route path="/" element={<MainLayout />}>
         <Route index element={<MainPage />} />
-        <Route path='skill/:id' element={<SkillPage />} />
-        <Route path='server-error' element={<ServerErrorPage />} />
-        <Route path='profile' element={<ProfilePage />} />
-        <Route path='*' element={<NotFoundPage />} />
+        <Route path="skill/:id" element={<SkillPage />} />
+        <Route path="server-error" element={<ServerErrorPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
-      <Route path='/' element={<AuthLayout/>}>
-        <Route path='login' element={<LoginPage />} />
-        <Route path='register' element={<RegisterPage />} />
+      <Route path="/login" element={<AuthLayout />}>
+        <Route index element={<LoginPage />} />
+      </Route>
+      <Route path="/register" element={<AuthLayout />}>
+        <Route index element={<RegisterPage />} />
       </Route>
     </Routes>
   );

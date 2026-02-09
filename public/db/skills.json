@@ -1,7 +1,7 @@
 [
   {
     "title": "Бизнес и карьера",
-    "icon": "business.svg",
+    "icon": "business-career.svg",
     "skills": [
       "Управление командой",
       "Маркетинг и реклама",
@@ -15,7 +15,7 @@
   },
   {
     "title": "Иностранные языки",
-    "icon": "languages.svg",
+    "icon": "foreign-languages.svg",
     "skills": [
       "Английский",
       "Французский",
@@ -28,7 +28,7 @@
   },
   {
     "title": "Дом и уют",
-    "icon": "home.svg",
+    "icon": "home-comfort.svg",
     "skills": [
       "Уборка и организация",
       "Домашние финансы",
@@ -40,7 +40,7 @@
   },
   {
     "title": "Творчество и искусство",
-    "icon": "creativity.svg",
+    "icon": "creativity-art.svg",
     "skills": [
       "Рисование и иллюстрация",
       "Фотография",
@@ -52,9 +52,10 @@
       "Декор и DIY"
     ]
   },
+  
   {
     "title": "Образование и развитие",
-    "icon": "education.svg",
+    "icon": "education-development.svg",
     "skills": [
       "Личностное развитие",
       "Навыки обучения",
@@ -64,9 +65,10 @@
       "Коучинг"
     ]
   },
+    
   {
     "title": "Здоровье и лайфстайл",
-    "icon": "health.svg",
+    "icon": "health-lifestyle.svg",
     "skills": [
       "Йога и медитация",
       "Питание и ЗОЖ",

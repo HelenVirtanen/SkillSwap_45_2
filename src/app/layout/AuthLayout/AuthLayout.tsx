@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import styles from './AuthLayout.module.css';
-import Header from '../Header/Header';
+import HeaderMain from '../Header/HeaderMain';
 
 const AuthLayout = () => {
   return (
     <div className={styles.wrapper}>
-      <Header />
+      <HeaderMain />
       <main className={styles.main}><Outlet/></main>
     </div>
   );

@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import Header from './Header.tsx';
+import HeaderMain from './HeaderMain';
 
 
 const meta = {
-  title: 'Main/Header',
-  component: Header,
+  title: 'Main/HeaderMain',
+  component: HeaderMain,
   tags: ['autodocs']
-} satisfies Meta<typeof Header>;
+} satisfies Meta<typeof HeaderMain>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
