@@ -6,16 +6,18 @@ import LikeSelectedIcon from '../../../assets/icons/like-selected.svg?react';
 interface FavoriteButtonUIProps {
   isActive: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
 }
 
 const FavoriteButtonUI: React.FunctionComponent<FavoriteButtonUIProps> = ({
   isActive,
   onClick,
+  className
 }) => {
   return (
     <button
       type="button"
-      className={styles.button}
+      className={`${styles.button} ${className || ''}`}
       onClick={onClick}
       aria-label={isActive ? 'Удалить из избранного' : 'В избранное'}
     >
