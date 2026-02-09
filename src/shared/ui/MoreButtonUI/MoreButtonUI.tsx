@@ -1,13 +1,18 @@
 import React from 'react';
 import styles from './MoreButtonUI.module.css';
-import MoreIcon from '../../../assets/icons/more-square.svg?react';
+import MoreIcon from '@assets/icons/more-square.svg?react';
 
-const MoreButtonUI: React.FunctionComponent = () => {
+interface MoreButtonUIProps {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const MoreButtonUI: React.FC<MoreButtonUIProps> = ({ onClick }) => {
   return (
     <button
       type="button"
       className={styles.button}
       aria-label="Ещё"
+      onClick={onClick}
     >
       <MoreIcon className={styles.icon} />
     </button>
