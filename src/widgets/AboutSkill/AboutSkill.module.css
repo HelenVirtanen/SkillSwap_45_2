@@ -1,0 +1,54 @@
+@import url('../../styles/variables.css');
+
+.root {
+  width: 399px;
+  height: 324px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Заголовок + категория */
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin-bottom: 2px;
+  font-family: var(--ff-heading);
+  font-weight: var(--fw-medium);
+  line-height: 40px;
+  vertical-align: middle;
+  color: var(--clr-text-primary);
+  letter-spacing: -0.35px;
+}
+
+.category {
+  color: var(--clr-text-secondary);
+  font-family: var(--ff-body);
+  font-weight: var(--fw-regular);
+  font-style: Regular;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  letter-spacing:  0.32px;
+  vertical-align: middle;
+}
+
+/* Описание */
+.description {
+  flex-grow: 1;
+  font-family: var(--ff-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: 0.32px;
+  color: var(--clr-text-primary);
+  white-space: pre-line;
+}
+
+/* Кнопка */
+.button {
+  margin-top: 28px;
+  width: 399px;
+  height: 48px;
+  border-radius: 12px;
+}
