@@ -1,22 +1,56 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  inline-size: 100%;
+  background: var(--bg-secondary);
+}
+
 .header {
   display: flex;
   align-items: center;
   gap: 32px;
   inline-size: 100%;
   padding: 36px 36px 20px;
-  background: #f9faf7;
+  background: var(--bg-secondary);
+}
+
+/* Вариант для страниц авторизации */
+.authHeader {
+  justify-content: space-between;
+  gap: 0;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
 .nav {
   display: flex;
-  align-items: center;  
-  white-space: nowrap;  
-  letter-spacing: 0.03rem;
+  align-items: center;
+  gap: 35px;
+  min-width: 222px;
+}
+.center {
+  flex: 1;
+  max-width: 527px;
+  min-width: 300px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
 .buttons {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+  margin-left: 55px;
 }
 
+.closeButton {
+  min-width: 100px;
+}
