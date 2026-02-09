@@ -8,6 +8,7 @@ import ServerErrorPage from '@pages/ServerErrorPage/ServerErrorPage';
 import RegisterPage from '@pages/RegisterPage/RegisterPage';
 import LoginPage from '@pages/LoginPage/LoginPage';
 import ProfilePage from '@pages/ProfilePage/ProfilePage';
+import FavoritesPage from '@pages/FavoritesPage/FavoritesPage';
 import AuthLayout from './layout/AuthLayout/AuthLayout';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="skill/:id" element={<SkillPage />} />
         <Route path="server-error" element={<ServerErrorPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="favorites" element={<FavoritesPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
       <Route path="/login" element={<AuthLayout />}>
