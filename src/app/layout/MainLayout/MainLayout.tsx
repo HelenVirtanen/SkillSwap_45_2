@@ -1,17 +1,14 @@
-import { type ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
 import styles from './MainLayout.module.css';
-import Header from '../Header/Header';
-import UserInfoUI from '../../../shared/ui/UserInfoUI/UserInfoUI';
+import HeaderMain from '../Header/HeaderMain';
+import Footer from '../Footer/Footer';
 
-interface MainLayoutProps {
-  children: ReactNode;
-}
-
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = () => {
   return (
     <div className={styles.wrapper}>
-      <Header />
-      <main className={styles.main}>{children}</main>
+      <HeaderMain />
+      <main className={styles.main}><Outlet/></main>
+      <Footer />
     </div>
   );
 };
