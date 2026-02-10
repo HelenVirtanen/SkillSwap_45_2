@@ -8,13 +8,12 @@ import SkillsDropdown from '../../../widgets/SkillDropDown/SkillDropdown';
 import ButtonUI from '../../../shared/ui/ButtonUI/ButtonUI';
 import HeaderUserMenuUI from '../../../shared/ui/HeaderUserMenuUI/HeaderUserMenuUI';
 
-
 const useAuth = () => {
   // Это временная заглушка
   return { isAuthenticated: false, userData: null };
 };
 
-export type HeaderVariant = 'default' | 'auth';
+export type HeaderVariant = 'guest' | 'auth';
 export type UserMenuAction = 'user' | 'favorite' | 'notifications';
 
 interface HeaderProps {
@@ -28,7 +27,7 @@ interface HeaderProps {
 const HeaderMain: React.FC<HeaderProps> = ({
   onSearchChange,
   onClose,
-  variant = 'default',
+  variant = 'guest',
   className = '',
 }) => {
   const navigate = useNavigate();
@@ -114,7 +113,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
     );
   }
 
-  // Основной вариант (по умолчанию)
+  // Основной вариант (для гостей)
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <header 
@@ -146,6 +145,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
         {/* Правая часть: авторизация */}
         <div className={styles.right}>
           {isAuthenticated ? (
+            // Авторизованный пользователь - полное меню с колокольчиком внутри
             <HeaderUserMenuUI
               hasNewNotifications={true}
               userName="Иван Иванов"
@@ -153,6 +153,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
               onAction={handleUserMenuAction}
             />
           ) : (
+            // Гость - только кнопки входа и регистрации
             <div className={styles.buttons}>
               <ButtonUI
                 variant="secondary"
