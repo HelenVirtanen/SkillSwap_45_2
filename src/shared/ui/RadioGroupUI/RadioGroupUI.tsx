@@ -28,17 +28,19 @@ const RadioGroupUI: React.FC<RadioGroupUIProps> = ({
     <div className={`${styles.radioGroup} ${className}`}>
       {label && <h3 className={styles.radioGroupLabel}>{label}</h3>}
 
-      {options.map((option) => (
-        <RadioUI
-          key={option.value}
-          name={name}
-          value={option.value}
-          checked={value === option.value}
-          onChange={onChange}
-        >
-          {option.label}
-        </RadioUI>
-      ))}
+      <div className={styles.radioGroupOptions}>
+        {options.map((option) => (
+          <RadioUI
+            key={option.value}
+            name={name}
+            value={option.value}
+            checked={value === option.value}
+            onChange={onChange}
+          >
+            {option.label}
+          </RadioUI>
+        ))}
+      </div>
     </div>
   );
 };
