@@ -32,7 +32,8 @@ const Stepper: FC<StepperProps> = ({ currentStep = 1, totalSteps = 3 }) => {
             className={`${styles.step} ${
               stepNumber <= safeCurrentStep ? styles.active : styles.inactive
             }`}
-            aria-hidden
+            key={stepNumber}  
+            aria-hidden={true}
           />
         ))}
       </div>
