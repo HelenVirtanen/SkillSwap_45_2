@@ -6,13 +6,13 @@
   width: 100%;
   justify-content: left;
   /* border:1px solid var(--clr-ui-disabled,#e4e8df);  */
-  border:1px solid var(--clr-text-secondary,#69735D);
+  border: 1px solid var(--clr-text-secondary, #69735d);
   border-radius: 12px;
-  font-family: "Roboto";
+  font-family: 'Roboto';
 }
 
 .dropDownListOpen .buttonWithIcon {
-  border:1px solid var(--clr-ui-disabled,#e4e8df);
+  border: 1px solid var(--clr-ui-disabled, #e4e8df);
 }
 
 .arrow {
@@ -25,45 +25,44 @@
 }
 
 .textInButtonWithIcon {
-  flex-grow:1;
+  flex-grow: 1;
   text-align: left;
 }
 
 .dropDownList {
-  width:100%;
-  padding-top:8px;
-  padding-bottom:8px;
-  display:flex;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  display: flex;
   flex-direction: column;
-  gap:4px;
-
+  gap: 4px;
+  line-height: 1.5;
 }
 
 .wrapperDrownList {
   border: 1px solid transparent;
-  font-family: "Roboto",sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .dropDownListOpen {
-  border: 1px solid var(--clr-text-secondary,#69735D) ;
+  border: 1px solid var(--clr-text-secondary, #69735d);
   border-radius: 14px;
 }
 
 .dropDownItem {
- padding: 4px 20px;
-  
+  padding: 4px 20px;
 }
 
 .dropDownItemSelected {
-  color:var(--clr-primary-pressed,#508826)
+  color: var(--clr-primary-pressed, #508826);
 }
 
 .dropDownItem:hover {
-  background-color: var( --clr-ui-disabled,#E4E8DF);
+  background-color: var(--clr-ui-disabled, #e4e8df);
 }
 
 .placeholder {
-  color:var(--clr-text-secondary,#69735D)
+  color: var(--clr-text-secondary, #69735d);
 }
 
 .text {
