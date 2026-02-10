@@ -6,8 +6,11 @@ import ProfileImage from '@assets/illustrations/user-info.svg?react';
 import SkillImage from '@assets/illustrations/school-board.svg?react';
 
 const meta: Meta<typeof IllustrationPanel> = {
-  title: 'Widgets/IllustrationPanel',
+  title: 'Main/Widgets/IllustrationPanel',
   component: IllustrationPanel,
+  parameters: {
+    layout: 'centered',
+  },
 };
 
 export default meta;
@@ -18,8 +21,7 @@ export const Login: Story = {
   args: {
     image: <LoginImage />,
     title: 'С возвращением в SkillSwap!',
-    description:
-      'Обменивайтесь знаниями и навыками с другими людьми',
+    description: 'Обменивайтесь знаниями и навыками с другими людьми',
   },
 };
 
@@ -28,7 +30,7 @@ export const Profile: Story = {
     image: <ProfileImage />,
     title: 'Расскажите немного о себе',
     description:
-      'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена',
+      'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена',
   },
 };
 
