@@ -10,6 +10,7 @@
   align-items: center;
   gap: 32px;
   inline-size: 100%;
+  max-width: 1440px;
   padding: 36px 36px 20px;
   background: var(--bg-secondary);
 }
@@ -26,12 +27,17 @@
   gap: 32px;
 }
 
+.logoContainer {
+  cursor: pointer;
+}
+
 .nav {
   display: flex;
   align-items: center;
   gap: 35px;
   min-width: 222px;
 }
+
 .center {
   flex: 1;
   max-width: 527px;
@@ -41,14 +47,24 @@
 .right {
   display: flex;
   align-items: center;
-  gap: 32px;
 }
 
-.buttons {
+/* структура для правой части */
+.rightContent {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-left: 55px;
+  gap: 30px; /* Общий отступ между всеми элементами правой части */
+}
+
+.themeSection {
+  display: flex;
+  align-items: center;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Отступ между кнопками Войти и Зарегистрироваться */
 }
 
 .closeButton {

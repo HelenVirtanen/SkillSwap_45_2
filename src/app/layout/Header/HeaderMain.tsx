@@ -1,21 +1,13 @@
 import React from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import styles from './HeaderMain.module.css';
-<<<<<<< header-23
-import Logo from '../../../features/Logo/Logo';
-import Link from '../../../features/navigation/Link/Link';
-import SearchInputUI from '../../../shared/ui/SearchInputUI/SearchInputUI';
-import SkillsDropdown from '../../../widgets/SkillDropDown/SkillDropdown';
-import ButtonUI from '../../../shared/ui/ButtonUI/ButtonUI';
-import HeaderUserMenuUI from '../../../shared/ui/HeaderUserMenuUI/HeaderUserMenuUI';
-=======
 import Logo from '@features/Logo/Logo';
 import Link from '@features/navigation/Link/Link';
 import ThemeToggle from '@widgets/ThemeToggle/ThemeToggle';
 import SearchInputUI from '@shared/ui/SearchInputUI/SearchInputUI';
 import SkillsDropdown from '@widgets/SkillDropDown/SkillDropdown';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
->>>>>>> develop
+import HeaderUserMenuUI from '@shared/ui/HeaderUserMenuUI/HeaderUserMenuUI';
 
 const useAuth = () => {
   // Это временная заглушка
@@ -57,6 +49,11 @@ const HeaderMain: React.FC<HeaderProps> = ({
 
   const handleRegister = () => {
     navigate('/register');
+  };
+
+  const handleThemeToggle = () => {
+    console.log('Theme toggle clicked');
+    // Здесь будет логика переключения темы
   };
 
   const handleUserMenuAction = (action: UserMenuAction) => {
@@ -151,7 +148,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
           />
         </div>
 
-        {/* Правая часть: авторизация */}
+        {/* Правая часть */}
         <div className={styles.right}>
           {isAuthenticated ? (
             // Авторизованный пользователь - полное меню с колокольчиком внутри
@@ -162,20 +159,31 @@ const HeaderMain: React.FC<HeaderProps> = ({
               onAction={handleUserMenuAction}
             />
           ) : (
-            // Гость - только кнопки входа и регистрации
-            <div className={styles.buttons}>
-              <ButtonUI
-                variant="secondary"
-                onClick={handleLogin}
-                title="Войти"
-                aria-label="Войти в аккаунт"
-              />
-              <ButtonUI
-                variant="primary"
-                onClick={handleRegister}
-                title="Зарегистрироваться"
-                aria-label="Зарегистрировать новый аккаунт"
-              />
+            // Гость - разделенная правая часть
+            <div className={styles.rightContent}>
+              {/* Кнопка темы рядом с поиском */}
+              <div className={styles.themeSection}>
+                <ThemeToggle 
+                  isLight={true}
+                  onToggle={handleThemeToggle}
+                />
+              </div>
+              
+              {/* Кнопки авторизации с отдельным отступом */}
+              <div className={styles.authButtons}>
+                <ButtonUI
+                  variant="secondary"
+                  onClick={handleLogin}
+                  title="Войти"
+                  aria-label="Войти в аккаунт"
+                />
+                <ButtonUI
+                  variant="primary"
+                  onClick={handleRegister}
+                  title="Зарегистрироваться"
+                  aria-label="Зарегистрировать новый аккаунт"
+                />
+              </div>
             </div>
           )}
         </div>
