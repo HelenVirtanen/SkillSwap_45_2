@@ -1,9 +1,8 @@
 .wrapper {
   display: flex;
-  position: relative;
   flex-direction: column;
   max-height: 93px;
-  max-width: 460px;
+  width: 100%;
   row-gap: 8px;  
 }
 
@@ -33,7 +32,6 @@
   border: var(--border-width, 1px) solid var(--clr-text-secondary, #69735d);
   border-radius: var(--border-radius, 12px);
   background-color: var(--clr-ui-surface, #ffffff);
-  min-width: 436px;
   width: 100%;
   min-height: 48px;
   font-family: var(

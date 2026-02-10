@@ -4,7 +4,7 @@ import React from 'react';
 
 // Метаданные компонента
 const meta: Meta<typeof InputUI> = {
-  title: 'Components/InputUI',
+  title: 'Main/UI/InputUI',
   component: InputUI,
   parameters: {
     layout: 'centered',
@@ -122,7 +122,7 @@ export const WithError: Story = {
   args: {
     label: 'Email',
     value: 'invalid-email',
-    error: 'Введите корректный email адрес',
+    error: 'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных',
     type: 'email',
     placeholder: 'Введите ваш email',
     onChange: () => {},
@@ -198,7 +198,7 @@ export const WithRightAddon: Story = {
 // Комбинация всех состояний
 export const AllStates: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '400px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '500px', width: '100%' }}>
       <InputUI
         label="Обычное поле"
         placeholder="Введите текст"
