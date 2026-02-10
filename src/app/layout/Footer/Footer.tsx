@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.css';
-import Logo from '../../../features/Logo/Logo';
-import Link from '../../../features/navigation/Link/Link';
+import Logo from '@features/Logo/Logo';
+import Link from '@features/navigation/Link/Link';
 
 const footerLinks = [
   {
@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
           ))}
         </ul>
       </nav>
-      <p className={styles.footer__copyright}>SkillSwap — 2025</p>
+      <p className={styles.footer__copyright}>SkillSwap — 2025</p>
     </footer>
   );
 };

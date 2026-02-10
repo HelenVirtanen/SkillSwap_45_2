@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import styles from './CheckboxUI.module.css';
 
-import CheckboxDefaultIcon from '../../../assets/icons/checkbox-Default.svg?react';
-import CheckboxDoneIcon from '../../../assets/icons/checkbox-Done-Active.svg?react';
-import CheckboxRemoveIcon from '../../../assets/icons/checkbox-Remove-Active.svg?react';
+import CheckboxDefaultIcon from '@assets/icons/checkbox-Default.svg?react';
+import CheckboxDoneIcon from '@assets/icons/checkbox-Done-Active.svg?react';
+import CheckboxRemoveIcon from '@assets/icons/checkbox-Remove-Active.svg?react';
 
 export type CheckboxState = 'default' | 'done' | 'remove';
 

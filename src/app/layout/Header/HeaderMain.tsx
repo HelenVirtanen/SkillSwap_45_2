@@ -1,12 +1,21 @@
 import React from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import styles from './HeaderMain.module.css';
+<<<<<<< header-23
 import Logo from '../../../features/Logo/Logo';
 import Link from '../../../features/navigation/Link/Link';
 import SearchInputUI from '../../../shared/ui/SearchInputUI/SearchInputUI';
 import SkillsDropdown from '../../../widgets/SkillDropDown/SkillDropdown';
 import ButtonUI from '../../../shared/ui/ButtonUI/ButtonUI';
 import HeaderUserMenuUI from '../../../shared/ui/HeaderUserMenuUI/HeaderUserMenuUI';
+=======
+import Logo from '@features/Logo/Logo';
+import Link from '@features/navigation/Link/Link';
+import ThemeToggle from '@widgets/ThemeToggle/ThemeToggle';
+import SearchInputUI from '@shared/ui/SearchInputUI/SearchInputUI';
+import SkillsDropdown from '@widgets/SkillDropDown/SkillDropdown';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
+>>>>>>> develop
 
 const useAuth = () => {
   // Это временная заглушка
