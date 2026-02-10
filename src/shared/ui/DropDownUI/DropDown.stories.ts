@@ -26,6 +26,6 @@ export const WithSelectedValue: Story = {
   args: {
     title: 'Пол',
     options: ['Не указан', 'Мужской', 'Женский'],
-    selected: 'Женский',
+    value: 'Женский',
   },
 };
