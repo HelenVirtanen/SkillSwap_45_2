@@ -17,6 +17,7 @@ const DropDownUI = (
   const [isOpen, setIsOpen] = useState(false)
   
   const [selected,setSelected] = useState(value)
+  
   const ref = useRef<HTMLDivElement>(null);
 
   function buttonToggle (){
@@ -31,6 +32,7 @@ const DropDownUI = (
 
 
   useEffect(() => {
+    setSelected(value)
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setIsOpen(false);
@@ -53,7 +55,7 @@ const DropDownUI = (
       )}
       <div className={`${styles.wrapperDrownList} ${isOpen ? styles.dropDownListOpen : ''}`}>
         <button type="button" aria-label="Открыть список" className={`${styles.buttonWithIcon}` } onClick={buttonToggle}>
-          <span className={`${styles.textInButtonWithIcon} ${selected  ? '' : styles.placeholder} ${styles.text}`  }>{selected ? selected : options?.[0]}</span>
+          <span className={`${styles.textInButtonWithIcon} ${selected  ? styles.text : styles.placeholder} `  }>{selected ? selected : options?.[0]}</span>
           <img src={chevronUp} alt={isOpen ? "Закрыть список" : "Открыть список"} className={isOpen ? styles.arrow : styles.arrowOpen }/>
         </button>
       {isOpen && (
@@ -61,7 +63,7 @@ const DropDownUI = (
             {options?.map((value)=>{
               if(selected == value) {
                 return (
-                  <li className={`${styles.dropDownItem} ${styles.dropDownItemSelected} ${styles.text}`} onClick={()=> handleSelect(value)} key={value} >
+                  <li className={`${styles.dropDownItem} ${styles.text} ${styles.dropDownItemSelected} `} onClick={()=> handleSelect(value)} key={value} >
                     {value}
                   </li>
               )

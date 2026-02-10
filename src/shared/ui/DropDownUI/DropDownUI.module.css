@@ -63,11 +63,18 @@
   background-color: var( --clr-ui-disabled,#E4E8DF);
 }
 
-.placeholder {
-  color:var(--clr-text-secondary,#69735D)
-}
+
 
 .text {
+  font-family: var(--ff-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+  /* color: var(--clr-text-primary, #253017) */
+}
+
+.placeholder {
+  color:var(--clr-text-secondary,#69735D);
   font-family: var(--ff-body);
   font-weight: var(--fw-regular);
   font-size: var(--fs-h4);
