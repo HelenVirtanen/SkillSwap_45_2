@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 
 import ProfileMenuItemUI from './ProfileMenuItemUI';
-import UserIcon from '../../../assets/icons/user.svg?react';
+import UserIcon from '@assets/icons/user.svg?react';
 
 const meta = {
   title: 'Main/UI/ProfileMenuItem',
