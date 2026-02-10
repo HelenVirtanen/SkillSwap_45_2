@@ -1,6 +1,6 @@
 import React, { useId, useState } from 'react';
-import clsx from 'clsx';
-import Eye from '../../../assets/icons/eye.svg?react';
+
+import Eye from '@assets/icons/eye.svg?react';
 import styles from './InputUI.module.css';
 
 export interface InputUIProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -44,20 +44,20 @@ const InputUI: React.FC<InputUIProps> = ({
   const id = useId();
 
   return (
-    <div className={clsx(styles.wrapper, className)}>
+    <div className={`${styles.wrapper} ${className ?? ''}`}>
       <label className={styles.label} htmlFor={id}>
         {label}
       </label>
 
       <div
-        className={clsx(styles.inputWrapper, {
-          [styles.error]: showError,
-        })}
+        className={`${styles.inputWrapper} ${
+    showError ? styles.error : ''
+  }`}
       >
         {isTextarea ? (
           <textarea
             id={id}
-            className={clsx(styles.input, styles.textarea)}
+            className={`${styles.input} ${styles.textarea}`}
             placeholder={placeholder}
             name={name}
             disabled={disabled}
