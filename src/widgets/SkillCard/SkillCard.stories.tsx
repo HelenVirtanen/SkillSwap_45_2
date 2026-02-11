@@ -12,7 +12,7 @@ import image5 from '@assets/image for test/Image (Копия 2).png';
 import image6 from '@assets/image for test/Image (Копия).png';
 
 const meta: Meta<typeof SkillCard> = {
-  title: 'Widgets/SkillCard',
+  title: 'Main/Widgets/SkillCard',
   component: SkillCard,
   parameters: {
     layout: 'centered',
