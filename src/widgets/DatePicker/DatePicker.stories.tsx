@@ -24,6 +24,7 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultRu: Story = {
   args: {
+    title: 'Дата рождения',
     language: 'ru',
     placeholder: 'дд.мм.гггг',
   },
@@ -31,6 +32,7 @@ export const DefaultRu: Story = {
 
 export const DefaultEn: Story = {
   args: {
+    title: 'Date of birth',
     language: 'en',
     placeholder: 'dd.mm.yyyy',
   },

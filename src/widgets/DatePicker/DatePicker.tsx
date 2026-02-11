@@ -40,6 +40,7 @@ const MONTHS_EN = [
 ];
 
 interface DatePickerProps {
+  title?: string;
   placeholder?: string;
   language?: string;
   classNameInput?: string;
@@ -47,6 +48,7 @@ interface DatePickerProps {
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
+  title,
   placeholder,
   language = 'ru',
   classNameInput,
@@ -86,76 +88,79 @@ const DatePicker: React.FC<DatePickerProps> = ({
   );
 
   return (
-    <ReactDatePicker
-      placeholderText={placeholder}
-      selected={startDate}
-      onChange={handleChange}
-      open={isOpen}
-      onClickOutside={() => setIsOpen(false)}
-      locale={language}
-      showIcon
-      icon={
-        <div onClick={handleIconClick} style={{ cursor: 'pointer' }}>
-          <CalendarIcon />
-        </div>
-      }
-      toggleCalendarOnIconClick={false}
-      shouldCloseOnSelect={false}
-      showPopperArrow={false}
-      dropdownMode="select"
-      peekNextMonth={false}
-      calendarStartDay={1}
-      calendarClassName={classNameCalendar}
-      className={classNameInput}
-      ref={datePickerRef}
-      popperPlacement="bottom-start"
-      highlightDates={tempDate ? [tempDate] : []}
-      dateFormat="dd.MM.yyyy"
-      renderCustomHeader={({ date, changeYear, changeMonth }) => (
-        <div className={styles.dropdownsContainer}>
-          <DropDownUI
-            title=""
-            value={
-              language === 'ru'
-                ? MONTHS_RU[date.getMonth()]
-                : MONTHS_EN[date.getMonth()]
-            }
-            options={language === 'ru' ? MONTHS_RU : MONTHS_EN}
-            widthDepOnContent={false}
-            type={'secondary'}
-            onChange={(value) => {
-              const monthIndex = MONTHS_RU.indexOf(value);
-              changeMonth(monthIndex);
-            }}
+    <>
+      {title && <h4 className={`${styles.text} ${styles.title}`}>{title}</h4>}
+      <ReactDatePicker
+        placeholderText={placeholder}
+        selected={startDate}
+        onChange={handleChange}
+        open={isOpen}
+        onClickOutside={() => setIsOpen(false)}
+        locale={language}
+        showIcon
+        icon={
+          <div onClick={handleIconClick} style={{ cursor: 'pointer' }}>
+            <CalendarIcon />
+          </div>
+        }
+        toggleCalendarOnIconClick={false}
+        shouldCloseOnSelect={false}
+        showPopperArrow={false}
+        dropdownMode="select"
+        peekNextMonth={false}
+        calendarStartDay={1}
+        calendarClassName={classNameCalendar}
+        className={classNameInput}
+        ref={datePickerRef}
+        popperPlacement="bottom-start"
+        highlightDates={tempDate ? [tempDate] : []}
+        dateFormat="dd.MM.yyyy"
+        renderCustomHeader={({ date, changeYear, changeMonth }) => (
+          <div className={styles.dropdownsContainer}>
+            <DropDownUI
+              title=""
+              value={
+                language === 'ru'
+                  ? MONTHS_RU[date.getMonth()]
+                  : MONTHS_EN[date.getMonth()]
+              }
+              options={language === 'ru' ? MONTHS_RU : MONTHS_EN}
+              widthDepOnContent={false}
+              type={'secondary'}
+              onChange={(value) => {
+                const monthIndex = MONTHS_RU.indexOf(value);
+                changeMonth(monthIndex);
+              }}
+            />
+            <DropDownUI
+              title=""
+              value={String(date.getFullYear())}
+              options={years}
+              widthDepOnContent={false}
+              type={'secondary'}
+              onChange={(value) => {
+                changeYear(Number(value));
+              }}
+            />
+          </div>
+        )}
+      >
+        {/* Кнопки внутри календаря через children */}
+        <div className={styles.buttonContainer}>
+          <ButtonUI
+            variant={'secondary'}
+            title={language === 'ru' ? 'Отменить' : 'Cancel'}
+            onClick={handleCancel}
+            className={styles.cancelButton}
           />
-          <DropDownUI
-            title=""
-            value={String(date.getFullYear())}
-            options={years}
-            widthDepOnContent={false}
-            type={'secondary'}
-            onChange={(value) => {
-              changeYear(Number(value));
-            }}
+          <ButtonUI
+            variant={'primary'}
+            title={language === 'ru' ? 'Выбрать' : 'Select'}
+            onClick={handleConfirm}
           />
         </div>
-      )}
-    >
-      {/* Кнопки внутри календаря через children */}
-      <div className={styles.buttonContainer}>
-        <ButtonUI
-          variant={'secondary'}
-          title={language === 'ru' ? 'Отменить' : 'Cancel'}
-          onClick={handleCancel}
-          className={styles.cancelButton}
-        />
-        <ButtonUI
-          variant={'primary'}
-          title={language === 'ru' ? 'Выбрать' : 'Select'}
-          onClick={handleConfirm}
-        />
-      </div>
-    </ReactDatePicker>
+      </ReactDatePicker>
+    </>
   );
 };
 

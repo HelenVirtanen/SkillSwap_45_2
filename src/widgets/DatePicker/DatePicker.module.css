@@ -74,6 +74,17 @@
     justify-content: center;
 }
 
+.text {
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h4);
+    font-family: var(--ff-body), serif;
+    line-height: var(--lh-h4);
+}
+
+.title {
+    margin-bottom: 4px;
+}
+
 :global(.react-datepicker__children-container) {
     display: flex;
     justify-self: center;
