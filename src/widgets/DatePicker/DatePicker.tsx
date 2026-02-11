@@ -1,27 +1,61 @@
 import React, { useRef, useState } from 'react';
-import ReactDatePicker from 'react-datepicker';
+import ReactDatePicker, { registerLocale } from 'react-datepicker';
+import { ru } from 'date-fns/locale/ru';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './DatePicker.module.css';
 import CalendarIcon from '../../assets/icons/calendar.svg?react';
+import DropDownUI from '@shared/ui/DropDownUI/DropDownUI.tsx';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI.tsx';
+
+registerLocale('ru', ru);
+
+const MONTHS_RU = [
+  'Январь',
+  'Февраль',
+  'Март',
+  'Апрель',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Август',
+  'Сентябрь',
+  'Октябрь',
+  'Ноябрь',
+  'Декабрь',
+];
+
+const MONTHS_EN = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
 interface DatePickerProps {
   placeholder?: string;
   language?: string;
+  classNameInput?: string;
+  classNameCalendar?: string;
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
   placeholder,
   language = 'ru',
+  classNameInput,
+  classNameCalendar,
 }) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [tempDate, setTempDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const datePickerRef = useRef<ReactDatePicker>(null);
-
-  const formatWeekDay = (nameOfDay: string) => {
-    const short = nameOfDay.slice(0, 2);
-    return short.charAt(0).toUpperCase() + short.charAt(1).toLowerCase();
-  };
 
   const handleCancel = () => {
     setTempDate(startDate);
@@ -33,48 +67,93 @@ const DatePicker: React.FC<DatePickerProps> = ({
     setIsOpen(false);
   };
 
+  const handleIconClick = () => {
+    setTempDate(startDate);
+    setIsOpen(true);
+  };
+
+  const handleChange = (date: Date | null) => {
+    if (isOpen) {
+      setTempDate(date);
+    } else {
+      setStartDate(date);
+    }
+  };
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: currentYear - 1900 + 11 }, (_, i) =>
+    String(1900 + i),
+  );
+
   return (
     <ReactDatePicker
       placeholderText={placeholder}
-      selected={tempDate}
-      onChange={(date) => setTempDate(date)}
+      selected={startDate}
+      onChange={handleChange}
       open={isOpen}
-      onInputClick={() => setIsOpen(true)}
       onClickOutside={() => setIsOpen(false)}
       locale={language}
-      // formatWeekDay={formatWeekDay}
       showIcon
-      icon={<CalendarIcon />}
-      toggleCalendarOnIconClick
+      icon={
+        <div onClick={handleIconClick} style={{ cursor: 'pointer' }}>
+          <CalendarIcon />
+        </div>
+      }
+      toggleCalendarOnIconClick={false}
       shouldCloseOnSelect={false}
-      showMonthDropdown
-      showYearDropdown
       showPopperArrow={false}
       dropdownMode="select"
       peekNextMonth={false}
       calendarStartDay={1}
-      calendarClassName={styles.calendar}
-      wrapperClassName={styles.wrapper}
-      className={styles.input}
+      calendarClassName={classNameCalendar}
+      className={classNameInput}
       ref={datePickerRef}
       popperPlacement="bottom-start"
+      highlightDates={tempDate ? [tempDate] : []}
+      dateFormat="dd.MM.yyyy"
+      renderCustomHeader={({ date, changeYear, changeMonth }) => (
+        <div className={styles.dropdownsContainer}>
+          <DropDownUI
+            title=""
+            value={
+              language === 'ru'
+                ? MONTHS_RU[date.getMonth()]
+                : MONTHS_EN[date.getMonth()]
+            }
+            options={language === 'ru' ? MONTHS_RU : MONTHS_EN}
+            widthDepOnContent={false}
+            type={'secondary'}
+            onChange={(value) => {
+              const monthIndex = MONTHS_RU.indexOf(value);
+              changeMonth(monthIndex);
+            }}
+          />
+          <DropDownUI
+            title=""
+            value={String(date.getFullYear())}
+            options={years}
+            widthDepOnContent={false}
+            type={'secondary'}
+            onChange={(value) => {
+              changeYear(Number(value));
+            }}
+          />
+        </div>
+      )}
     >
       {/* Кнопки внутри календаря через children */}
       <div className={styles.buttonContainer}>
-        <button
-          type="button"
-          className={styles.cancelButton}
+        <ButtonUI
+          variant={'secondary'}
+          title={language === 'ru' ? 'Отменить' : 'Cancel'}
           onClick={handleCancel}
-        >
-          Отменить
-        </button>
-        <button
-          type="button"
-          className={styles.confirmButton}
+          className={styles.cancelButton}
+        />
+        <ButtonUI
+          variant={'primary'}
+          title={language === 'ru' ? 'Выбрать' : 'Select'}
           onClick={handleConfirm}
-        >
-          Выбрать
-        </button>
+        />
       </div>
     </ReactDatePicker>
   );

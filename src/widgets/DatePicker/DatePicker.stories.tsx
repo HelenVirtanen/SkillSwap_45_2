@@ -10,7 +10,13 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  // args: { placeholder: 'дд.мм.гггг' },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: '218px' }}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof DatePicker>;
 
 export default meta;
