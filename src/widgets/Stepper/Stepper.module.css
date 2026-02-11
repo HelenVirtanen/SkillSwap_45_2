@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.label {
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h2);
+  font-family: var(--ff-heading);
+  line-height: 28px;
+}
+
+.stepsContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.step {
+  flex: 1;
+  width: 60px;
+  height: 4px;
+  border-radius: 8px;
+}
+
+.active {
+  background-color: var(--clr-primary);
+}
+
+.inactive {
+  background-color: var(--clr-ui-disabled);
+}

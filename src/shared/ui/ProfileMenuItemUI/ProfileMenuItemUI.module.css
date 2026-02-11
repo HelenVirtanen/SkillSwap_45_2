@@ -1,0 +1,28 @@
+.item {
+  display: flex;
+  min-width: 244px;
+  border-radius: var(--border-radius);
+  flex-direction: row;
+  padding: 12px 63px 12px 20px;
+  gap: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.item:hover {
+  background-color: var(--clr-ui-disabled);
+  cursor: pointer;
+}
+
+.item:active {
+  background-color: var(--clr-primary-hover);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  color: var(--clr-text-primary);
+}
+
+.link:hover {
+  color: var(--clr-text-primary);
+}
