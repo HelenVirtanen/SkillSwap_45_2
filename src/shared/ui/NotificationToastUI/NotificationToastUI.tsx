@@ -28,7 +28,7 @@ const NotificationToastUI: React.FC<NotificationToastUIProps> = ({
         <Cross />
       </button>
       {isHovered && (
-        <button className={styles.goButton} onClick={onAction}>
+        <button className={styles.goButton} onClick={onAction} aria-label="Закрыть уведомление">
           Перейти
         </button>
       )}
