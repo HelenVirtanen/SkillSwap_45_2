@@ -2,12 +2,14 @@
 
 .modal {
   width: 556px;
+  box-sizing: border-box;
   background: var(--clr-ui-surface);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: 62px 60px;
+  gap: 52px;
 }
 
 /* Размер для первого окна */
@@ -18,6 +20,7 @@
 /* Размер для второго окна */
 .sent {
   height: 480px;
+  padding: 80px 60px;
 }
 
 .icon {
@@ -33,11 +36,10 @@
 
 /* Группа: заголовок + текст + кнопка */
 .content {
-  margin-top: 52px;
+  width: 436px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 32px;
 }
 
@@ -45,7 +47,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 436px;
   text-align: center;
   word-break: break-word;
 }
@@ -76,6 +77,6 @@
 
 /* Кнопка */
 .button {
-  width: 436px;
+  width: 100%;
   height: 48px;
 }

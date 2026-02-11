@@ -33,7 +33,7 @@ export const ModalCreateOffer: FC<ModalCreateOfferProps> = ({
       heightClass: styles.sent,
     },
     accepted: {
-      Icon: DoneIcon, // или новую иконку, если есть
+      Icon: DoneIcon,
       title: 'Ваше предложение создано',
       description: 'Теперь вы можете предложить обмен',
       heightClass: styles.created,
