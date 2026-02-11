@@ -26,7 +26,9 @@ function App() {
         <Route index element={<LoginPage />} />
       </Route>
       <Route path="/register" element={<AuthLayout />}>
-        <Route index element={<RegisterPage />} />
+        <Route path="step1" element={<RegisterPage />} />
+        <Route path="step2" element={<RegisterPage />} />
+        <Route path="step3" element={<RegisterPage />} />
       </Route>
     </Routes>
   );
