@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Расстояние между секциями */
+  width: 100%;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Расстояние между заголовком и тегами */
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: var(--fs-h4, 16px);
+  font-weight: var(--fw-medium, 500);
+  color: var(--clr-text-primary, #253017);
+  line-height: var(--lh-h4, 24px);
+}
+
+.skillsRow {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hiddenMeasure {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
