@@ -1,0 +1,81 @@
+@import url('../../../styles/variables.css');
+
+.modal {
+  width: 556px;
+  background: var(--clr-ui-surface);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Размер для первого окна */
+.created {
+  height: 420px;
+}
+
+/* Размер для второго окна */
+.sent {
+  height: 480px;
+}
+
+.icon {
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Группа: заголовок + текст + кнопка */
+.content {
+  margin-top: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.content_text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 436px;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* Заголовок */
+.title {
+  color: var(--clr-ui-border);
+  font-family: var(--ff-heading);
+  font-weight: var(--fw-medium);
+  font-style: Medium;
+  font-size: var(--fs-h2);
+  line-height: 28px;
+  letter-spacing: -0.38px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Параграф */
+.description {
+  font-family: var(--ff-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: 0.3px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Кнопка */
+.button {
+  width: 436px;
+  height: 48px;
+}
