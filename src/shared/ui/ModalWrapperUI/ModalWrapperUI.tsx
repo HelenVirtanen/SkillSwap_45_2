@@ -24,7 +24,6 @@ export const ModalWrapperUI = ({
   const handleContentClick = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation(); // чтобы клик внутри не закрывал модалку
   };
-  console.log("Modal rendered");
 
   return createPortal(
     <div className={styles.overlay} onClick={handleOverlayClick}>
