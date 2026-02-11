@@ -4,7 +4,7 @@
   max-width: 556px;
   max-height: 692px;
   background-color: var(--clr-ui-surface, #ffffff);
-  padding-block-start: 121px;  
+  padding: 121px 60px;  
   border-radius: var(--border-radius, 12px);  
 }
 
