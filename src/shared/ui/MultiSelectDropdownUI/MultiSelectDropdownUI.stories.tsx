@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { MultiSelectDropdownUI } from './MultiSelectDropdownUI';
 
 const meta: Meta<typeof MultiSelectDropdownUI> = {
-  title: 'shared/MultiSelectDropdownUI',
+  title: 'Main/MultiSelectDropdownUI',
   component: MultiSelectDropdownUI,
   tags: ['autodocs'],
   parameters: {
