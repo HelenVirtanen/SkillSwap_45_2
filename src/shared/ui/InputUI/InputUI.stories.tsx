@@ -92,7 +92,11 @@ export const Default: Story = {
     label: 'Имя пользователя',
     placeholder: 'Введите ваше имя',
     type: 'text',
-    onChange: () => {},
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+      e.target.value;
+    },
   },
 };
 
@@ -122,7 +126,8 @@ export const WithError: Story = {
   args: {
     label: 'Email',
     value: 'invalid-email',
-    error: 'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных',
+    error:
+      'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных',
     type: 'email',
     placeholder: 'Введите ваш email',
     onChange: () => {},
@@ -179,7 +184,8 @@ export const TextareaLarge: Story = {
     type: 'textarea',
     placeholder: 'Введите много текста...',
     rows: 8,
-    value: 'Это пример длинного текста, который занимает несколько строк в textarea.',
+    value:
+      'Это пример длинного текста, который занимает несколько строк в textarea.',
     onChange: () => {},
   },
 };
@@ -198,7 +204,15 @@ export const WithRightAddon: Story = {
 // Комбинация всех состояний
 export const AllStates: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '500px', width: '100%' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        maxWidth: '500px',
+        width: '100%',
+      }}
+    >
       <InputUI
         label="Обычное поле"
         placeholder="Введите текст"
@@ -238,7 +252,7 @@ export const AllStates: Story = {
 export const ControlledInput: Story = {
   render: function Render() {
     const [value, setValue] = React.useState('');
-    
+
     return (
       <div style={{ maxWidth: '400px' }}>
         <InputUI
@@ -261,29 +275,31 @@ export const WithValidation: Story = {
   render: function Render() {
     const [value, setValue] = React.useState('');
     const [error, setError] = React.useState<string | boolean>(false);
-    
+
     const validateEmail = (email: string) => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     };
-    
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
       const newValue = e.target.value;
       setValue(newValue);
-      
+
       if (newValue && !validateEmail(newValue)) {
         setError('Введите корректный email адрес');
       } else {
         setError(false);
       }
     };
-    
+
     const handleBlur = () => {
       if (value && !validateEmail(value)) {
         setError('Введите корректный email адрес');
       }
     };
-    
+
     return (
       <div style={{ maxWidth: '400px' }}>
         <InputUI
@@ -297,7 +313,12 @@ export const WithValidation: Story = {
           helperText={!error ? 'Введите ваш email' : undefined}
         />
         <div style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
-          Статус: {error ? '❌ Ошибка' : value ? '✅ Корректный email' : '⏳ Ожидание ввода'}
+          Статус:{' '}
+          {error
+            ? '❌ Ошибка'
+            : value
+              ? '✅ Корректный email'
+              : '⏳ Ожидание ввода'}
         </div>
       </div>
     );

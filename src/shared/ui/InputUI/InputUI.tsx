@@ -1,5 +1,4 @@
 import React, { useId, useState } from 'react';
-
 import Eye from '@assets/icons/eye.svg?react';
 import styles from './InputUI.module.css';
 
@@ -98,9 +97,9 @@ const InputUI: React.FC<InputUIProps> = ({
         )}
       </div>
 
-      {(showError && typeof error === 'string' && (
+      {showError && typeof error === 'string' && (
         <div className={styles.errorText}>{error}</div>
-      )) || <div className={styles.errorDummy} />}
+      )}
 
       {showHelper && <div className={styles.helperText}>{helperText}</div>}
     </div>

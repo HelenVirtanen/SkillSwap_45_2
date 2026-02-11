@@ -6,10 +6,8 @@ import Footer from '../Footer/Footer';
 const MainLayout = () => {
   return (
     <div className={styles.wrapper}>
-      <HeaderMain />      
-      <main className={styles.main}>
-        <Outlet />
-      </main>
+      <HeaderMain />
+      <main className={styles.main}><Outlet/></main>
       <Footer />
     </div>
   );

@@ -3,7 +3,7 @@
   flex-direction: column;
   max-height: 93px;
   width: 100%;
-  row-gap: 8px;  
+  row-gap: 8px;
 }
 
 .inputWrapper {
@@ -61,7 +61,7 @@
 }
 
 .errorText {
-    font-family: var(
+  font-family: var(
     --ff-body,
     'Roboto',
     system-ui,
@@ -73,5 +73,21 @@
   font-weight: var(--fw-regular, 400);
   font-size: var(--fs-caption, 12px);
   color: var(--clr-error, #bf3920);
+  letter-spacing: 0.02em;
+}
+
+.helperText {
+  font-family: var(
+    --ff-body,
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-caption, 12px);
+  color: var(--clr-text-primary, #253017);
   letter-spacing: 0.02em;
 }
