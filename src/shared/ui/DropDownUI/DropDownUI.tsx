@@ -32,7 +32,6 @@ const DropDownUI = (
 
 
   useEffect(() => {
-    setSelected(value)
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setIsOpen(false);
