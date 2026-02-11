@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './SearchInputUI.module.css';
-import SearchIcon from '../../../assets/icons/search.svg?react';
+import SearchIcon from '@assets/icons/search.svg?react';
 
 interface SearchInputUIProps {
   placeholder?: string;

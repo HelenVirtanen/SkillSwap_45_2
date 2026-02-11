@@ -1,0 +1,52 @@
+.formWrapper {
+  display: flex;  
+  justify-content: center;
+  max-width: 556px;
+  max-height: 692px;
+  background-color: var(--clr-ui-surface, #ffffff);
+  padding: 121px 60px;  
+  border-radius: var(--border-radius, 12px);  
+}
+
+.buttonSocialWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    padding-block-end: 28px;
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding-block-start: 31px;
+}
+
+.buttonNext {
+    padding-block-start: 29px;
+}
+
+.orSeparator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.orSeparator::before,
+.orSeparator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 46%;
+  height: 1px;
+  background-color: var(--clr-ui-disabled, #e4e8df);
+}
+
+.orSeparator::before {
+  left: 0;
+}
+
+.orSeparator::after {
+  right: 0;
+}
