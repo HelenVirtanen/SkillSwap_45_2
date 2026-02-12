@@ -8,6 +8,7 @@
   max-height: 104px;
   background-color: transparent;
   border-radius: 12px;  
+  white-space: nowrap;
 }
 
 .icon {

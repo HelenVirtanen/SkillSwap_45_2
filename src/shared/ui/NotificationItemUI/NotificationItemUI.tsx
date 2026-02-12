@@ -26,7 +26,7 @@ const NotificationItemUI: React.FC<NotificationItemUIProps> = ({
         <div className={styles.mainText}>{mainText}</div>
         <div className={styles.subText}>{subText}</div>
       </div>
-      <time className={styles.date}>{date}</time>      
+      <time className={styles.date}>{date}</time>
       {disabled !== false && (
         <ButtonUI variant="submit" title="Перейти" onClick={onClick} className={styles.button} />
       )}
