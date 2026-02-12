@@ -1,15 +1,5 @@
 @import url('../../styles/variables.css');
 
-/* .wrapper { */
-
-/*    display: flex !important; */
-
-/*    width: 100% !important; */
-
-/*    min-width: 0 !important; */
-
-/* } */
-
 .calendarContainer {
     background: white;
     border-radius: 16px;
@@ -26,32 +16,6 @@
     margin-top: 0;
     transform: translateX(-50%);
 }
-
-/* .input { */
-
-/*    flex: 1; */
-
-/*    width: ; */
-
-/*    padding: 12px 20px !important; */
-
-/*    color: var(--clr-text-primary); */
-
-/*    font-size: 16px; */
-
-/*    font-family: var(--ff-body); */
-
-/*    background-color: white; */
-
-/*    border: 1px solid var(--clr-text-secondary); */
-
-/*    border-radius: 12px; */
-
-/*    outline: none; */
-
-/*    caret-color: var(--clr-primary-pressed, #508826); */
-
-/* } */
 
 .cancelButton {
     padding: 12px 24px;
@@ -111,6 +75,7 @@
     width: 100% !important;
     padding: 12px 40px 12px 20px !important;
     color: var(--clr-text-primary);
+    line-height: 22px;
     font-size: 16px;
     font-family: var(--ff-body);
     background-color: white;
@@ -169,6 +134,7 @@
 
 :global(.react-datepicker__month) {
     font-size: 12px;
+    margin-bottom: 16px;
 }
 
 :global(.react-datepicker__calendar-icon) {
