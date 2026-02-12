@@ -1,0 +1,31 @@
+.menu {
+  width: 260px;
+  height: 152px;
+  padding: 40px;
+  background: var(--clr-ui-surface, #ffffff);
+  border: 1px solid var(--clr-ui-toggle, #B2B9A9);
+  border-radius: var(--border-radius, 12px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.item {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  font-size: var(--fs-body, 16px);
+  font-weight: var(--fw-medium, 500);
+  line-height: var(--lh-body, 24px);
+  letter-spacing: 0.02em;
+  color: var(--clr-text-primary, #253017);
+  white-space: nowrap;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
