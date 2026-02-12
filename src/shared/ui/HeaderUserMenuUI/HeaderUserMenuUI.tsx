@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './HeaderUserMenuUI.module.css';
-import NotificationBell from '../../../widgets/NotificationBell/NotificationBell';
+import NotificationBell from '@widgets/NotificationBell/NotificationBell';
 import FavoriteButtonUI from '../FavoriteButtonUI/FavoriteButtonUI';
-import ThemeToggle from '../../../widgets/ThemeToggle/ThemeToggle';
+import ThemeToggle from '@widgets/ThemeToggle/ThemeToggle';
 
 type HeaderUserMenuAction = 'user' | 'favorite' | 'notifications';
 interface HeaderUserMenuUIProps {

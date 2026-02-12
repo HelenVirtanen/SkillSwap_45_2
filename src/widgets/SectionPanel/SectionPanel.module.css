@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  inline-size: 100%;
+}
+
+.header {
+  margin: 4px 0;
+  color: var(--clr-text-primary, #253017);
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  font-size: 32px;
+}

@@ -36,6 +36,23 @@
   left: -300px;
   min-width: 1136px;
   max-height: 1100px;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.closed {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 .categoryTitle {

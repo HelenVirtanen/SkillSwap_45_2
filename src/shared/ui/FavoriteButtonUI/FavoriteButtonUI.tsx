@@ -1,7 +1,7 @@
 import React, { type MouseEventHandler } from 'react';
 import styles from './FavoriteButtonUI.module.css';
-import LikeIcon from '../../../assets/icons/like.svg?react';
-import LikeSelectedIcon from '../../../assets/icons/like-selected.svg?react';
+import LikeIcon from '@assets/icons/like.svg?react';
+import LikeSelectedIcon from '@assets/icons/like-selected.svg?react';
 
 interface FavoriteButtonUIProps {
   isActive?: boolean;

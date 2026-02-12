@@ -1,0 +1,227 @@
+
+/* Основная карточка */
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 52px;
+  gap: 24px;
+  
+  max-width: 1020px;
+  width: 100%;
+  height: 444px;
+  
+  background: var(--clr-ui-surface);
+  border: var(--border-width) solid var(--clr-ui-surface);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Контейнер для кнопок действий */
+.actionsContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: flex-end;
+  padding: 0px;
+  gap: 0px 16px;
+  
+  width: 916px;
+  height: 24px;
+}
+
+/* Основной контент - карточка пользователя */
+.content {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 33px;
+  
+  width: 916px;
+  height: 324px;
+}
+
+/* Левая колонка - контент */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+  
+  width: 399px;
+  height: 324px;
+}
+
+/* Блок с текстом */
+.skillContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+  
+  width: 399px;
+  height: 248px;
+}
+
+/* Заголовок и категории */
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+  
+  width: 399px;
+  height: 60px;
+}
+
+/* Заголовок навыка */
+.skillTitle {
+  width: 274px;
+  height: 40px;
+  
+  font-family: var(--ff-heading);
+  font-style: normal;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: -0.011em;
+  
+  color: var(--clr-text-primary);
+  margin: 0;
+  
+  display: flex;
+  align-items: center;
+}
+
+/* Категории */
+.categoriesText {
+  font-family: var(--ff-body);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  letter-spacing: 0.02em;
+  color: var(--clr-text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+/* Описание */
+.description {
+  width: 399px;
+  height: 168px;
+  
+  font-family: var(--ff-body);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: 0.02em;
+  
+  color: var(--clr-text-primary);
+  margin: 0;
+  
+  /* Добавляем перенос текста */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Контейнер для кнопки обмена */
+.exchangeButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  margin-top: 8px;
+  width: 399px;
+  height: 48px;
+}
+
+/* Кнопка обмена */
+.exchangeButton {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 8px;
+  
+  width: 100%; 
+  height: 48px;
+  
+  background: var(--clr-primary);
+  border-radius: var(--border-radius);
+  border: none;
+  
+  font-family: var(--ff-body);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: 0.02em;
+  text-align: center;
+  
+  color: var(--clr-text-primary);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.exchangeButton:hover {
+  background: var(--clr-primary-hover);
+}
+
+.exchangeButton:active {
+  background: var(--clr-primary-pressed);
+}
+
+/* Правая колонка - галерея */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  
+  width: 440px;
+  height: 324px;
+}
+
+/* Контейнер галереи */
+.galleryContainer {
+  width: 100%;
+  height: 100%;
+}
+
+/* Заглушка для отсутствующих изображений */
+.noImages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 131px 16px;
+  gap: 200px;
+  
+  width: 324px;
+  height: 324px;
+  
+  background: var(--clr-ui-background);
+  border-radius: var(--border-radius);
+  
+  font-family: var(--ff-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  color: var(--clr-text-disabled);
+}
