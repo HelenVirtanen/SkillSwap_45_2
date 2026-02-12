@@ -1,11 +1,7 @@
-import React from 'react';
 import styles from './NotificationsPanel.module.css';
 import NotificationItemUI from '@shared/ui/NotificationItemUI/NotificationItemUI';
-interface NotificationsPanelProps {}
 
-const NotificationsPanel: React.FunctionComponent<
-  NotificationsPanelProps
-> = () => {
+const NotificationsPanel = () => {
   const notificationsNew = [
     {
       id: 1,
