@@ -9,6 +9,7 @@ import RegisterPage from '@pages/RegisterPage/RegisterPage';
 import LoginPage from '@pages/LoginPage/LoginPage';
 import ProfilePage from '@pages/ProfilePage/ProfilePage';
 import FavoritesPage from '@pages/FavoritesPage/FavoritesPage';
+import AboutPage from '@pages/AboutPage/AboutPage';
 import AuthLayout from './layout/AuthLayout/AuthLayout';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<MainPage />} />
+        <Route path="about" element={<AboutPage />} />
         <Route path="skill/:id" element={<SkillPage />} />
         <Route path="server-error" element={<ServerErrorPage />} />
         <Route path="profile" element={<ProfilePage />} />
