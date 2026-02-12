@@ -40,7 +40,7 @@ const mockUsers = [
 ];
 
 const meta = {
-  title: 'Widgets/UserCard',
+  title: '<Main/Widgets/UserCard',
   component: UserCard,
   parameters: {
     layout: 'centered',

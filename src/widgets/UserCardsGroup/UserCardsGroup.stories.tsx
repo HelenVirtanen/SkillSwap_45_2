@@ -124,7 +124,7 @@ const mockUsers = [
 ];
 
 const meta = {
-  title: 'Widgets/UserCardsGroup',
+  title: 'Main/Widgets/UserCardsGroup',
   component: UserCardsGroup,
   parameters: {
     layout: 'centered',
