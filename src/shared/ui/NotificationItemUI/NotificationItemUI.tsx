@@ -9,27 +9,28 @@ interface NotificationItemUIProps {
   date?: string; 
   onClick?: () => void;
   disabled?: boolean;
+  className?: string;
 }
 
 const NotificationItemUI: React.FC<NotificationItemUIProps> = ({
-  mainText,
-  subText,
-  date,
+  mainText = 'Николай принял ваш обмен',
+  subText = 'Перейдите в профиль, чтобы обсудить детали',
+  date = 'сегодня',
   onClick,
   disabled = true,
 }) => {
   return (
-    <div className={styles.notificationItem}>
-      <Idea className={styles.icon} />
+    <article className={styles.notificationItem}>
+      <Idea className={styles.icon} aria-hidden="true"/>
       <div className={styles.content}>        
-        <div className={styles.mainText}>{mainText || 'Николай принял ваш обмен'}</div>
-        <div className={styles.subText}>{subText || 'Перейдите в профиль, чтобы обсудить детали'}</div>
+        <div className={styles.mainText}>{mainText}</div>
+        <div className={styles.subText}>{subText}</div>
       </div>
-      <div className={styles.date}>{date || 'сегодня'}</div>      
+      <time className={styles.date}>{date}</time>      
       {disabled !== false && (
         <ButtonUI variant="submit" title="Перейти" onClick={onClick} className={styles.button} />
       )}
-    </div>
+    </article>
   );
 };
 
