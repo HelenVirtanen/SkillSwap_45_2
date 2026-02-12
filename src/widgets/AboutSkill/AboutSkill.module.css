@@ -1,7 +1,7 @@
 @import url('../../styles/variables.css');
 
 .root {
-  width: 399px;
+  min-width: 399px;
   height: 324px;
   display: flex;
   flex-direction: column;
