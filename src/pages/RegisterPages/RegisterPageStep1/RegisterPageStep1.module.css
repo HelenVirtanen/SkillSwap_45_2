@@ -1,8 +1,12 @@
+.container {
+  margin-top: -46px;
+}
+
 .content {
   display: flex;
   gap: 24px;
   max-width: 1136px;
-  margin: 0 auto;
+  margin: 28px auto;
 }
 
 /* Форма регистрации */
@@ -11,6 +15,42 @@
   border-radius: 12px;
   background-color: var(--clr-ui-surface);
   padding: 121.5px 60px;
+}
+
+.loginWith {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 27px 0;
+  color: var(--clr-text-primary);
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--clr-ui-disabled);
+}
+
+.registerForm {
+  margin-top: 32px;
+}
+
+.registerForm__inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.registerForm__submit {
+  margin-top: 30px;
 }
 
 /* onBoarding */
@@ -23,10 +63,10 @@
 }
 
 .onBoarding__textContainer {
-  margin-top: 40px;
+  margin-top: 36px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .onBoardingTitle {
@@ -34,6 +74,7 @@
   font-weight: var(--fw-medium);
   font-size: var(--fs-h2);
   line-height: var(--lh-h2);
+  letter-spacing: -1.1%;
 }
 
 .onBoardingText {
