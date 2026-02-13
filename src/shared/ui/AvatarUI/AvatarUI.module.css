@@ -1,0 +1,70 @@
+/* src/shared/ui/AvatarUI/AvatarUI.module.css */
+
+.main {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
+.imageButton {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Стили для fallback иконки */
+.imageButton[style*='user-circle.svg'] {
+  background-position: center;
+  background-size: 70%;
+  
+}
+
+[data-theme='dark'] .imageButton[style*='user-icon.svg'] {
+  filter: brightness(0) invert(1);
+}
+
+.imageButton:focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+.image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.add {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  
+}
+
+.imageButton:hover .add,
+.imageButton:focus .add {
+  transform: scale(1.2);
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
