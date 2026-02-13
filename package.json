@@ -16,20 +16,22 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "date-fns": "^4.1.0",
     "@hookform/resolvers": "^5.2.2",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "lodash": "^4.17.23",
     "react": "^19.2.0",
     "react-datepicker": "^9.1.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.71.1",
     "react-router-dom": "^7.13.0",
-    "yup": "^1.7.1",
-    "swiper": "^12.1.0"
+    "swiper": "^12.1.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.1",
     "@eslint/js": "^9.39.1",
+    "@types/lodash": "^4.17.23",
     "@storybook/addon-a11y": "^10.2.8",
     "@storybook/addon-docs": "^10.2.8",
     "@storybook/addon-vitest": "^10.2.8",
