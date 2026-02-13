@@ -1,6 +1,7 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import Loader from '@shared/ui/Loader/Loader';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
 const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));
@@ -18,7 +19,7 @@ const AboutPage = lazy(() => import('@pages/AboutPage/AboutPage'));
 
 function App() {
   return (
-    <Suspense fallback={<div>Загрузка...</div>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<MainPage />} />
