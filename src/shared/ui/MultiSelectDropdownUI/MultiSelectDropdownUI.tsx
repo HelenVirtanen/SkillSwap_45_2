@@ -93,24 +93,27 @@ export const MultiSelectDropdownUI: FC<MultiSelectDropdownUIProps> = ({
           <span className={styles.dropdownArrow}>⌵</span>
         </button>
 
-        {isOpen && !disabled && (
-          <div className={styles.dropdownMenu}>
-            {options.map((option) => (
-              <div
-                key={option.id}
-                className={styles.dropdownItem}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <CheckboxUI
-                  label={option.label}
-                  state={selected.includes(option.value) ? 'done' : 'default'}
-                  onChange={() => handleOptionChange(option.value)}
-                  disabled={disabled}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        <div className={`${styles.dropdownMenu} ${isOpen ? styles.open : ''}`}>
+          {options.map((option) => (
+            <div
+              key={option.id}
+              className={styles.dropdownItem}
+              tabIndex={0}
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ')
+                  handleOptionChange(option.value);
+              }}
+            >
+              <CheckboxUI
+                label={option.label}
+                state={selected.includes(option.value) ? 'done' : 'default'}
+                onChange={() => handleOptionChange(option.value)}
+                disabled={disabled}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {error && <span className={styles.errorText}>{error}</span>}
     </div>
