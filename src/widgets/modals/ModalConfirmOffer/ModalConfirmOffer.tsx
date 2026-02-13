@@ -49,7 +49,7 @@ export const ModalConfirmOffer: FC<ModalConfirmOfferProps> = ({
                   title="Редактировать"
                   iconRight={<IconRight/>}
                   onClick={onEdit}
-                  className={styles.button_modal}
+                  className={styles.buttonModal}
                 />
 
                 <ButtonUI
