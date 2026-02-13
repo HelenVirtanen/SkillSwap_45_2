@@ -1,0 +1,72 @@
+@import url('../../../styles/variables.css');
+
+.modal {
+  width: 1024px;
+  height: 532px;
+  background: var(--clr-ui-surface);
+  border-radius: 12px;
+  padding: 44px 60px 72px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/*  Верхняя секция  */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--ff-heading);
+  font-weight: var(--fw-medium);
+  font-style: Medium;
+  font-size: var(--fs-h2);
+  line-height: 28px;
+  letter-spacing: -0.264px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.description {
+  font-family: var(--ff-body);
+  font-weight: var(--fw-regular);
+  font-style: Regular;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  letter-spacing: 0.24px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/*Контент */
+
+.content {
+  display: flex;
+  gap: 44px;
+  flex: 1;
+}
+
+/* Левая колонка */
+
+.leftColumn {
+  width: 420px;
+  height: 324px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Кнопки */
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.buttonModal {
+  flex: 1;
+  height: 48px;
+}

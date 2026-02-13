@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { getSkills } from '@api/skills';
 import SkillsDropdownUI, { SkillCategory } from '@shared/ui/SkillsDropdownUI/SkillsDropdownUI';
 
 const SkillsDropdown: React.FC = () => {
@@ -7,17 +8,9 @@ const SkillsDropdown: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const response = await fetch('/db/skills.json');
-        if (!response.ok) throw new Error('Failed to fetch skills');
-        const data = await response.json();
-        setSkills(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchSkills();
+    getSkills()
+    .then(setSkills)
+    .catch(console.error);
   }, []);
 
   useEffect(() => {

@@ -1,0 +1,74 @@
+.notificationsPanel {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 556px;
+  max-height: 616px;
+  background-color: var(--clr-ui-surface, #ffffff);
+  border-radius: var(--border-radius, 12px);
+  padding: 60px 60px 50px 60px;
+  border: var(--border-width, 1px) solid var(--clr-text-secondary, #69735d);
+}
+
+.notificationsWrapperNew {
+  display: flex;
+  padding-block-end: 43px;
+  flex-direction: column;
+  gap: 24px;    
+}
+
+.notificationsWrapperOld {
+  display: flex;  
+  flex-direction: column;
+  gap: 7px;     
+}
+
+.headerNew {
+  display: flex;  
+  justify-content: space-between;
+  padding-block-end: 10px;
+  margin-inline-end: -7px;
+}
+
+.headerOld {
+  display: flex;  
+  justify-content: space-between;
+  padding-block-end: 26px;
+  margin-inline-end: -7px;
+}
+
+.title {
+  font-family: var(
+    --ff-heading,
+    'Jost',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    roboto,
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-medium, 500);
+  font-size: var(--lh-body, 24px);
+  color: var(--clr-text-primary, #253017);
+  letter-spacing: -0.01em;
+}
+
+.readAllBtn,
+.clearBtn {
+  font-family: var(
+    --ff-body,
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-medium, 500);
+  font-size: var(--lh-caption, 16px);
+  color: var(--clr-primary-pressed, #508826);
+  letter-spacing: 0.02em;
+  border: none;
+  background-color: transparent;
+}

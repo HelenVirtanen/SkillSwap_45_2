@@ -30,3 +30,27 @@ export const WithSelectedValue: Story = {
   },
 };
 
+export const NoWidthDepOnContent: Story = {
+  args: {
+    title: 'Пол',
+    options: ['Не указан', 'Мужской', 'Женский'],
+    widthDepOnContent: false
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    title: 'Пол',
+    options: ['Не указан', 'Мужской', 'Женский'],
+    type: 'primary'
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    title: 'Пол',
+    options: ['Не указан', 'Мужской', 'Женский'],
+    type: 'secondary',
+    widthDepOnContent: false,
+  },
+};

@@ -1,0 +1,59 @@
+.container {
+  width: 284px;
+  height: 580px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.categoryRow {
+  display: flex;
+  align-items: center;
+}
+
+/* кнопка раскрытия */
+
+.expandButton {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.categoryRow:hover .expandButton {
+  opacity: 1;
+}
+
+/* подкатегории */
+
+.subcategories {
+  margin-left: 34px;
+  margin-top: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* scrollbar */
+
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: var(--clr-ui-border);
+  border-radius: 3px;
+}

@@ -41,8 +41,8 @@
 /* SVG иконки */
 
 .icon svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .default {
@@ -71,6 +71,13 @@
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   font-style: Regular;
-  letter-spacing: 2%;
+  letter-spacing: 0.48px;
   vertical-align: middle;
+
+  white-space: normal;         
+  word-wrap: break-word;        
+  overflow-wrap: break-word; 
+  hyphens: auto;                
+  max-width: 100%;            
+  flex: 1;
 }

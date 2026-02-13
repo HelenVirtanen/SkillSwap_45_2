@@ -2,16 +2,13 @@ import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import styles from './AutoCompleteUI.module.css';
 import Clear from '@assets/icons/cross.svg?react';
 import Chevron from '@assets/icons/chevron-down.svg?react';
+import { getCities } from '@api/cities';
 
 interface AutocompleteProps {
   label?: string;
   placeholder?: string;
   onCitySelect?: (city: string) => void;
   className?: string;
-}
-
-interface CityData {
-  cities: string[];
 }
 
 const AutoCompleteUI = ({
@@ -31,22 +28,19 @@ const AutoCompleteUI = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const fetchCities = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch('/db/cities.json');
-        if (!response.ok) {
-          throw new Error('Не удалось загрузить список городов');
-        }
-        const data: CityData = await response.json();
-        setAllCities(data.cities || []);
-      } catch (err) {
-        console.error('Ошибка загрузки городов:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchCities();
+    const loadCities = async () => {
+    setIsLoading(true);
+    try {
+      const cities = await getCities();
+      setAllCities(cities);
+    } catch (error) {
+      console.error('Ошибка загрузки городов:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  loadCities();
   }, []);
 
   const normalizeString = (str: string): string => {
