@@ -1,12 +1,15 @@
 .container {
   margin-top: -46px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .content {
   display: flex;
   gap: 24px;
   max-width: 1136px;
-  margin: 28px auto;
+  margin: 0 auto;
 }
 
 /* Форма регистрации */
