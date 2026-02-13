@@ -11,7 +11,7 @@ const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
 const ServerErrorPage = lazy(
   () => import('@pages/ServerErrorPage/ServerErrorPage'),
 );
-const RegisterPage = lazy(() => import('@pages/RegisterPage/RegisterPage'));
+const RegisterPageStep1 = lazy(() => import('@pages/RegisterPages/RegisterPageStep1/RegisterPageStep1'));
 const LoginPage = lazy(() => import('@pages/LoginPage/LoginPage'));
 const ProfilePage = lazy(() => import('@pages/ProfilePage/ProfilePage'));
 const FavoritesPage = lazy(() => import('@pages/FavoritesPage/FavoritesPage'));
@@ -34,9 +34,9 @@ function App() {
           <Route index element={<LoginPage />} />
         </Route>
         <Route path="/register" element={<AuthLayout />}>
-          <Route path="step1" element={<RegisterPage />} />
-          <Route path="step2" element={<RegisterPage />} />
-          <Route path="step3" element={<RegisterPage />} />
+          <Route path="step1" element={<RegisterPageStep1 />} />
+          <Route path="step2" element={<RegisterPageStep1 />} />
+          <Route path="step3" element={<RegisterPageStep1 />} />
         </Route>
       </Routes>
     </Suspense>
