@@ -1,0 +1,45 @@
+.content {
+  display: flex;
+  gap: 24px;
+  max-width: 1136px;
+  margin: 0 auto;
+}
+
+/* Форма регистрации */
+
+.register {
+  border-radius: 12px;
+  background-color: var(--clr-ui-surface);
+  padding: 121.5px 60px;
+}
+
+/* onBoarding */
+
+.onBoarding {
+  border-radius: 12px;
+  background-color: var(--clr-ui-surface);
+  text-align: center;
+  padding: 132px 60px;
+}
+
+.onBoarding__textContainer {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.onBoardingTitle {
+  font-family: var(--ff-heading);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+}
+
+.onBoardingText {
+  font-family: var(--ff-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: 2%;
+}

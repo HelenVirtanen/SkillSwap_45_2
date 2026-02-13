@@ -5,7 +5,8 @@ import MainPage from '@pages/MainPage/MainPage';
 import SkillPage from '@pages/SkillPage/SkillPage';
 import NotFoundPage from '@pages/NotFoundPage/NotFoundPage';
 import ServerErrorPage from '@pages/ServerErrorPage/ServerErrorPage';
-import RegisterPage from '@pages/RegisterPage/RegisterPage';
+import RegisterPage from '@pages/RegisterPages/RegisterPage';
+import RegisterPageStep1 from '@pages/RegisterPages/RegisterPageStep1/RegisterPageStep1';
 import LoginPage from '@pages/LoginPage/LoginPage';
 import ProfilePage from '@pages/ProfilePage/ProfilePage';
 import FavoritesPage from '@pages/FavoritesPage/FavoritesPage';
@@ -26,7 +27,7 @@ function App() {
         <Route index element={<LoginPage />} />
       </Route>
       <Route path="/register" element={<AuthLayout />}>
-        <Route index element={<RegisterPage />} />
+        <Route index element={<RegisterPageStep1 />} />
       </Route>
     </Routes>
   );
