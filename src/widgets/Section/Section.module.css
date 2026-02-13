@@ -3,6 +3,7 @@
   flex-direction: column;
   max-width: 1020px;
   max-height: 448px; 
+  background: transparent;
 }
 
 .sectionHeader {
