@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import type { FC } from 'react';
 import styles from './MultiSelectDropdownUI.module.css';
 import { CheckboxUI } from '@shared/ui/CheckboxUI/CheckboxUI';
@@ -46,26 +46,25 @@ export const MultiSelectDropdownUI: FC<MultiSelectDropdownUIProps> = ({
     }
   };
   // закрываем дроп даун при клике вне компонента
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: MouseEvent) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node)
     ) {
       setIsOpen(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
     }
 
+    // убрал лишний вызов
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, handleClickOutside]);
 
   // текст который показывается в кнопке дропдауна  (выберите варианты/выбраннвй элемент / или число элементов)
   const getDisplayText = () => {
@@ -81,15 +80,18 @@ export const MultiSelectDropdownUI: FC<MultiSelectDropdownUIProps> = ({
     <div className={styles.container} ref={dropdownRef}>
       {label && <label className={styles.label}>{label}</label>}
      <div className={`${styles.wrapper} ${isOpen ? styles.wrapperOpen : ''}`}>
-      <div
+      <button
+        type="button"
         className={`${styles.dropdown} ${isOpen ? styles.dropdownOpen : ''} ${
           error ? styles.dropdownError : '' 
         } ${disabled ? styles.dropdownDisabled : ''}`}
         onClick={toggleDropdown}
+        aria-expanded={isOpen}
+        disabled={disabled} 
       >
         <span className={styles.dropdownText}>{getDisplayText()}</span>
         <span className={styles.dropdownArrow}>⌵</span>
-      </div>
+      </button>
 
       {isOpen && !disabled && (
         <div className={styles.dropdownMenu}>
