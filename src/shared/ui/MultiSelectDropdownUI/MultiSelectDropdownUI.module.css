@@ -61,6 +61,7 @@
   margin-right: 6px; 
   font-size: 23px ;
   color: var(--color-text-tertiary, #999999);
+  transform-origin: center;
   transition: transform var(--transition-duration, 0.2s) ease;
 }
 
@@ -74,9 +75,19 @@
   left: 0;
   right: 0;
   z-index: 1000;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdownMenu.open {
   max-height: var(--max-height-dropdown, 240px);
-  overflow-y: auto;
   padding: 8px 0;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Скроллбар */
