@@ -23,6 +23,15 @@
   border-radius: 12px;
 }
 
+.main :global(.swiper) {
+  width: 100%;
+  height: 100%;
+}
+
+.main :global(.swiper-slide) {
+  height: 100%;
+}
+
 /*Навигационные кнопки*/
 .navButton {
   position: absolute;
