@@ -72,8 +72,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
     }
   };
 
-  const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleBackHomeClick = () => {
     navigate('/');
   };
 
@@ -98,7 +97,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
             <ButtonUI
               variant="tertiary"
               title="Закрыть"
-              onClick={onClose}
+              onClick={handleBackHomeClick}
               aria-label="Закрыть страницу авторизации"
               iconRight={
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -128,7 +127,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
       >
         {/* Левая часть: логотип и навигация */}
         <div className={styles.left}>
-          <div onClick={handleLogoClick} className={styles.logoContainer}>
+          <div onClick={handleBackHomeClick} className={styles.logoContainer}>
             <Logo />
           </div>
           <nav className={styles.nav} aria-label="Основная навигация">
