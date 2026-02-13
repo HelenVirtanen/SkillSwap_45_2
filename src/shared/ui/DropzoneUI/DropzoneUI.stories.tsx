@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DropzoneUI } from './DropzoneUI';
 
 const meta: Meta<typeof DropzoneUI> = {

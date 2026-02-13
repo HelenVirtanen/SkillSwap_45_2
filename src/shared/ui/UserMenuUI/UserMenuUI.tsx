@@ -12,7 +12,7 @@ export const UserMenuUI: React.FC<UserMenuUIProps> = ({
   onLogoutClick,
 }) => {
   return (
-    <div className={styles.menu}>
+    <nav className={styles.menu}>
       <button
         type="button"
         className={styles.item}
@@ -27,8 +27,8 @@ export const UserMenuUI: React.FC<UserMenuUIProps> = ({
         onClick={onLogoutClick}
       >
         <span>Выйти из аккаунта</span>
-        <LogoutIcon className={styles.icon} />
+        <LogoutIcon className={styles.icon} aria-hidden="true"/>
       </button>
-    </div>
+    </nav>
   );
 };

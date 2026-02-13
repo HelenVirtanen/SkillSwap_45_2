@@ -48,6 +48,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
+    title: 'Пол',
     options: ['Не указан', 'Мужской', 'Женский'],
     type: 'secondary',
     widthDepOnContent: false,
