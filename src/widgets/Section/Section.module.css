@@ -1,0 +1,34 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  max-width: 1020px;
+  max-height: 448px; 
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  padding-block-end: 33px;
+}
+
+.sectionTitle {
+  font-family: var(
+    --ff-heading,
+    'Jost',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    roboto,
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-medium, 500);
+  font-size: var(--lh-h2, 32px);
+  color: var(--clr-text-primary, #253017);
+  letter-spacing: -0.01em;
+  padding-block-start: 7px;
+}
+
+.buttonWrapper {
+  max-width: 187px;
+}
