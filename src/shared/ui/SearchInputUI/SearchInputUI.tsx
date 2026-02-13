@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import _ from 'lodash';
 import styles from './SearchInputUI.module.css';
 import SearchIcon from '@assets/icons/search.svg?react';
 
@@ -13,13 +14,17 @@ const SearchInputUI: React.FunctionComponent<SearchInputUIProps> = ({
   onChange,
   onClear,
 }) => {
-  const [inputValue, setInputValue] = React.useState('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+  const [inputValue, setInputValue] = useState('');
+  
+  const handleDebouncedChange = _.debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(event);
     }
+  }, 500);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    handleDebouncedChange(event);
   };
 
   const handleClear = () => {
