@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import _ from 'lodash';
 import styles from './SearchInputUI.module.css';
 import SearchIcon from '@assets/icons/search.svg?react';
 
-interface SearchInputUIProps {
-  placeholder?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+interface SearchInputUIProps extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'onChange'
+  > {
+  onChange?: (value: string) => void;
   onClear?: () => void;
 }
 
@@ -12,32 +15,45 @@ const SearchInputUI: React.FunctionComponent<SearchInputUIProps> = ({
   placeholder = 'Искать навык',
   onChange,
   onClear,
+  ...inputProps
 }) => {
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = useState('');
+
+  const handleDebouncedChange = useMemo(
+    () => _.debounce((value: string) => onChange?.(value), 500),
+    [onChange],
+  );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    if (onChange) {
-      onChange(event);
-    }
+    const value = event.target.value;
+    setInputValue(value);
+    handleDebouncedChange(value);
   };
 
   const handleClear = () => {
     setInputValue('');
+    handleDebouncedChange('');
     if (onClear) {
       onClear();
     }
   };
 
+  useEffect(() => {
+    return () => {
+      handleDebouncedChange.cancel();
+    };
+  }, [handleDebouncedChange]);
+
   return (
     <div className={styles.searchInputContainer}>
-      <SearchIcon className={styles.searchIcon}/>
+      <SearchIcon className={styles.searchIcon} />
       <input
         type="text"
         placeholder={placeholder}
         value={inputValue}
         onChange={handleChange}
         className={styles.searchInput}
+        {...inputProps}
       />
       {inputValue && (
         <button

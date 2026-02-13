@@ -34,8 +34,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleSearchChange = (value: string) => {
     onSearchChange?.(value);
   };
 
@@ -48,7 +47,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
   };
 
   const handleRegister = () => {
-    navigate('/register');
+    navigate('/register/step1');
   };
 
   const handleThemeToggle = () => {

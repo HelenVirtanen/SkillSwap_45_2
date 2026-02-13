@@ -1,9 +1,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  max-height: 93px;
-  width: 100%;
   row-gap: 8px;
+  width: 100%;
 }
 
 .inputWrapper {
@@ -61,6 +60,10 @@
 }
 
 .errorText {
+  padding-top: 12px;
+  color: var(--clr-error, #bf3920);
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-caption, 12px);
   font-family: var(
     --ff-body,
     'Roboto',
@@ -70,9 +73,7 @@
     arial,
     sans-serif
   );
-  font-weight: var(--fw-regular, 400);
-  font-size: var(--fs-caption, 12px);
-  color: var(--clr-error, #bf3920);
+  line-height: 16px;
   letter-spacing: 0.02em;
 }
 

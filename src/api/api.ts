@@ -59,6 +59,10 @@ export const fetchWithRefresh = async <T>(
   }
 };
 
+// ============================================
+// AUTH TYPES & API
+// ============================================
+
 export type TRegisterData = {
   email: string;
   name: string;
@@ -168,3 +172,142 @@ export const logoutApi = () =>
       token: localStorage.getItem('refreshToken'),
     }),
   }).then((res) => checkResponse<TServerResponse<object>>(res));
+
+// ============================================
+// STATIC DATA TYPES & API
+// ============================================
+
+export type TSkillCategory = {
+  title: string;
+  icon: string;
+  skills: string[];
+};
+
+type TSkillsResponse = TServerResponse<TSkillCategory[]>;
+type TCitiesResponse = TServerResponse<string[]>;
+
+export const getSkillsApi = () =>
+  fetch(`${URL}/static/skills`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+    },
+  }).then((res) => checkResponse<TSkillsResponse>(res));
+
+export const getCitiesApi = () =>
+  fetch(`${URL}/static/cities`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+    },
+  }).then((res) => checkResponse<TCitiesResponse>(res));
+
+// ============================================
+// PROFILE TYPES & API
+// ============================================
+
+export type TTeachSkills = {
+  title: string;
+  skills: string;
+};
+
+export type TProfile = {
+  id: number;
+  name: string;
+  email: string;
+  city?: string;
+  birthDate?: string;
+  gender?: string;
+  teach_skills?: TTeachSkills;
+  learn_skills?: string[];
+  avatar?: string;
+  about?: string;
+  photosOnAbout?: string[];
+  isFavourite?: boolean;
+};
+
+export type TUpdateProfileData = {
+  name?: string;
+  birthDate?: string;
+  gender?: string;
+  city?: string;
+  teachSkillsTitle?: string;
+  teachSkills?: string;
+  learnSkills?: string[];
+  avatar?: string;
+  about?: string;
+  photosOnAbout?: string[];
+};
+
+type TProfileResponse = TServerResponse<TProfile>;
+type TProfilesResponse = TServerResponse<TProfile[]>;
+
+// Get all profiles
+export const getProfilesApi = () =>
+  fetchWithRefresh<TProfilesResponse>(`${URL}/profiles`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+      authorization: getCookie('accessToken'),
+    } as HeadersInit,
+  });
+
+// Get specific profile by ID
+export const getProfileByIdApi = (id: number) =>
+  fetchWithRefresh<TProfileResponse>(`${URL}/profiles/${id}`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+      authorization: getCookie('accessToken'),
+    } as HeadersInit,
+  });
+
+// Get current user's profile
+export const getMyProfileApi = () =>
+  fetchWithRefresh<TProfileResponse>(`${URL}/profiles/me`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+      authorization: getCookie('accessToken'),
+    } as HeadersInit,
+  });
+
+// Update current user's profile
+export const updateMyProfileApi = (data: TUpdateProfileData) =>
+  fetchWithRefresh<TProfileResponse>(`${URL}/profiles/me`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'X-API-Key': `${API_KEY}`,
+      authorization: getCookie('accessToken'),
+    } as HeadersInit,
+    body: JSON.stringify(data),
+  });
+
+// ============================================
+// FAVOURITES API
+// ============================================
+
+// Get user's favourites
+export const getFavouritesApi = () =>
+  fetchWithRefresh<TProfilesResponse>(`${URL}/profiles/favourites`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+      authorization: getCookie('accessToken'),
+    } as HeadersInit,
+  });
+
+// Add user to favourites
+export const addToFavouritesApi = (userId: number) =>
+  fetchWithRefresh<TServerResponse<object>>(`${URL}/profiles/favourites/${userId}`, {
+    method: 'POST',
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+      authorization: getCookie('accessToken'),
+    } as HeadersInit,
+  });
+
+// Remove user from favourites
+export const removeFromFavouritesApi = (userId: number) =>
+  fetchWithRefresh<TServerResponse<object>>(`${URL}/profiles/favourites/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+      authorization: getCookie('accessToken'),
+    } as HeadersInit,
+  });
