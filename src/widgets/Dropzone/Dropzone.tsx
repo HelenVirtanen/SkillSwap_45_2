@@ -26,6 +26,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onFilesChange }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleFiles(e.target.files);
+    e.target.value = '';
   };
 
   const handleClick = () => {
