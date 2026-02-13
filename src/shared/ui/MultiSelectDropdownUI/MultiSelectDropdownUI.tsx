@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import type { FC } from 'react';
 import styles from './MultiSelectDropdownUI.module.css';
 import { CheckboxUI } from '@shared/ui/CheckboxUI/CheckboxUI';
@@ -60,57 +60,57 @@ export const MultiSelectDropdownUI: FC<MultiSelectDropdownUIProps> = ({
       document.addEventListener('mousedown', handleClickOutside);
     }
 
-    // убрал лишний вызов
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, handleClickOutside]);
 
-  // текст который показывается в кнопке дропдауна  (выберите варианты/выбраннвй элемент / или число элементов)
-  const getDisplayText = () => {
+  // текст который показывается в кнопке дропдауна (выберите варианты/выбранный элемент / или число элементов)
+  const getDisplayText = useMemo(() => {
     if (selected.length === 0) return placeholder;
     if (selected.length === 1) {
       const selectedOption = options.find((opt) => opt.value === selected[0]);
       return selectedOption?.label || placeholder;
     }
     return `Выбрано: ${selected.length}`;
-  };
+  }, [selected, options, placeholder]);
 
   return (
     <div className={styles.container} ref={dropdownRef}>
       {label && <label className={styles.label}>{label}</label>}
-     <div className={`${styles.wrapper} ${isOpen ? styles.wrapperOpen : ''}`}>
-      <button
-        type="button"
-        className={`${styles.dropdown} ${isOpen ? styles.dropdownOpen : ''} ${
-          error ? styles.dropdownError : '' 
-        } ${disabled ? styles.dropdownDisabled : ''}`}
-        onClick={toggleDropdown}
-        aria-expanded={isOpen}
-        disabled={disabled} 
-      >
-        <span className={styles.dropdownText}>{getDisplayText()}</span>
-        <span className={styles.dropdownArrow}>⌵</span>
-      </button>
+      <div className={`${styles.wrapper} ${isOpen ? styles.wrapperOpen : ''}`}>
+        <button
+          type="button"
+          className={`${styles.dropdown} ${isOpen ? styles.dropdownOpen : ''} ${
+            error ? styles.dropdownError : ''
+          } ${disabled ? styles.dropdownDisabled : ''}`}
+          onClick={toggleDropdown}
+          aria-expanded={isOpen}
+          disabled={disabled}
+          aria-haspopup="listbox"
+        >
+          <span className={styles.dropdownText}>{getDisplayText}</span>
+          <span className={styles.dropdownArrow}>⌵</span>
+        </button>
 
-      {isOpen && !disabled && (
-        <div className={styles.dropdownMenu}>
-          {options.map((option) => (
-            <div
-              key={option.id}
-              className={styles.dropdownItem}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <CheckboxUI
-                label={option.label}
-                state={selected.includes(option.value) ? 'done' : 'default'}
-                onChange={() => handleOptionChange(option.value)}
-                disabled={disabled}
-              />
-            </div>
-          ))}
-        </div>
-      )}
+        {isOpen && !disabled && (
+          <div className={styles.dropdownMenu}>
+            {options.map((option) => (
+              <div
+                key={option.id}
+                className={styles.dropdownItem}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <CheckboxUI
+                  label={option.label}
+                  state={selected.includes(option.value) ? 'done' : 'default'}
+                  onChange={() => handleOptionChange(option.value)}
+                  disabled={disabled}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       {error && <span className={styles.errorText}>{error}</span>}
     </div>

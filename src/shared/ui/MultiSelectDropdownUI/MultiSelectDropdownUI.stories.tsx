@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { MultiSelectDropdownUI } from './MultiSelectDropdownUI';
 
@@ -20,9 +20,8 @@ const options = [
   { id: 1, label: 'Бизнес и карьера', value: 'бизнес и карьера' },
   { id: 2, label: 'Творчество и искусство', value: 'творчество и искусство' },
   { id: 3, label: 'Иностранные языки', value: 'иностранные языки' },
-  { id: 4, label: 'Иностранные языки', value: 'иностранные языки' },
-  { id: 5, label: 'Здоровье и лайфстайл', value: 'здоровье и лайфстайл' },
-  { id: 6, label: 'Дом и уют', value: 'дом и уют' },
+  { id: 4, label: 'Здоровье и лайфстайл', value: 'здоровье и лайфстайл' },
+  { id: 5, label: 'Дом и уют', value: 'дом и уют' },
 ];
 
 // Обёртка для управления состоянием
