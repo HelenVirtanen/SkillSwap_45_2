@@ -242,6 +242,22 @@ type TProfilesResponse = TServerResponse<TProfile[]>;
 
 // Get all profiles
 export const getProfilesApi = () =>
+  fetch(`${URL}/profiles`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+    },
+  }).then((res) => checkResponse<TProfilesResponse>(res));
+
+// Get specific profile by ID
+export const getProfileByIdApi = (id: number) =>
+  fetch(`${URL}/profiles/${id}`, {
+    headers: {
+      'X-API-Key': `${API_KEY}`,
+    },
+  }).then((res) => checkResponse<TProfileResponse>(res));
+
+// Если авторизован - с токеном (для отображения избранного)
+export const getProfilesAuthApi = () =>
   fetchWithRefresh<TProfilesResponse>(`${URL}/profiles`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
@@ -249,8 +265,7 @@ export const getProfilesApi = () =>
     } as HeadersInit,
   });
 
-// Get specific profile by ID
-export const getProfileByIdApi = (id: number) =>
+export const getProfileByIdAuthApi = (id: number) =>
   fetchWithRefresh<TProfileResponse>(`${URL}/profiles/${id}`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
