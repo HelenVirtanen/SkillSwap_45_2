@@ -13,19 +13,21 @@ export interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ title, users, onShowAll }) => {
   return (
-    <section className={styles.section}>      
+    <section className={styles.section}>
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>{title}</h2>
-        <div className={styles.buttonWrapper}>
-        <ButtonUI
-          variant="tertiary"
-          title="Смотреть все"
-          iconRight={<ChevronRight />}
-          onClick={onShowAll}
-        />
-        </div>
+        {onShowAll && (
+          <div className={styles.buttonWrapper}>
+            <ButtonUI
+              variant="tertiary"
+              title="Смотреть все"
+              iconRight={<ChevronRight />}
+              onClick={onShowAll}
+            />
+          </div>
+        )}
       </div>
-      
+
       <UserCardsGroup users={users} />
     </section>
   );
