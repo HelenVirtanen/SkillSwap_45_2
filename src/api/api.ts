@@ -237,8 +237,8 @@ export type TUpdateProfileData = {
   photosOnAbout?: string[];
 };
 
-type TProfileResponse = TServerResponse<TProfile>;
-type TProfilesResponse = TServerResponse<TProfile[]>;
+export type TProfileResponse = TServerResponse<TProfile>;
+export type TProfilesResponse = TServerResponse<TProfile[]>;
 
 // Get all profiles
 export const getProfilesApi = () =>
