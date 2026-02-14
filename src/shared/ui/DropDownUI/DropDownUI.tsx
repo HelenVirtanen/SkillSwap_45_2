@@ -9,12 +9,13 @@ type SelectProps = {
   options?: string[];
   type?: 'primary' | 'secondary';
   onChange?: (value: string) => void;
+  placeholder?: string;
 };
 
 const DropDownUI = (
   props: SelectProps
 ) => {
-  const { title, value, widthDepOnContent = true, options, type = 'primary', onChange } = props;
+  const { title, value, widthDepOnContent = true, options, type = 'primary', onChange, placeholder } = props;
 
   const [isOpen, setIsOpen] = useState(false)
   const [selected,setSelected] = useState(value)
@@ -22,7 +23,10 @@ const DropDownUI = (
 
   const ref = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
-
+  
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
   function buttonToggle (){
     setIsOpen(!isOpen)
   }
@@ -97,7 +101,7 @@ const DropDownUI = (
           <span
             className={`${styles.textInButtonWithIcon} ${selected ? '' : styles.placeholder} ${styles.text}`}
           >
-            {selected ? selected : options?.[0]}
+            {selected ? selected : (placeholder ? placeholder : options?.[0])}
           </span>
           <img
             src={chevronUp}

@@ -91,3 +91,8 @@
   color: var(--clr-text-primary, #253017);
   letter-spacing: 0.02em;
 }
+.textarea {
+  resize: none;
+  height: 96px;
+
+}
