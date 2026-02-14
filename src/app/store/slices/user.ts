@@ -11,7 +11,7 @@ export type TUser = {
 
 interface UsersState {
   users: TUser[];
-  status: 'idle' | 'loading' | 'failed';
+  status: 'idle' | 'loading' | 'failed' | 'succeeded';
   error: string | null;
 }
 
@@ -44,7 +44,7 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<TUser[]>) => {
-        state.status = 'idle';
+        state.status = 'succeeded';
         state.users = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
