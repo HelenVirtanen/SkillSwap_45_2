@@ -6,7 +6,7 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import InputUI from '@shared/ui/InputUI/InputUI';
 import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
 import styles from './Step3SkillInfo.module.css';
-import {DropzoneUI} from '@shared/ui/DropzoneUI/DropzoneUI';
+import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';
 
 // Типы данных формы (убрали tagging)
 export interface Step3Data {
@@ -44,7 +44,7 @@ const schema = yup.object().shape({
 });
 
 interface Step3SkillInfoProps {
-   onNext: (data: Step3Data) => void;
+  onNext: (data: Step3Data) => void;
   onBack: () => void;
   initialData?: Partial<Step3Data>;
 }
@@ -59,7 +59,6 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
     setValue,
-    watch,
   } = useForm<Step3Data>({
     resolver: yupResolver(schema),
     mode: 'onChange',
@@ -82,8 +81,8 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
 
   // Отправка формы
   const onSubmit = (data: Step3Data) => {
-  onNext(data);
-};
+    onNext(data);
+  };
 
   // Варианты категорий для DropDownUI
   const categoryOptions = [
@@ -139,7 +138,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
                 options={categoryOptions}
                 onChange={field.onChange}
                 widthDepOnContent={false}
-                placeholder='Выберите категорию навыка'
+                placeholder="Выберите категорию навыка"
               />
               {errors.category && (
                 <span className={styles.errorMessage}>
@@ -162,7 +161,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
                 options={subcategoryOptions}
                 onChange={field.onChange}
                 widthDepOnContent={false}
-                placeholder='Выберите подкатегорию навыка'
+                placeholder="Выберите подкатегорию навыка"
               />
               {errors.subcategory && (
                 <span className={styles.errorMessage}>
