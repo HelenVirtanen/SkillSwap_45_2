@@ -2,6 +2,8 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loader from '@shared/ui/Loader/Loader';
+import RegisterPageStep2 from '@pages/RegisterPages/RegisterPageStep2/RegisterPageStep2';
+import RegisterPageStep3 from '@pages/RegisterPages/RegisterPageStep3/RegisterPageStep3';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
 const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));
@@ -35,8 +37,8 @@ function App() {
         </Route>
         <Route path="/register" element={<AuthLayout />}>
           <Route path="step1" element={<RegisterPageStep1 />} />
-          <Route path="step2" element={<RegisterPageStep1 />} />
-          <Route path="step3" element={<RegisterPageStep1 />} />
+          <Route path="step2" element={<RegisterPageStep2 />} />
+          <Route path="step3" element={<RegisterPageStep3 />} />
         </Route>
       </Routes>
     </Suspense>
