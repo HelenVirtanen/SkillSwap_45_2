@@ -1,5 +1,5 @@
-import ButtonUI from "@shared/ui/ButtonUI/ButtonUI";
 import Stepper from "@widgets/Stepper/Stepper";
+import { Step3SkillInfo } from "@widgets/Forms/RegisterSteps/Step3SkillInfo/Step3SkillInfo";
 import { useNavigate } from "react-router-dom";
 
 const RegisterPageStep3: React.FC = () => {
@@ -16,18 +16,7 @@ const RegisterPageStep3: React.FC = () => {
   return (
     <div>
       <Stepper currentStep={3}/>
-      <div>
-        <ButtonUI 
-          variant="secondary"
-          title="Назад"
-          onClick={handleBack}
-        />
-        <ButtonUI 
-          variant="primary"
-          title="Продолжить"
-          onClick={handleNext}
-        />
-      </div>
+      <Step3SkillInfo onBack={handleBack} onNext={handleNext}/>
     </div>
   );
 }
