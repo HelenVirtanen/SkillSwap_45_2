@@ -17,7 +17,7 @@ type TRefreshResponse = TServerResponse<{
 }>;
 
 export const refreshToken = (): Promise<TRefreshResponse> =>
-  fetch(`${URL}/auth/token`, {
+  fetch(`/api/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -76,7 +76,7 @@ type TAuthResponse = TServerResponse<{
 }>;
 
 export const registerUserApi = (data: TRegisterData) =>
-  fetch(`${URL}/auth/register`, {
+  fetch(`/api/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -96,7 +96,7 @@ export type TLoginData = {
 };
 
 export const loginUserApi = (data: TLoginData) =>
-  fetch(`${URL}/auth/login`, {
+  fetch(`/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -111,7 +111,7 @@ export const loginUserApi = (data: TLoginData) =>
     });
 
 export const forgotPasswordApi = (data: { email: string }) =>
-  fetch(`${URL}/password-reset`, {
+  fetch(`/api/password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -126,7 +126,7 @@ export const forgotPasswordApi = (data: { email: string }) =>
     });
 
 export const resetPasswordApi = (data: { password: string; token: string }) =>
-  fetch(`${URL}/password-reset/reset`, {
+  fetch(`/api/password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -143,7 +143,7 @@ export const resetPasswordApi = (data: { password: string; token: string }) =>
 type TUserResponse = TServerResponse<{ user: TUser }>;
 
 export const getUserApi = () =>
-  fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
+  fetchWithRefresh<TUserResponse>(`/api/auth/user`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -151,7 +151,7 @@ export const getUserApi = () =>
   });
 
 export const updateUserApi = (user: Partial<TRegisterData>) =>
-  fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
+  fetchWithRefresh<TUserResponse>(`/api/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -162,7 +162,7 @@ export const updateUserApi = (user: Partial<TRegisterData>) =>
   });
 
 export const logoutApi = () =>
-  fetch(`${URL}/auth/logout`, {
+  fetch(`/api/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -187,14 +187,14 @@ type TSkillsResponse = TServerResponse<TSkillCategory[]>;
 type TCitiesResponse = TServerResponse<string[]>;
 
 export const getSkillsApi = () =>
-  fetch(`${URL}/static/skills`, {
+  fetch(`/api/static/skills`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
   }).then((res) => checkResponse<TSkillsResponse>(res));
 
 export const getCitiesApi = () =>
-  fetch(`${URL}/static/cities`, {
+  fetch(`/api/static/cities`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
@@ -242,7 +242,7 @@ export type TProfilesResponse = TServerResponse<TProfile[]>;
 
 // Get all profiles
 export const getProfilesApi = () =>
-  fetch(`${URL}/profiles`, {
+  fetch(`/api/profiles`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
@@ -250,7 +250,7 @@ export const getProfilesApi = () =>
 
 // Get specific profile by ID
 export const getProfileByIdApi = (id: number) =>
-  fetch(`${URL}/profiles/${id}`, {
+  fetch(`/api/profiles/${id}`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
@@ -258,7 +258,7 @@ export const getProfileByIdApi = (id: number) =>
 
 // Если авторизован - с токеном (для отображения избранного)
 export const getProfilesAuthApi = () =>
-  fetchWithRefresh<TProfilesResponse>(`${URL}/profiles`, {
+  fetchWithRefresh<TProfilesResponse>(`/api/profiles`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -266,7 +266,7 @@ export const getProfilesAuthApi = () =>
   });
 
 export const getProfileByIdAuthApi = (id: number) =>
-  fetchWithRefresh<TProfileResponse>(`${URL}/profiles/${id}`, {
+  fetchWithRefresh<TProfileResponse>(`/api/profiles/${id}`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -275,7 +275,7 @@ export const getProfileByIdAuthApi = (id: number) =>
 
 // Get current user's profile
 export const getMyProfileApi = () =>
-  fetchWithRefresh<TProfileResponse>(`${URL}/profiles/me`, {
+  fetchWithRefresh<TProfileResponse>(`/api/profiles/me`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -284,7 +284,7 @@ export const getMyProfileApi = () =>
 
 // Update current user's profile
 export const updateMyProfileApi = (data: TUpdateProfileData) =>
-  fetchWithRefresh<TProfileResponse>(`${URL}/profiles/me`, {
+  fetchWithRefresh<TProfileResponse>(`/api/profiles/me`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -300,7 +300,7 @@ export const updateMyProfileApi = (data: TUpdateProfileData) =>
 
 // Get user's favourites
 export const getFavouritesApi = () =>
-  fetchWithRefresh<TProfilesResponse>(`${URL}/profiles/favourites`, {
+  fetchWithRefresh<TProfilesResponse>(`/api/profiles/favourites`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -309,7 +309,7 @@ export const getFavouritesApi = () =>
 
 // Add user to favourites
 export const addToFavouritesApi = (userId: number) =>
-  fetchWithRefresh<TServerResponse<object>>(`${URL}/profiles/favourites/${userId}`, {
+  fetchWithRefresh<TServerResponse<object>>(`/api/profiles/favourites/${userId}`, {
     method: 'POST',
     headers: {
       'X-API-Key': `${API_KEY}`,
@@ -319,7 +319,7 @@ export const addToFavouritesApi = (userId: number) =>
 
 // Remove user from favourites
 export const removeFromFavouritesApi = (userId: number) =>
-  fetchWithRefresh<TServerResponse<object>>(`${URL}/profiles/favourites/${userId}`, {
+  fetchWithRefresh<TServerResponse<object>>(`/api/profiles/favourites/${userId}`, {
     method: 'DELETE',
     headers: {
       'X-API-Key': `${API_KEY}`,
