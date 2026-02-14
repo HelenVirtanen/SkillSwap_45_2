@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styles from './AvatarUI.module.css';
-import addIcon from '/src/assets/icons/add1.svg';
-import userIcon from '/src/assets/icons/user-circle.svg';
+import AddIcon from '/src/assets/icons/add1.svg?react';
+import UserIcon from '/src/assets/icons/user-circle.svg?react';
 
 interface AvatarUIProps {
   value?: string | null;
@@ -54,26 +54,19 @@ const AvatarUI: React.FC<AvatarUIProps> = ({
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         aria-label="Изменить аватар"
-        style={{
-          backgroundImage: preview && !imageError
-            ? `url(${preview})`
-            : `url(${userIcon})`,
-        }}
       >
-        {preview && !imageError && (
+        {preview && !imageError ? (
           <img
             src={preview}
             alt=""
             className={styles.image}
             onError={handleImageError}
           />
+        ) : (
+          <UserIcon className={styles.fallbackIcon} />
         )}
-        <img
-          src={addIcon}
-          alt=""
-          className={styles.add}
-          aria-hidden="true"
-        />
+
+        <AddIcon className={styles.add} aria-hidden="true" />
       </button>
 
       <input

@@ -1,5 +1,3 @@
-/* src/shared/ui/AvatarUI/AvatarUI.module.css */
-
 .main {
   position: relative;
   width: 54px;
@@ -8,54 +6,34 @@
 }
 
 .imageButton {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  background: transparent;
   border-radius: 50%;
   outline: none;
   cursor: pointer;
 }
 
-/* Стили для fallback иконки */
-.imageButton[style*='user-circle.svg'] {
-  background-position: center;
-  background-size: 70%;
-  
-}
-
-[data-theme='dark'] .imageButton[style*='user-icon.svg'] {
-  filter: brightness(0) invert(1);
-}
-
-.imageButton:focus-visible {
-  outline: 2px solid #007bff;
-  outline-offset: 2px;
-}
-
 .image {
-  position: relative;
-  display: block;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   object-fit: cover;
+  border: 1.5px solid var(--clr-text-primary, #253017);
 }
 
 .add {
   position: absolute;
-  right: 2px;
-  bottom: 2px;
+  right: -10px;
+  bottom: -10px;
   width: 16px;
   height: 16px;
-  cursor: pointer;
+  background-color: var(--clr-primary, #ABD27A);
+  border-radius: 50%;
   transition: transform 0.2s ease-in-out;
-  
 }
 
 .imageButton:hover .add,
@@ -63,8 +41,7 @@
   transform: scale(1.2);
 }
 
-.wrapper {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.imageButton:focus-visible {
+  outline: 2px solid var(--clr-primary, #007bff);
+  outline-offset: 2px;
 }
