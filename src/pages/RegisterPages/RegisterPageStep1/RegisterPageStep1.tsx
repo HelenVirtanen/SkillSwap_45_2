@@ -6,10 +6,13 @@ import lightBulb from "../../../assets/illustrations/light-bulb.svg";
 import InputUI from "@shared/ui/InputUI/InputUI";
 import Stepper from "@widgets/Stepper/Stepper";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPageStep1: React.FC = () => {
     const [password, setPassword] = useState('');
     const [passwordHelperText, setPasswordHelperText] = useState<string | undefined>(undefined);
+
+    const navigate = useNavigate();
 
     // const [email, setEmail] = useState('');
     // const [emailErrorText, setEmailErrorText] = useState<string | undefined>(undefined);
@@ -19,7 +22,7 @@ const RegisterPageStep1: React.FC = () => {
       if (password.length < 8) {
         setPasswordHelperText('Пароль должен содержать не менее 8 знаков');
       } else {
-        setPasswordHelperText('Надёжный');
+        navigate('/register/step2');
       }
     }
 
@@ -40,7 +43,7 @@ const RegisterPageStep1: React.FC = () => {
 
     return (
       <div className={styles.container}>
-        <Stepper/>
+        <Stepper currentStep={1}/>
         <div className={styles.content} >
           <div className={styles.register}>
             <div className={styles.loginWith}>
