@@ -1,11 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './UserCard.module.css';
-import UserInfoUI from '@shared/ui/UserInfoUI/UserInfoUI'
-import SkillTagUI from '@shared/ui/SkillTagUI/SkillTagUI'
+import UserInfoUI from '@shared/ui/UserInfoUI/UserInfoUI';
+import SkillTagUI from '@shared/ui/SkillTagUI/SkillTagUI';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 
 interface ISkill {
   title: string;
-  variant?: 'business' | 'languages' | 'home' | 'art' | 'education' | 'health' | 'other';
+  variant?:
+    | 'business'
+    | 'languages'
+    | 'home'
+    | 'art'
+    | 'education'
+    | 'health'
+    | 'other';
 }
 
 interface IUserCardProps {
@@ -35,23 +43,24 @@ const UserCard: React.FC<IUserCardProps> = ({
   const tag1Ref = useRef<HTMLDivElement>(null);
   const tag2Ref = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
-  
+
   const [visibleCount, setVisibleCount] = useState(1); // По умолчанию 1
 
   useEffect(() => {
     const calculateVisibleTags = () => {
       const containerWidth = containerRef.current?.offsetWidth || 284;
-      
+
       // Получаем ширины тегов
       const tag1Width = tag1Ref.current?.offsetWidth || 0;
       const tag2Width = tag2Ref.current?.offsetWidth || 0;
       const counterWidth = counterRef.current?.offsetWidth || 0;
-      
+
       const gap = 4; // gap между тегами
 
       // Пробуем поместить 2 тега + счетчик
-      const twoTagsPlusCounter = tag1Width + gap + tag2Width + gap + counterWidth;
-      
+      const twoTagsPlusCounter =
+        tag1Width + gap + tag2Width + gap + counterWidth;
+
       if (twoTagsPlusCounter <= containerWidth && learningSkills.length >= 2) {
         // Помещается 2 тега + счетчик
         setVisibleCount(2);
@@ -63,10 +72,10 @@ const UserCard: React.FC<IUserCardProps> = ({
 
     // Даем время на отрисовку тегов
     const timeoutId = setTimeout(calculateVisibleTags, 50);
-    
+
     // Добавляем обработчик изменения размера окна
     window.addEventListener('resize', calculateVisibleTags);
-    
+
     return () => {
       window.removeEventListener('resize', calculateVisibleTags);
       clearTimeout(timeoutId);
@@ -97,9 +106,9 @@ const UserCard: React.FC<IUserCardProps> = ({
           <div className={styles.section}>
             <h4 className={styles.sectionTitle}>Может научить:</h4>
             <div className={styles.skillsRow}>
-              <SkillTagUI 
-                title={teachingSkill.title} 
-                variant={teachingSkill.variant || 'other'} 
+              <SkillTagUI
+                title={teachingSkill.title}
+                variant={teachingSkill.variant || 'other'}
               />
             </div>
           </div>
@@ -110,69 +119,66 @@ const UserCard: React.FC<IUserCardProps> = ({
             <div className={styles.skillsRow} ref={containerRef}>
               {/* Скрытые теги для измерения */}
               {learningSkills.length > 0 && (
-                <div 
+                <div
                   ref={tag1Ref}
-                  style={{ 
-                    position: 'absolute', 
-                    visibility: 'hidden', 
+                  style={{
+                    position: 'absolute',
+                    visibility: 'hidden',
                     pointerEvents: 'none',
-                    zIndex: -1
+                    zIndex: -1,
                   }}
                 >
-                  <SkillTagUI 
-                    title={learningSkills[0].title} 
-                    variant={learningSkills[0].variant || 'other'} 
+                  <SkillTagUI
+                    title={learningSkills[0].title}
+                    variant={learningSkills[0].variant || 'other'}
                   />
                 </div>
               )}
-              
+
               {learningSkills.length > 1 && (
-                <div 
+                <div
                   ref={tag2Ref}
-                  style={{ 
-                    position: 'absolute', 
-                    visibility: 'hidden', 
+                  style={{
+                    position: 'absolute',
+                    visibility: 'hidden',
                     pointerEvents: 'none',
-                    zIndex: -1
+                    zIndex: -1,
                   }}
                 >
-                  <SkillTagUI 
-                    title={learningSkills[1].title} 
-                    variant={learningSkills[1].variant || 'other'} 
+                  <SkillTagUI
+                    title={learningSkills[1].title}
+                    variant={learningSkills[1].variant || 'other'}
                   />
                 </div>
               )}
-              
-              <div 
+
+              <div
                 ref={counterRef}
-                style={{ 
-                  position: 'absolute', 
-                  visibility: 'hidden', 
+                style={{
+                  position: 'absolute',
+                  visibility: 'hidden',
                   pointerEvents: 'none',
-                  zIndex: -1
+                  zIndex: -1,
                 }}
               >
-                <SkillTagUI 
-                  title={`+${learningSkills.length > 2 ? learningSkills.length - 2 : 1}`} 
-                  variant="other" 
+                <SkillTagUI
+                  title={`+${learningSkills.length > 2 ? learningSkills.length - 2 : 1}`}
+                  variant="other"
                 />
               </div>
-              
+
               {/* Видимые теги */}
               {visibleSkills.map((skill, index) => (
-                <SkillTagUI 
+                <SkillTagUI
                   key={index}
-                  title={skill.title} 
-                  variant={skill.variant || 'other'} 
+                  title={skill.title}
+                  variant={skill.variant || 'other'}
                 />
               ))}
-              
+
               {/* Счетчик скрытых тегов */}
               {hiddenCount > 0 && (
-                <SkillTagUI 
-                  title={`+${hiddenCount}`} 
-                  variant="other" 
-                />
+                <SkillTagUI title={`+${hiddenCount}`} variant="other" />
               )}
             </div>
           </div>
@@ -181,12 +187,12 @@ const UserCard: React.FC<IUserCardProps> = ({
 
       {/* Actions секция - только кнопка "Подробнее" */}
       <div className={styles.actions}>
-        <button 
+        <ButtonUI
+          title="Подробнее"
+          variant="primary"
           className={styles.messageButton}
           onClick={onMessageClick}
-        >
-          Подробнее
-        </button>
+        />
       </div>
     </article>
   );
