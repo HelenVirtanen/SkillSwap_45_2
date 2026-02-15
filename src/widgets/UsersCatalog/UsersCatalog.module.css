@@ -9,30 +9,4 @@
   gap: 40px; /* расстояние между группами */
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 32px; /* расстояние между header и карточками */
-}
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header h1 {
-  margin: 0;
-  font-family: var(--ff-heading);
-  font-weight: var(--fw-medium);
-  font-style: Medium;
-  font-size: var(--fs-h1);
-  line-height: var(--lh-h1);
-  letter-spacing: -0.352px;
-  vertical-align: middle;
-}
-
-.buttonCatalog {
-  width: auto;
-  flex: 0 0 auto;
-}
