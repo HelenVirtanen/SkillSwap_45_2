@@ -88,34 +88,6 @@ const optionsSubCategorySkillsWantedToLearn = [
     value: 'Декор и DIY',
   },
 ];
-const optionsCity = [
-  {
-    id: 1,
-    label: 'Москва',
-    value: 'Москва',
-  },
-  {
-    id: 2,
-    label: 'Новосибирск',
-    value: 'Новосибирск',
-  },
-  {
-    id: 3,
-    label: 'Томск',
-    value: 'Томск',
-  },
-  {
-    id: 4,
-    label: 'Париж',
-    value: 'Париж',
-  },
-  {
-    id: 6,
-    label: 'Пекин',
-    value: 'Пекин',
-  },
-];
-//Убрать ширину form так как вдруг расстягиваться будет.
 
 export type Step2Data = {
   firstName?: string;

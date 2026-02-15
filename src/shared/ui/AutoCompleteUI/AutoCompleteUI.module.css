@@ -21,7 +21,7 @@
 }
 
 .cityAutocompleteInput {
-
+  color: var(--clr-text-primary, #253017);
   padding: 14px 19px;
   width: 100%;
   border: none;
