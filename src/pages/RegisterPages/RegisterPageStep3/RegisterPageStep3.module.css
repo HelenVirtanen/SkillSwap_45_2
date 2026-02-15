@@ -1,0 +1,19 @@
+.page {
+  margin-top: -48px;
+}
+
+.wrapper {
+  display: flex;
+  gap: 24px;
+  margin: 32px auto 0; 
+  width: 1136px;
+}
+
+.left {
+  width: 556px;
+  flex-shrink: 0;
+}
+
+.right {
+  flex: 1;
+}

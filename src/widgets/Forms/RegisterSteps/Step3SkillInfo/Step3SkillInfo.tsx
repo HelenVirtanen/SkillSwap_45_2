@@ -132,14 +132,16 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           control={control}
           render={({ field }) => (
             <div className={styles.formGroup}>
-              <DropDownUI
-                title="Категория навыка"
-                value={field.value}
-                options={categoryOptions}
-                onChange={field.onChange}
-                widthDepOnContent={false}
-                placeholder="Выберите категорию навыка"
-              />
+              <div className={styles.dropDownWrapper}>
+                <DropDownUI
+                  title="Категория навыка"
+                  value={field.value}
+                  options={categoryOptions}
+                  onChange={field.onChange}
+                  widthDepOnContent={false}
+                  placeholder="Выберите категорию навыка"
+                />
+              </div>
               {errors.category && (
                 <span className={styles.errorMessage}>
                   {errors.category.message}
@@ -155,14 +157,16 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           control={control}
           render={({ field }) => (
             <div className={styles.formGroup}>
-              <DropDownUI
-                title="Подкатегория навыка"
-                value={field.value}
-                options={subcategoryOptions}
-                onChange={field.onChange}
-                widthDepOnContent={false}
-                placeholder="Выберите подкатегорию навыка"
-              />
+              <div className={styles.dropDownWrapper}>
+                <DropDownUI
+                  title="Подкатегория навыка"
+                  value={field.value}
+                  options={subcategoryOptions}
+                  onChange={field.onChange}
+                  widthDepOnContent={false}
+                  placeholder="Выберите подкатегорию навыка"
+                />
+              </div>
               {errors.subcategory && (
                 <span className={styles.errorMessage}>
                   {errors.subcategory.message}
@@ -178,16 +182,18 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           control={control}
           render={({ field }) => (
             <div className={styles.formGroup}>
-              <InputUI
-                {...field}
-                label="Описание"
-                placeholder="Коротко опишите, чему можете научить"
-                type="textarea"
-                rows={4}
-                maxLength={500}
-                error={errors.description?.message}
-                className={errors.description ? styles.inputError : ''}
-              />
+              <div className={styles.textareaWrapper}>
+                <InputUI
+                  {...field}
+                  label="Описание"
+                  placeholder="Коротко опишите, чему можете научить"
+                  type="textarea"
+                  rows={4}
+                  maxLength={500}
+                  error={errors.description?.message}
+                  className={errors.description ? styles.inputError : ''}
+                />
+              </div>
             </div>
           )}
         />
