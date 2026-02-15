@@ -32,8 +32,6 @@ const MainPage: React.FC = () => {
     loadUsers();
   }, []);
 
-  const users: TProfile[] = usersData?.users || [];
-
   const mapProfileToCard = (profile: TProfile): IUserCardData => ({
     id: String(profile.id),
     avatar: profile.avatar || 'https://i.pravatar.cc/300',
@@ -54,7 +52,10 @@ const MainPage: React.FC = () => {
     isFavorite: profile.isFavourite ?? false,
   });
 
-  const mappedUsers = useMemo(() => users.map(mapProfileToCard), [users]);
+  const mappedUsers = useMemo(() => {
+     const users: TProfile[] = usersData?.users || [];
+     return users.map(mapProfileToCard);
+  }, [usersData]);
 
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>Ошибка: {error}</div>;
