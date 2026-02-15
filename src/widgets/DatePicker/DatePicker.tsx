@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { ru } from 'date-fns/locale/ru';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './DatePicker.module.css';
 import CalendarIcon from '../../assets/icons/calendar.svg?react';
-import DropDownUI from '@shared/ui/DropDownUI/DropDownUI.tsx';
-import ButtonUI from '@shared/ui/ButtonUI/ButtonUI.tsx';
+import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 
 registerLocale('ru', ru);
 
@@ -45,6 +45,10 @@ interface DatePickerProps {
   language?: string;
   classNameInput?: string;
   classNameCalendar?: string;
+  /** Controlled selected date */
+  selected?: Date | null;
+  /** Callback when date is confirmed (user clicks "Выбрать") */
+  onChange?: (date: Date | null) => void;
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
@@ -53,32 +57,39 @@ const DatePicker: React.FC<DatePickerProps> = ({
   language = 'ru',
   classNameInput,
   classNameCalendar,
+  selected,
+  onChange,
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [tempDate, setTempDate] = useState<Date | null>(null);
+  const [tempDate, setTempDate] = useState<Date | null>(selected ?? null);
   const [isOpen, setIsOpen] = useState(false);
   const datePickerRef = useRef<ReactDatePicker>(null);
 
+  // When selected changes externally and picker is closed, update tempDate
+  useEffect(() => {
+    if (!isOpen) {
+      setTempDate(selected ?? null);
+    }
+  }, [selected, isOpen]);
+
   const handleCancel = () => {
-    setTempDate(startDate);
+    setTempDate(selected ?? null);
     setIsOpen(false);
   };
 
   const handleConfirm = () => {
-    setStartDate(tempDate);
+    onChange?.(tempDate);
     setIsOpen(false);
   };
 
   const handleIconClick = () => {
-    setTempDate(startDate);
+    setTempDate(selected ?? null);
     setIsOpen(true);
   };
 
   const handleChange = (date: Date | null) => {
+    // Only update tempDate while open; actual value only changes on confirm
     if (isOpen) {
       setTempDate(date);
-    } else {
-      setStartDate(date);
     }
   };
 
@@ -89,77 +100,79 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
   return (
     <>
-      {title && <h4 className={`${styles.text} ${styles.title}`}>{title}</h4>}
-      <ReactDatePicker
-        placeholderText={placeholder}
-        selected={startDate}
-        onChange={handleChange}
-        open={isOpen}
-        onClickOutside={() => setIsOpen(false)}
-        locale={language}
-        showIcon
-        icon={
-          <div onClick={handleIconClick} style={{ cursor: 'pointer' }}>
-            <CalendarIcon />
-          </div>
-        }
-        toggleCalendarOnIconClick={false}
-        shouldCloseOnSelect={false}
-        showPopperArrow={false}
-        dropdownMode="select"
-        peekNextMonth={false}
-        calendarStartDay={1}
-        calendarClassName={classNameCalendar}
-        className={classNameInput}
-        ref={datePickerRef}
-        popperPlacement="bottom-start"
-        highlightDates={tempDate ? [tempDate] : []}
-        dateFormat="dd.MM.yyyy"
-        renderCustomHeader={({ date, changeYear, changeMonth }) => (
-          <div className={styles.dropdownsContainer}>
-            <DropDownUI
-              title=""
-              value={
-                language === 'ru'
-                  ? MONTHS_RU[date.getMonth()]
-                  : MONTHS_EN[date.getMonth()]
-              }
-              options={language === 'ru' ? MONTHS_RU : MONTHS_EN}
-              widthDepOnContent={false}
-              type={'secondary'}
-              onChange={(value) => {
-                const monthIndex = MONTHS_RU.indexOf(value);
-                changeMonth(monthIndex);
-              }}
+      <div className={`${styles.datePickerContainer}`}>
+        {title && <h4 className={`${styles.text} ${styles.title}`}>{title}</h4>}
+        <ReactDatePicker
+          placeholderText={placeholder}
+          selected={tempDate} // show temp selection in calendar
+          onChange={handleChange}
+          open={isOpen}
+          onClickOutside={() => setIsOpen(false)}
+          locale={language}
+          showIcon
+          icon={
+            <div onClick={handleIconClick} style={{ cursor: 'pointer' }}>
+              <CalendarIcon />
+            </div>
+          }
+          toggleCalendarOnIconClick={false}
+          shouldCloseOnSelect={false}
+          showPopperArrow={false}
+          dropdownMode="select"
+          peekNextMonth={false}
+          calendarStartDay={1}
+          calendarClassName={classNameCalendar}
+          className={classNameInput}
+          ref={datePickerRef}
+          popperPlacement="bottom-start"
+          highlightDates={tempDate ? [tempDate] : []}
+          dateFormat="dd.MM.yyyy"
+          renderCustomHeader={({ date, changeYear, changeMonth }) => (
+            <div className={styles.dropdownsContainer}>
+              <DropDownUI
+                title={''}
+                value={
+                  language === 'ru'
+                    ? MONTHS_RU[date.getMonth()]
+                    : MONTHS_EN[date.getMonth()]
+                }
+                options={language === 'ru' ? MONTHS_RU : MONTHS_EN}
+                widthDepOnContent={false}
+                type={'secondary'}
+                onChange={(value) => {
+                  const monthIndex = MONTHS_RU.indexOf(value);
+                  changeMonth(monthIndex);
+                }}
+              />
+              <DropDownUI
+                title={''}
+                value={String(date.getFullYear())}
+                options={years}
+                widthDepOnContent={false}
+                type={'secondary'}
+                onChange={(value) => {
+                  changeYear(Number(value));
+                }}
+              />
+            </div>
+          )}
+        >
+          {/* Buttons inside calendar */}
+          <div className={styles.buttonContainer}>
+            <ButtonUI
+              variant={'secondary'}
+              title={language === 'ru' ? 'Отменить' : 'Cancel'}
+              onClick={handleCancel}
+              className={styles.cancelButton}
             />
-            <DropDownUI
-              title=""
-              value={String(date.getFullYear())}
-              options={years}
-              widthDepOnContent={false}
-              type={'secondary'}
-              onChange={(value) => {
-                changeYear(Number(value));
-              }}
+            <ButtonUI
+              variant={'primary'}
+              title={language === 'ru' ? 'Выбрать' : 'Select'}
+              onClick={handleConfirm}
             />
           </div>
-        )}
-      >
-        {/* Кнопки внутри календаря через children */}
-        <div className={styles.buttonContainer}>
-          <ButtonUI
-            variant={'secondary'}
-            title={language === 'ru' ? 'Отменить' : 'Cancel'}
-            onClick={handleCancel}
-            className={styles.cancelButton}
-          />
-          <ButtonUI
-            variant={'primary'}
-            title={language === 'ru' ? 'Выбрать' : 'Select'}
-            onClick={handleConfirm}
-          />
-        </div>
-      </ReactDatePicker>
+        </ReactDatePicker>
+      </div>
     </>
   );
 };
