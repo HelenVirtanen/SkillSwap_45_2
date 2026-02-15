@@ -44,7 +44,7 @@ const DropDownUI = (
 
   return (
    
-    <div ref={ref}>
+    <div ref={ref} >
       {title && (
       <>
         <h4 className={`${styles.text} ${styles.title}`}>
@@ -54,7 +54,7 @@ const DropDownUI = (
       )}
       <div className={`${styles.wrapperDrownList} ${isOpen ? styles.dropDownListOpen : ''}`}>
         <button type="button" aria-label="Открыть список" className={`${styles.buttonWithIcon}` } onClick={buttonToggle}>
-          <span className={`${styles.textInButtonWithIcon} ${selected  ? styles.text : styles.placeholder} `  }>{selected ? selected : options?.[0]}</span>
+          <span className={`${styles.textInButtonWithIcon} ${selected ? styles.text : styles.placeholder} `  }>{selected ? selected : options?.[0]}</span>
           <img src={chevronUp} alt={isOpen ? "Закрыть список" : "Открыть список"} className={isOpen ? styles.arrow : styles.arrowOpen }/>
         </button>
       {isOpen && (

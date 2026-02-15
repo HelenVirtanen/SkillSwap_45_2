@@ -1,17 +1,31 @@
 .buttonWithIcon {
+
+
   display: flex;
   gap: 10px;
   padding: 12px 20px;
   background: transparent;
   width: 100%;
   justify-content: left;
-  /* border:1px solid var(--clr-ui-disabled,#e4e8df);  */
+  border: none;
+  font-family: "Roboto";
+
+  /* display: flex;
+  gap: 10px;
+  padding: 12px 20px;
+  background: transparent;
+  width: 100%;
+  justify-content: left;
+  
   border:1px solid var(--clr-text-secondary,#69735D);
+  
   border-radius: 12px;
   font-family: "Roboto";
+
+  width:208px;   */
 }
 
-.dropDownListOpen .buttonWithIcon {
+.borderWhenOpen {
   border:1px solid var(--clr-ui-disabled,#e4e8df);
 }
 
@@ -31,23 +45,85 @@
 }
 
 .dropDownList {
-  width:100%;
-  padding-top:8px;
+
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+
+  background-color: var(--clr-ui-surface, #FFFFFF);
+  border: 1px solid var(--clr-text-secondary, #69735D);
+  border-top: none;
+
+  border-bottom-left-radius: var(--border-radius, 12px);
+  border-bottom-right-radius: var(--border-radius, 12px);
+
+
+
+  /* padding-top:8px;
   padding-bottom:8px;
   display:flex;
   flex-direction: column;
   gap:4px;
   line-height: 1.5;
+
+  position: absolute;
+  top: calc(100% + 0px);
+  left: -1px;
+  right: -1px;
+  z-index: 1000;
+  max-height: var(--max-height-dropdown, 240px);
+  overflow-y: auto;
+  padding: 8px 0;
+  background-color: var(--clr-ui-surface, #FFFFFF);
+  border: 1px solid var(--clr-text-secondary, #69735D);
+  border-top:none; */
+
+
 }
 
 .wrapperDrownList {
-  border: 1px solid transparent;
-  font-family: "Roboto",sans-serif;
+  position: relative;
+  width: 208px;
+  border: 1px solid var(--clr-text-secondary, #69735D);
+  border-radius: var(--border-radius, 12px);
+  /* font-family: "Roboto",sans-serif;
+  position: relative; 
+  border:1px solid transparent; */
+}
+
+.wrapperDrownList.dropDownListOpen {
+
+
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  /* border:1px solid var(--clr-text-secondary, #69735D);
+  border-bottom-left-radius:0px;
+  border-bottom-right-radius:0px;
+  border-bottom:1px solid transparent; */
+
 }
 
 .dropDownListOpen {
-  border: 1px solid var(--clr-text-secondary,#69735D) ;
-  border-radius: 14px;
+ 
+  border-radius:var(--border-radius, 12px);
+}
+
+.dropDownListOpen .buttonWithIcon {
+  border-bottom-left-radius:12px;
+  border-bottom-right-radius:12px;
+  border-bottom:1px solid var(--clr-ui-disabled,#e4e8df);
+  border-top:none;
+  border-left:none;
+  border-right:none;
 }
 
 .dropDownItem {
@@ -68,7 +144,7 @@
   font-weight: var(--fw-regular);
   font-size: var(--fs-h4);
   line-height: var(--lh-h4);
-  color: var(--clr-text-primary, #253017)
+  /* color: var(--clr-text-primary, #253017) */
 }
 
 .placeholder {

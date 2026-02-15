@@ -1,0 +1,21 @@
+.form {
+  padding:60px 40px;
+  background-color:var(--clr-ui-surface,#FFFFFF);
+  /* Убрать в конце ширину */
+  width: 556px; 
+  display:flex;
+  flex-direction: column;
+  gap:16px;
+}
+
+.inLineDataAndGender {
+  display:flex;
+  
+  justify-content: space-between;
+}
+
+.inLineButtons {
+  display:flex;
+  gap:20px;
+  margin-top:16px;
+}
