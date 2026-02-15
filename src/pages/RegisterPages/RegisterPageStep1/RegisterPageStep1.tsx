@@ -56,12 +56,12 @@ const RegisterPageStep1: React.FC = () => {
           <div className={styles.loginWith}>
             <ButtonUI
               variant="social"
-              title="Продлжить с Google"
+              title="Продолжить с Google"
               iconLeft={<GoogleIcon />}
             />
             <ButtonUI
               variant="social"
-              title="Продлжить с Apple"
+              title="Продолжить с Apple"
               iconLeft={<AppleIcon />}
             />
           </div>
