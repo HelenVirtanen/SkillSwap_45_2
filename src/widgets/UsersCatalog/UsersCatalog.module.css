@@ -1,0 +1,12 @@
+@import url('../../styles/variables.css');
+.catalog {
+  width: 1020px;
+  min-height: 2200px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* расстояние между группами */
+}
+
+
