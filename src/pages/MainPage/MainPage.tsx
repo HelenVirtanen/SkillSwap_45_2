@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import UsersCatalog from '@widgets/UsersCatalog/UsersCatalog';
 import type { IUserCardData } from '@widgets/UserCardsGroup/UserCardsGroup';
 import type { TProfile } from '@api/api';
+import FilterSidebar from '@shared/ui/FiltersSidebar/FiltersSidebar';
+import Loader from '@shared/ui/Loader/Loader';
+import styles from './MainPage.module.css';
 
 type TUsersMock = {
   users: TProfile[];
@@ -57,15 +60,18 @@ const MainPage: React.FC = () => {
      return users.map(mapProfileToCard);
   }, [usersData]);
 
-  if (loading) return <div>Загрузка...</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Ошибка: {error}</div>;
 
   return (
-    <UsersCatalog
+    <div className={styles.mainContainer}>
+      <FilterSidebar />
+      <UsersCatalog
       popularUsers={mappedUsers.slice(0, 6)}
       newUsers={mappedUsers.slice(6, 12)}
       recommendedUsers={mappedUsers.slice(12, 18)}
     />
+    </div>
   );
 };
 
