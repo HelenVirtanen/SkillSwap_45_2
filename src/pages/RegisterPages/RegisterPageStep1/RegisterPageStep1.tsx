@@ -95,6 +95,7 @@ const RegisterPageStep1: React.FC = () => {
               className={styles.registerForm__submit}
             />
           </form>
+         
         </div>
         <IllustrationPanel
           image={<BulbIcon />}
