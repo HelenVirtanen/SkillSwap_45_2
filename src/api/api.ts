@@ -1,7 +1,6 @@
 import { getCookie, setCookie } from '../features/auth/cookie.ts';
 import type { TUser } from '../entities/User.ts';
 
-const URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const checkResponse = <T>(res: Response): Promise<T> =>
