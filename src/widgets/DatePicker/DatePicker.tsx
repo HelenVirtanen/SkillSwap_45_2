@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { ru } from 'date-fns/locale/ru';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './DatePicker.module.css';
 import CalendarIcon from '../../assets/icons/calendar.svg?react';
-import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
-import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
+import DropDownUI from '@shared/ui/DropDownUI/DropDownUI.tsx';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI.tsx';
 
 registerLocale('ru', ru);
 
@@ -45,10 +45,6 @@ interface DatePickerProps {
   language?: string;
   classNameInput?: string;
   classNameCalendar?: string;
-  /** Controlled selected date */
-  selected?: Date | null;
-  /** Callback when date is confirmed (user clicks "Выбрать") */
-  onChange?: (date: Date | null) => void;
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
@@ -57,39 +53,32 @@ const DatePicker: React.FC<DatePickerProps> = ({
   language = 'ru',
   classNameInput,
   classNameCalendar,
-  selected,
-  onChange,
 }) => {
-  const [tempDate, setTempDate] = useState<Date | null>(selected ?? null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [tempDate, setTempDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const datePickerRef = useRef<ReactDatePicker>(null);
 
-  // When selected changes externally and picker is closed, update tempDate
-  useEffect(() => {
-    if (!isOpen) {
-      setTempDate(selected ?? null);
-    }
-  }, [selected, isOpen]);
-
   const handleCancel = () => {
-    setTempDate(selected ?? null);
+    setTempDate(startDate);
     setIsOpen(false);
   };
 
   const handleConfirm = () => {
-    onChange?.(tempDate);
+    setStartDate(tempDate);
     setIsOpen(false);
   };
 
   const handleIconClick = () => {
-    setTempDate(selected ?? null);
+    setTempDate(startDate);
     setIsOpen(true);
   };
 
   const handleChange = (date: Date | null) => {
-    // Only update tempDate while open; actual value only changes on confirm
     if (isOpen) {
       setTempDate(date);
+    } else {
+      setStartDate(date);
     }
   };
 
@@ -104,7 +93,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
       {title && <h4 className={`${styles.text} ${styles.title}`}>{title}</h4>}
       <ReactDatePicker
         placeholderText={placeholder}
-        selected={selected}
+        selected={startDate}
         onChange={handleChange}
         open={isOpen}
         onClickOutside={() => setIsOpen(false)}

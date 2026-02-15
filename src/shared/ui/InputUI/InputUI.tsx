@@ -1,6 +1,5 @@
-import React, { useId, useState, useRef } from 'react';
+import React, { useId, useState } from 'react';
 import Eye from '@assets/icons/eye.svg?react';
-import Edit from '@assets/icons/edit-text.svg?react';
 import styles from './InputUI.module.css';
 
 export interface InputUIProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -12,7 +11,6 @@ export interface InputUIProps extends React.InputHTMLAttributes<HTMLInputElement
   rightAddon?: React.ReactNode;
   rows?: number;
   className?: string;
-  editIcon?: boolean;
 }
 
 const InputUI: React.FC<InputUIProps> = ({
@@ -33,12 +31,8 @@ const InputUI: React.FC<InputUIProps> = ({
   onKeyDown,
   className,
   rows = 3,
-  editIcon = false,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-
   const isPassword = type === 'password';
   const isTextarea = type === 'textarea';
   const inputType = isPassword && showPassword ? 'text' : type;
@@ -48,24 +42,6 @@ const InputUI: React.FC<InputUIProps> = ({
 
   const id = useId();
 
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setIsFocused(true);
-    if (onFocus) onFocus(e as any);
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setIsFocused(false);
-    if (onBlur) onBlur(e as any);
-  };
-
-  const handleEditClick = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
-  const showEditIcon = editIcon && !isPassword && value && value.trim() !== '' && !isFocused;
-
   return (
     <div className={`${styles.wrapper} ${className ?? ''}`}>
       <label className={styles.label} htmlFor={id}>
@@ -73,11 +49,12 @@ const InputUI: React.FC<InputUIProps> = ({
       </label>
 
       <div
-        className={`${styles.inputWrapper} ${showError ? styles.error : ''}`}
+        className={`${styles.inputWrapper} ${
+    showError ? styles.error : ''
+  }`}
       >
         {isTextarea ? (
           <textarea
-            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
             id={id}
             className={`${styles.input} ${styles.textarea}`}
             placeholder={placeholder}
@@ -87,12 +64,9 @@ const InputUI: React.FC<InputUIProps> = ({
             rows={rows}
             value={value}
             onChange={onChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
           />
         ) : (
           <input
-            ref={inputRef as React.RefObject<HTMLInputElement>}
             id={id}
             className={styles.input}
             type={inputType}
@@ -103,8 +77,8 @@ const InputUI: React.FC<InputUIProps> = ({
             name={name}
             disabled={disabled}
             autoComplete={autoComplete}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
+            onBlur={onBlur}
+            onFocus={onFocus}
             onKeyDown={onKeyDown}
           />
         )}
@@ -116,21 +90,10 @@ const InputUI: React.FC<InputUIProps> = ({
             className={styles.eyeButton}
             aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
           >
-            <Eye className={styles.eyeIcon} />
+            <Eye className={styles.eyeIcon}/>
           </button>
         ) : (
-          <>
-            {showEditIcon && (
-              <button
-                type="button"
-                onClick={handleEditClick}
-                className={styles.editButton}
-              >
-                <Edit className={styles.editIcon} />
-              </button>
-            )}
-            {!showEditIcon && rightAddon && <div className={styles.rightAddon}>{rightAddon}</div>}
-          </>
+          rightAddon && <div className={styles.rightAddon}>{rightAddon}</div>
         )}
       </div>
 

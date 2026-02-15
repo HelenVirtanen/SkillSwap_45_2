@@ -6,6 +6,9 @@
   align-items: center;
   gap: 8px;
   box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 12px 24px;
   color: inherit;
   font-weight: var(--fw-regular);
   font-size: var(--fs-body);
@@ -22,9 +25,6 @@
 .primary {
   color: var(--clr-text-primary);
   background-color: var(--clr-primary);
-  height: 48px;
-  padding: 12px 24px;
-  width: 100%;
 }
 
 .primary:disabled {
@@ -46,9 +46,6 @@
   color: var(--clr-text-primary);
   background-color: var(--clr-ui-surface);
   border: var(--border-width) solid var(--clr-primary);
-  height: 48px;
-  padding: 12px 24px;
-  width: 100%;
 }
 
 .secondary:disabled {
@@ -74,9 +71,6 @@
   color: var(--clr-text-primary);
   background-color: var(--clr-ui-surface);
   border: none;
-  height: 48px;
-  padding: 12px 24px;
-  width: 100%;
 }
 
 .tertiary:disabled {
@@ -99,9 +93,6 @@
   color: var(--clr-text-primary);
   background-color: var(--clr-ui-surface);
   border: var(--border-width) solid #404040;
-  height: 48px;
-  padding: 12px 24px;
-  width: 100%;
 }
 
 .social:disabled {
@@ -123,9 +114,6 @@
   width: 100%;
   color: var(--clr-text-primary);
   background-color: var(--clr-primary);
-  height: 48px;
-  padding: 12px 24px;
-  width: 100%;
 }
 
 .submit:disabled {
@@ -141,17 +129,6 @@
 .submit:active:not(:disabled) {
   color: var(--clr-ui-surface);
   background-color: var(--clr-primary-pressed);
-}
-
-.simple {
-  color: var(--clr-primary-pressed, #508826);
-  font-weight: var(--fw-medium, 500);
-  justify-content: left;
-  padding-inline: 0px;
-}
-
-.simple:hover {
-  text-decoration: underline;
 }
 
 .iconLeft {

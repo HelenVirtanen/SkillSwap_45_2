@@ -111,18 +111,6 @@ export const WithValue: Story = {
   },
 };
 
-// Поле с иконкой Edit
-export const WithEdit: Story = {
-  args: {
-    label: 'Email',
-    value: 'user@example.com',
-    type: 'email',
-    placeholder: 'Введите ваш email',
-    onChange: () => {},
-    editIcon: true
-  },
-};
-
 // Поле с паролем
 export const Password: Story = {
   args: {
