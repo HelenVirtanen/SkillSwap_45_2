@@ -59,6 +59,16 @@
   justify-content: center;
 }
 
+.editButton {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .errorText {
   padding-top: 12px;
   color: var(--clr-error, #bf3920);
