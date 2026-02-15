@@ -1,9 +1,12 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Loader from '@shared/ui/Loader/Loader';
 import RegisterPageStep2 from '@pages/RegisterPages/RegisterPageStep2/RegisterPageStep2';
 import RegisterPageStep3 from '@pages/RegisterPages/RegisterPageStep3/RegisterPageStep3';
+import ProtectedRoute from '@features/navigation/ProtectedRoute';
+import { useDispatch } from './store/store';
+import { checkUserAuth } from './store/slices/user/actions';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
 const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));
@@ -20,6 +23,12 @@ const FavoritesPage = lazy(() => import('@pages/FavoritesPage/FavoritesPage'));
 const AboutPage = lazy(() => import('@pages/AboutPage/AboutPage'));
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -28,8 +37,16 @@ function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="skill/:id" element={<SkillPage />} />
           <Route path="server-error" element={<ServerErrorPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
+          <Route path="profile" element={
+            <ProtectedRoute>
+              <ProfilePage /> 
+            </ProtectedRoute>
+          } />
+          <Route path="favorites" element={
+            <ProtectedRoute>
+              <FavoritesPage /> 
+            </ProtectedRoute>
+          } />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="/login" element={<AuthLayout />}>

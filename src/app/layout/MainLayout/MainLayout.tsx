@@ -5,14 +5,15 @@ import Footer from '../Footer/Footer';
 import Loader from '@shared/ui/Loader/Loader';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '@app/store/store';
-import { fetchUsers, selectUsers, selectUsersStatus, selectUsersError } from '@app/store/slices/user';
+import { selectUser, selectUserStatus, selectUserError } from '@app/store/slices/user/slice';
+import { fetchUsers } from '@app/store/slices/user/actions';
 
 const MainLayout = () => {
   // проверка фетчинга юзеров из стора
   const dispatch = useDispatch();
-  const users = useSelector(selectUsers);
-  const status = useSelector(selectUsersStatus);
-  const error = useSelector(selectUsersError);
+  const users = useSelector(selectUser);
+  const status = useSelector(selectUserStatus);
+  const error = useSelector(selectUserError);
 
   useEffect(() => {
     dispatch(fetchUsers());
