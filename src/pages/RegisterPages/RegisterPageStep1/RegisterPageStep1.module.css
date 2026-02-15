@@ -17,10 +17,17 @@
 .register {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 30px;
   border-radius: 12px;
   background-color: var(--clr-ui-surface);
-  padding: 125px 60px;
+  padding: 60px;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .loginWith {

@@ -88,13 +88,14 @@ const RegisterPageStep1: React.FC = () => {
                 helperText={passwordHelperText}
               />
             </div>
-          </form>
-          <ButtonUI
+            <ButtonUI
               variant="submit"
               title="Далее"
               type="submit"
               className={styles.registerForm__submit}
             />
+          </form>
+         
         </div>
         <IllustrationPanel
           image={<BulbIcon />}
