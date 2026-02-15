@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Stepper from '@widgets/Stepper/Stepper';
-import { Step3SkillInfo } from '@widgets/Forms/RegisterSteps/Step3SkillInfo/Step3SkillInfo';
+import { Step3SkillInfo } from '@features/forms/RegisterSteps/Step3SkillInfo/Step3SkillInfo';
 import { IllustrationPanel } from '@widgets/IllustrationPanel/IllustrationPanel';
 
 import SkillImage from '@assets/illustrations/school-board.svg?react';
