@@ -134,48 +134,61 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
       <div className={styles.avatarWrapper}>
         <AvatarUI className="avatar" />
       </div>
-      <InputUI
-        value={localData.firstName}
-        label={'Имя'}
-        onChange={(e) => {
-          handleFieldChange('firstName', e.target.value);
-        }}
-        placeholder="Введите ваше имя"
-      />
-
-      <div className={styles.inLineDataAndGender}>
-        <DatePicker title="Дата рождения" placeholder="дд.мм.гггг"></DatePicker>
-        <DropDownUI
-          title="Пол"
-          options={optionsGenders}
-          value={localData.gender}
-          onChange={(value) => handleFieldChange('gender', value)}
+      <div className={styles.nameInput}>
+        <InputUI
+          value={localData.firstName}
+          label={'Имя'}
+          onChange={(e) => {
+            handleFieldChange('firstName', e.target.value);
+          }}
+          placeholder="Введите ваше имя"
         />
       </div>
 
-      <AutoCompleteUI
-        onCitySelect={(value) => handleFieldChange('city', value)}
-      />
+      <div className={styles.inLineDataAndGender}>
+        <div className={styles.dataPicker}>
+          <DatePicker
+            title="Дата рождения"
+            placeholder="дд.мм.гггг"
+          ></DatePicker>
+        </div>
+        <div className={styles.dropDownUI}>
+          <DropDownUI
+            title="Пол"
+            options={optionsGenders}
+            value={localData.gender}
+            onChange={(value) => handleFieldChange('gender', value)}
+          />
+        </div>
+      </div>
+      <div className={styles.autoCompleteUI}>
+        <AutoCompleteUI
+          onCitySelect={(value) => handleFieldChange('city', value)}
+        />
+      </div>
+      <div className={styles.multiSelectDropdownUI}>
+        <MultiSelectDropdownUI
+          placeholder="Выберите категорию"
+          label="Категория навыка, которому хотите научиться"
+          options={optionsCategorySkillsWantedToLearn}
+          selected={localData.categorySkill ? localData.categorySkill : []}
+          onChange={(value: string[]) => {
+            handleFieldChange('categorySkill', value);
+          }}
+        />
 
-      <MultiSelectDropdownUI
-        placeholder="Выберите категорию"
-        label="Категория навыка, которому хотите научиться"
-        options={optionsCategorySkillsWantedToLearn}
-        selected={localData.categorySkill ? localData.categorySkill : []}
-        onChange={(value: string[]) => {
-          handleFieldChange('categorySkill', value);
-        }}
-      />
-
-      <MultiSelectDropdownUI
-        placeholder="Выберите подкатегорию"
-        label="Подкатегория навыка, которому хотите научиться"
-        options={optionsSubCategorySkillsWantedToLearn}
-        selected={localData.subcategorySkill ? localData.subcategorySkill : []}
-        onChange={(value: string[]) => {
-          handleFieldChange('subcategorySkill', value);
-        }}
-      />
+        <MultiSelectDropdownUI
+          placeholder="Выберите подкатегорию"
+          label="Подкатегория навыка, которому хотите научиться"
+          options={optionsSubCategorySkillsWantedToLearn}
+          selected={
+            localData.subcategorySkill ? localData.subcategorySkill : []
+          }
+          onChange={(value: string[]) => {
+            handleFieldChange('subcategorySkill', value);
+          }}
+        />
+      </div>
 
       <div className={styles.inLineButtons}>
         <ButtonUI variant="secondary" title="Назад" onClick={handleBack} />

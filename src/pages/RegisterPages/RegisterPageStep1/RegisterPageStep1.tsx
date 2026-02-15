@@ -48,7 +48,9 @@ const RegisterPageStep1: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.stepper}>
       <Stepper currentStep={1} />
+      </div>
       <div className={styles.content}>
         <div className={styles.register}>
           <div className={styles.loginWith}>

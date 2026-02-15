@@ -15,10 +15,10 @@ export const IllustrationPanel: React.FC<IllustrationPanelProps> = ({
   return (
     <section className={styles.panel}>
       <div className={styles.image}>{image}</div>
-
-      <h2 className={styles.title}>{title}</h2>
-
-      <p className={styles.description}>{description}</p>
+      <div className={styles.textWrapper}>
+        <h2 className={styles.title}>{title}</h2>
+        <p className={styles.description}>{description}</p>
+      </div>
     </section>
   );
 };

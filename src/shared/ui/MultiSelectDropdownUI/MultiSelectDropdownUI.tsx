@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import type { FC } from 'react';
 import styles from './MultiSelectDropdownUI.module.css';
 import { CheckboxUI } from '@shared/ui/CheckboxUI/CheckboxUI';
+import ChevronDown from '@assets/icons/chevron-down.svg?react';
 
 interface Option {
   // один элемент списка
@@ -90,7 +91,7 @@ export const MultiSelectDropdownUI: FC<MultiSelectDropdownUIProps> = ({
           aria-haspopup="listbox"
         >
           <span className={styles.dropdownText}>{getDisplayText}</span>
-          <span className={styles.dropdownArrow}>⌵</span>
+          <span className={styles.dropdownArrow}><ChevronDown/></span>
         </button>
 
         <div className={`${styles.dropdownMenu} ${isOpen ? styles.open : ''}`}>
