@@ -226,3 +226,8 @@
 :global(.react-datepicker__day--highlighted:hover){
     background-color: var(--clr-primary-hover) !important;
 }
+
+.flex {
+    display: flex;
+    flex-direction: column;
+}
