@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  height: 100%;
-  max-width: 556px;
+  height: 692px;
+  width: 556px;
   background-color: var(--clr-ui-surface, #ffffff);
   padding: 50px 60px;
   box-sizing: border-box;
@@ -13,12 +13,12 @@
 .formContent {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
+  padding-top: 4px; 
 }
 
 .formGroup {
-  width: 100%;
-  max-width: 436px;/* ширина по макету */
+  width: 436px;/* ширина по макету */
 }
 
 .label {
@@ -30,11 +30,25 @@
   font-family: var(--ff-body, 'Roboto', sans-serif);
 }
 
+.dropDownWrapper {
+  font-size: var(--fs-body, 16px);
+  line-height: 24px; 
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  color: var(--clr-text-primary, #253017);
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+.textareaWrapper {
+  margin-top: 4px; 
+}
+
 /* Обёртка для дропзоны */
 .dropzoneWrapper {
   position: relative;
   display: inline-block;
-  margin-top: 30px;
 }
 
 /* Скрытый инпут файла */
@@ -103,7 +117,7 @@
 /* Кнопки действий */
 .formActions {
   display: flex;
-  gap: 16px;
+  gap: 20px;
 }
 
 .formGroup :global(.dropDownContainer) {
@@ -112,6 +126,10 @@
 
 .formGroup [class*="buttonWithIcon"] {
   width: 100% !important;
+  height: 48px;
   justify-content: space-between;
   box-sizing: border-box;
+  letter-spacing: 0.02em;
+  font-weight: 400;
 }
+
