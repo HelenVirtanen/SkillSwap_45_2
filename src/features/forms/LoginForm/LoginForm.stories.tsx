@@ -4,7 +4,7 @@ import { userEvent, within } from 'storybook/test';
 import LoginForm from './LoginForm';
 
 const meta: Meta<typeof LoginForm> = {
-  title: 'Main/Widgets/Forms/LoginForm',
+  title: 'Main/Features/Forms/LoginForm',
   component: LoginForm,
   parameters: {
     layout: 'centered',

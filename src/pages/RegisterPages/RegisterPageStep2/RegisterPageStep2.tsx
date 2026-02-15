@@ -1,5 +1,4 @@
-import ButtonUI from "@shared/ui/ButtonUI/ButtonUI";
-import Step2ProfileInfo, { Step2Data } from "@shared/ui/RegisterSteps/Step2ProfileInfo/Step2ProfileInfo";
+import Step2ProfileInfo, { Step2Data } from "@features/forms/RegisterSteps/Step2ProfileInfo/Step2ProfileInfo";
 import Stepper from "@widgets/Stepper/Stepper";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
