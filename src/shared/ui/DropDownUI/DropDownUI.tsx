@@ -99,7 +99,7 @@ const DropDownUI = (
           }
         >
           <span
-            className={`${styles.textInButtonWithIcon} ${selected ? '' : styles.placeholder} ${styles.text}`}
+            className={`${styles.textInButtonWithIcon} ${selected ? "" : styles.placeholder } ${styles.text}`}
           >
             {selected ? selected : (placeholder ? placeholder : options?.[0])}
           </span>

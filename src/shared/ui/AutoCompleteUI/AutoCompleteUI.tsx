@@ -144,8 +144,8 @@ const AutoCompleteUI = ({
   return (
     <div className={`${styles.cityAutocomplete} ${className}`}>
       <label className={styles.cityAutocompleteLabel}>{label}</label>
-      <div className={styles.cityAutocompleteInputContainerFull}>
-        <div className={styles.cityAutocompleteInputContainer}>
+      <div className={`${styles.cityAutocompleteInputContainerFull} ${showSuggestions ? styles.isOpen : ""}`}>
+        <div className={`${styles.cityAutocompleteInputContainer} `}>
           <input
             ref={inputRef}
             type="text"
