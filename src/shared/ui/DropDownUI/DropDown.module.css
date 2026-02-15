@@ -10,7 +10,6 @@
 }
 
 .title {
-  margin-bottom: 4px;
   font-size: var(--fs-h4, 16px);
   font-weight: var(--fw-regular, 400);
   color: var(--clr-text-primary, #253017);

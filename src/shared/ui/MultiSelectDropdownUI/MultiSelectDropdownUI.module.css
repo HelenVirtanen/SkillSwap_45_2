@@ -58,7 +58,7 @@
   white-space: nowrap;
   line-height: 24px;
   color: var(--clr-text-primary);
-  
+  font-family: var(--ff-body,'Roboto', system-ui, -apple-system, 'Segoe UI', arial, sans-serif);
 }
 
 .dropdownArrow {
