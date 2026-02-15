@@ -1,0 +1,14 @@
+.mainContainer {
+  display: flex;  
+  flex-direction: column;
+}
+
+.mainWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.stepper {
+    padding-block-end: 32px;
+}

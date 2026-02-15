@@ -3,7 +3,7 @@
   /* display: inline-block; */
   display:flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 8px;
   justify-content:space-between;
   font-family: var(--ff-body, 'Roboto', sans-serif);
   letter-spacing: 0.019rem;
