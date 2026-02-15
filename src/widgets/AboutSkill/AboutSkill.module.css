@@ -1,7 +1,8 @@
 @import url('../../styles/variables.css');
 
 .root {
-  width: 399px;
+  min-width: 320px;
+  width: 100%;
   height: 324px;
   display: flex;
   flex-direction: column;
@@ -48,7 +49,6 @@
 /* Кнопка */
 .button {
   margin-top: 28px;
-  width: 399px;
   height: 48px;
   border-radius: 12px;
 }

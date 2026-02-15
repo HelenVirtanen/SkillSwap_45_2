@@ -25,17 +25,6 @@
   padding-left: 14px;
 }
 
-.grid li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 3px;
-  height: 3px;
-  background-color: var(--clr-text-primary);
-  border-radius: 50%;
-}
-
 .footer__copyright {
   font-size: var(--fs-caption);
 }

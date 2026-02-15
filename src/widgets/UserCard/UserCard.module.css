@@ -1,0 +1,105 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 16px;
+  width: 324px;
+  min-height: 368px;
+  background: #FFFFFF;
+  border-radius: 12px;
+}
+
+/* UserInfo секция */
+.userInfo {
+  width: 284px;
+}
+
+/* Skills секция */
+.skills {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+  width: 284px;
+}
+
+.skillsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 12px;
+  width: 284px;
+  height: 140px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  width: 284px;
+  height: 64px;
+}
+
+.sectionTitle {
+  width: 284px;
+  height: 24px;
+  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #253017;
+  margin: 0;
+}
+
+.skillsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 4px;
+  width: 284px;
+  height: 32px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+/* Actions секция */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+  margin-block-start: 4px;
+  width: 284px;
+  height: 48px;
+}
+
+.messageButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 8px;
+  width: 284px;
+  height: 48px;
+  background: #ABD27A;
+  border-radius: 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+  border: none;
+  cursor: pointer;
+}

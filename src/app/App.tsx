@@ -1,38 +1,47 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import MainLayout from './layout/MainLayout/MainLayout';
-import MainPage from '@pages/MainPage/MainPage';
-import SkillPage from '@pages/SkillPage/SkillPage';
-import NotFoundPage from '@pages/NotFoundPage/NotFoundPage';
-import ServerErrorPage from '@pages/ServerErrorPage/ServerErrorPage';
-import RegisterPage from '@pages/RegisterPage/RegisterPage';
-import LoginPage from '@pages/LoginPage/LoginPage';
-import ProfilePage from '@pages/ProfilePage/ProfilePage';
-import FavoritesPage from '@pages/FavoritesPage/FavoritesPage';
-import AboutPage from '@pages/AboutPage/AboutPage';
-import AuthLayout from './layout/AuthLayout/AuthLayout';
+import { lazy, Suspense } from 'react';
+import Loader from '@shared/ui/Loader/Loader';
+import RegisterPageStep2 from '@pages/RegisterPages/RegisterPageStep2/RegisterPageStep2';
+import RegisterPageStep3 from '@pages/RegisterPages/RegisterPageStep3/RegisterPageStep3';
+
+const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
+const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));
+const MainPage = lazy(() => import('@pages/MainPage/MainPage'));
+const SkillPage = lazy(() => import('@pages/SkillPage/SkillPage'));
+const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
+const ServerErrorPage = lazy(
+  () => import('@pages/ServerErrorPage/ServerErrorPage'),
+);
+const RegisterPageStep1 = lazy(() => import('@pages/RegisterPages/RegisterPageStep1/RegisterPageStep1'));
+const LoginPage = lazy(() => import('@pages/LoginPage/LoginPage'));
+const ProfilePage = lazy(() => import('@pages/ProfilePage/ProfilePage'));
+const FavoritesPage = lazy(() => import('@pages/FavoritesPage/FavoritesPage'));
+const AboutPage = lazy(() => import('@pages/AboutPage/AboutPage'));
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<MainPage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="skill/:id" element={<SkillPage />} />
-        <Route path="server-error" element={<ServerErrorPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="favorites" element={<FavoritesPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-      <Route path="/login" element={<AuthLayout />}>
-        <Route index element={<LoginPage />} />
-      </Route>
-      <Route path="/register" element={<AuthLayout />}>
-        <Route path="step1" element={<RegisterPage />} />
-        <Route path="step2" element={<RegisterPage />} />
-        <Route path="step3" element={<RegisterPage />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<MainPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="skill/:id" element={<SkillPage />} />
+          <Route path="server-error" element={<ServerErrorPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="favorites" element={<FavoritesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="/login" element={<AuthLayout />}>
+          <Route index element={<LoginPage />} />
+        </Route>
+        <Route path="/register" element={<AuthLayout />}>
+          <Route path="step1" element={<RegisterPageStep1 />} />
+          <Route path="step2" element={<RegisterPageStep2 />} />
+          <Route path="step3" element={<RegisterPageStep3 />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

@@ -1,0 +1,174 @@
+@import url('@styles/variables.css');
+
+.loaderWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20%;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--clr-ui-background, #f9faf7);
+  gap: 15px;
+}
+
+.loader {
+  width: 150px;
+  height: 100px;
+  position: relative;
+  display: inline-block;
+  --base-color: var(--clr-ui-surface, #ffffff);
+}
+
+.loader::before {
+  content: '';
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: var(--clr-primary-pressed, #508826);
+  background-image:
+    radial-gradient(
+      circle 20px at 45px 45px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 45px 0px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 0px 45px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 90px 45px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 45px 90px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 75px 12px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 75px 12px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 75px 75px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 12px 75px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 10px at 12px 12px,
+      var(--base-color) 100%,
+      transparent 0
+    );
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  animation: rotationBack 3s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  left: 88px;
+  top: 38px;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--clr-primary, #abd27a);
+  background-image:
+    radial-gradient(
+      circle 12px at 30px 30px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 30px 0px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 0px 30px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 60px 30px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 30px 60px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 50px 8px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 50px 8px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 50px 50px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 8px 50px,
+      var(--base-color) 100%,
+      transparent 0
+    ),
+    radial-gradient(
+      circle 6px at 8px 8px,
+      var(--base-color) 100%,
+      transparent 0
+    );
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  animation: rotationBack 4s linear infinite reverse;
+}
+
+.loaderTitle {
+  color: var(--clr-primary-pressed, #508826);
+  font-size: var(--fs-h1, 32px);
+  font-family: var(
+    --ff-heading,
+    'Jost',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    roboto,
+    arial,
+    sans-serif
+  );
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
