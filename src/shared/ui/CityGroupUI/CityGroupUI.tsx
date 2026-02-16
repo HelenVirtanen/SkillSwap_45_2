@@ -7,14 +7,14 @@ export interface CheckboxGroupItem {
   label: string;
 }
 
-interface CheckboxGroupUIProps {
+interface CityGroupUIProps {
   title: string;
   items: CheckboxGroupItem[];
   selectedItems: string[];
   onItemToggle: (id: string) => void;
 }
 
-export const CheckboxGroupUI: FC<CheckboxGroupUIProps> = ({
+export const CityGroupUI: FC<CityGroupUIProps> = ({
   title,
   items,
   selectedItems,

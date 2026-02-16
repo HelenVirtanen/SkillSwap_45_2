@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { CheckboxGroupUI } from '../CityGroupUI/CityGroupUI';
+import { CityGroupUI } from './CityGroupUI';
 
-const meta: Meta<typeof CheckboxGroupUI> = {
-  title: 'Main/UI/CheckboxGroupUI',
-  component: CheckboxGroupUI,
+const meta: Meta<typeof CityGroupUI> = {
+  title: 'Main/UI/CityGroupUI',
+  component: CityGroupUI,
   parameters: {
     layout: 'centered',
   },
@@ -12,7 +12,7 @@ const meta: Meta<typeof CheckboxGroupUI> = {
 
 export default meta;
 
-type Story = StoryObj<typeof CheckboxGroupUI>;
+type Story = StoryObj<typeof CityGroupUI>;
 
 const citiesMock = [
   { id: 'moscow', label: 'Москва' },
@@ -40,7 +40,7 @@ export const Default: Story = {
     };
 
     return (
-      <CheckboxGroupUI
+      <CityGroupUI
         title="Город"
         items={citiesMock}
         selectedItems={selectedCities}
