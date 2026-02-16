@@ -6,7 +6,7 @@ import RegisterPageStep2 from '@pages/RegisterPages/RegisterPageStep2/RegisterPa
 import RegisterPageStep3 from '@pages/RegisterPages/RegisterPageStep3/RegisterPageStep3';
 import ProtectedRoute from '@features/navigation/ProtectedRoute';
 import { useDispatch } from './store/store';
-import { checkUserAuth } from './store/slices/user/actions';
+import { checkUserAuth } from './store/slices/authUser/actions';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
 const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));

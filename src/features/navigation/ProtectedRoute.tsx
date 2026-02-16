@@ -1,4 +1,4 @@
-import { selectUser, selectUserAuth } from "@app/store/slices/user/slice";
+import { selectAuthUser, selectIsAuthChecked } from "@app/store/slices/authUser/auth";
 import { useSelector } from "@app/store/store";
 import Loader from "@shared/ui/Loader/Loader";
 import { useLocation, Navigate } from "react-router-dom";
@@ -12,8 +12,8 @@ const ProtectedRoute = ({
   onlyUnauth = false,
   children
 }: ProtectedRouteProps) => {
-  const isAuth = useSelector(selectUserAuth);
-  const user = useSelector(selectUser);
+  const isAuth = useSelector(selectIsAuthChecked);
+  const user = useSelector(selectAuthUser);
   const location = useLocation();
 
   // Показываем загрузку пока идет авторизация пользователя

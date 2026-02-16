@@ -9,22 +9,22 @@ export type TUser = {
   city?: string;
 };
 
-interface IUserState {
+interface AuthState {
   user: TUser | null;
   isAuthChecked: boolean;
   error: string | null;
   status: 'idle' | 'loading' | 'failed' | 'succeeded';
 }
 
-const initialState: IUserState = {
+const initialState: AuthState = {
   user: null,
   isAuthChecked: false,
   error: null,
   status: 'idle'
 };
 
-export const userSlice = createSlice({
-  name: 'users',
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     clearUser(state) {
@@ -54,18 +54,18 @@ export const userSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message || 'Ошибка при загрузке пользователей';
+        state.error = action.error.message || 'Ошибка при загрузке пользователя';
         state.isAuthChecked = false;
       });
   },
 });
 
-export const selectUser = (state: RootState ) => state.user;
-export const selectUserStatus = (state: RootState ) => state.user.status;
-export const selectUserError = (state: RootState ) => state.user.error;
-export const selectUserAuth = (state: RootState) => state.user.isAuthChecked;
+export const selectAuthUser = (state: RootState ) => state.auth.user;
+export const selectAuthStatus = (state: RootState ) => state.auth.status;
+export const selectAuthError = (state: RootState ) => state.auth.error;
+export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
 
-export const { clearUser, setUser, setIsAuthChecked } = userSlice.actions;
-export default userSlice.reducer;
+export const { clearUser, setUser, setIsAuthChecked } = authSlice.actions;
+export default authSlice.reducer;
 
 

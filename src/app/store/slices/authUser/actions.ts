@@ -1,7 +1,7 @@
 import { getUsers } from "@api/users";
 import { deleteCookie, getCookie } from "@features/auth/cookie";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setIsAuthChecked, setUser } from "./slice";
+import { setIsAuthChecked, setUser } from "./auth";
 
 export const checkUserAuth = createAsyncThunk(
   'users/checkUser',
