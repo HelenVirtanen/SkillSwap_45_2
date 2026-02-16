@@ -7,6 +7,8 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import styles from './LoginForm.module.css';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
 import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
+import { loginUserApi } from '@api/api';
+import { setCookie } from '@features/auth/cookie';
 
 const INVALID_CREDENTIALS =
   'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных';
@@ -29,13 +31,21 @@ const LoginForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<UserData>({
     resolver: yupResolver(validationSchema),
   });
 
   const submitHandler = async (data: UserData) => {
-    console.log(data);
-    reset();
+    try {
+      const response = await loginUserApi(data);
+      console.log('Успешный вход:', response);
+      localStorage.setItem('refreshToken', response.refreshToken);
+      setCookie('accessToken', response.accessToken);
+    } catch (error) {
+      console.error('Ошибка входа:', error);
+    } finally {
+      reset();
+    }
   };
 
   return (
@@ -66,6 +76,7 @@ const LoginForm: React.FC = () => {
             label="Email"
             type="email"
             placeholder="Введите email"
+            error={errors.email?.message}
           />
 
           <InputUI

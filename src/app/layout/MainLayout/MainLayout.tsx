@@ -26,7 +26,7 @@ const MainLayout = () => {
 
   return (
     <div className={styles.wrapper}>
-      <HeaderMain />
+      <HeaderMain />      
       <main className={styles.main}>
         <Outlet />
       </main>
