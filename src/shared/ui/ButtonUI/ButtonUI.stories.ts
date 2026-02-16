@@ -51,3 +51,10 @@ export const Submit: Story = {
     className: `${styles.button} ${styles.submit}`,
   },
 };
+
+export const Simple: Story = {
+  args: {
+    variant: 'simple',
+    className: `${styles.button} ${styles.simple}`,
+  },
+};
