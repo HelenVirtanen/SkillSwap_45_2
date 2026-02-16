@@ -2,11 +2,11 @@ import { Outlet } from 'react-router-dom';
 import styles from './MainLayout.module.css';
 import HeaderMain from '../Header/HeaderMain';
 import Footer from '../Footer/Footer';
-import Loader from '@shared/ui/Loader/Loader';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from '@app/store/store';
-import { fetchUsers, selectUsers, selectUsersStatus, selectUsersError } from '@app/store/slices/user';
-import LoginPage from '@pages/LoginPage/LoginPage';
+// import Loader from '@shared/ui/Loader/Loader';
+// import { useEffect } from 'react';
+// import { useDispatch, useSelector } from '@app/store/store';
+// import { fetchUsers, selectUsers, selectUsersStatus, selectUsersError } from '@app/store/slices/user';
+// import LoginPage from '@pages/LoginPage/LoginPage';
 
 const MainLayout = () => {
   // проверка фетчинга юзеров из стора
@@ -27,11 +27,10 @@ const MainLayout = () => {
   return (
     <div className={styles.wrapper}>
       <HeaderMain />
-      <LoginPage />
-      {/* <main className={styles.main}>
+      <main className={styles.main}>
         <Outlet />
       </main>
-      <Footer /> */}
+      <Footer />
     </div>
   );
 };
