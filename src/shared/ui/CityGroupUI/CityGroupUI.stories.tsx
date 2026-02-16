@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { CheckboxGroupUI } from './CityGroupUI';
+import { CheckboxGroupUI } from '../CityGroupUI/CityGroupUI';
 
 const meta: Meta<typeof CheckboxGroupUI> = {
-  title: 'Shared/UI/CheckboxGroupUI',
+  title: 'Main/UI/CheckboxGroupUI',
   component: CheckboxGroupUI,
   parameters: {
     layout: 'centered',
