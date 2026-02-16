@@ -2,9 +2,11 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
 import Loader from '@shared/ui/Loader/Loader';
+import ProtectedRoute from '@features/navigation/ProtectedRoute';
 import { useAppDispatch } from './store/store';
 import { fetchCities, fetchCategories } from './store/slices/staticData/staticDataSlice';
 import { fetchLikes } from './store/slices/likes/likesSlice';
+import { checkUserAuth } from './store/slices/authUser/actions';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
 const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));
@@ -26,11 +28,16 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
+
+  useEffect(() => {
     // Загружаем города и категории один раз при старте приложения
     dispatch(fetchCities());
     dispatch(fetchCategories());
     dispatch(fetchLikes())
   }, [dispatch]); // пустой массив зависимостей — выполнится один раз{
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -39,8 +46,16 @@ function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="skill/:id" element={<SkillPage />} />
           <Route path="server-error" element={<ServerErrorPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
+          <Route path="profile" element={
+            <ProtectedRoute>
+              <ProfilePage /> 
+            </ProtectedRoute>
+          } />
+          <Route path="favorites" element={
+            <ProtectedRoute>
+              <FavoritesPage /> 
+            </ProtectedRoute>
+          } />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="/login" element={<AuthLayout />}>

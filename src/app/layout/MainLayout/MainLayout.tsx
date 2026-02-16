@@ -2,27 +2,30 @@ import { Outlet } from 'react-router-dom';
 import styles from './MainLayout.module.css';
 import HeaderMain from '../Header/HeaderMain';
 import Footer from '../Footer/Footer';
-// import Loader from '@shared/ui/Loader/Loader';
-// import { useEffect } from 'react';
-// import { useDispatch, useSelector } from '@app/store/store';
-// import { fetchUsers, selectUsers, selectUsersStatus, selectUsersError } from '@app/store/slices/user';
-// import LoginPage from '@pages/LoginPage/LoginPage';
+import Loader from '@shared/ui/Loader/Loader';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
+import { fetchAllUsers, selectAllUsers, selectUsersStatus, selectUsersError } from '@app/store/slices/User/usersSlise';
+// import { selectAuthUser, selectAuthStatus, selectAuthError } from '@app/store/slices/authUser/auth';
 
 const MainLayout = () => {
-  // проверка фетчинга юзеров из стора
-  // const dispatch = useDispatch();
-  // const users = useSelector(selectUsers);
-  // const status = useSelector(selectUsersStatus);
-  // const error = useSelector(selectUsersError);
+// проверка фетчинга юзеров из стора
+const dispatch = useAppDispatch();
+// const users = useSelector(selectAuthUser);
+// const status = useSelector(selectAuthStatus);
+// const error = useSelector(selectAuthError);
 
-  // useEffect(() => {
-  //   dispatch(fetchUsers());
-  // }, [dispatch]);
+const users = useAppSelector(selectAllUsers);
+const status = useAppSelector(selectUsersStatus);
+  const error = useAppSelector(selectUsersError);
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
 
-  // console.log('USERS', users);
+  console.log('USERS', users);
 
-  // if (status === 'loading') return <Loader />;
-  // if (error) return <p>Ошибка: {error}</p>;
+  if (status === 'loading') return <Loader />;
+  if (error) return <p>Ошибка: {error}</p>;
 
   return (
     <div className={styles.wrapper}>
