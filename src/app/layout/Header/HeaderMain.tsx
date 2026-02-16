@@ -8,6 +8,7 @@ import SearchInputUI from '@shared/ui/SearchInputUI/SearchInputUI';
 import SkillsDropdown from '@widgets/SkillDropDown/SkillDropdown';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import HeaderUserMenuUI from '@shared/ui/HeaderUserMenuUI/HeaderUserMenuUI';
+import { useTheme } from '@shared/lib/theme/useTheme';
 
 const useAuth = () => {
   // Это временная заглушка
@@ -33,6 +34,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   const handleSearchChange = (value: string) => {
     onSearchChange?.(value);
@@ -48,11 +50,6 @@ const HeaderMain: React.FC<HeaderProps> = ({
 
   const handleRegister = () => {
     navigate('/register/step1');
-  };
-
-  const handleThemeToggle = () => {
-    console.log('Theme toggle clicked');
-    // Здесь будет логика переключения темы
   };
 
   const handleUserMenuAction = (action: UserMenuAction) => {
@@ -162,8 +159,8 @@ const HeaderMain: React.FC<HeaderProps> = ({
               {/* Кнопка темы рядом с поиском */}
               <div className={styles.themeSection}>
                 <ThemeToggle 
-                  isLight={true}
-                  onToggle={handleThemeToggle}
+                  isLight={theme === 'light'}
+                  onToggle={toggleTheme}
                 />
               </div>
               

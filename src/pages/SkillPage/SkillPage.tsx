@@ -1,12 +1,20 @@
 import React from 'react';
-import styles from './SkillPage.module.css';
 import UserProfileCard from '@widgets/UserProfileCard/UserProfileCard';
 import SkillCard from '@widgets/SkillCard/SkillCard';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
+import styles from './SkillPage.module.css';
 
 // Интерфейсы
 interface ISkill {
   title: string;
-  variant: 'business' | 'languages' | 'home' | 'art' | 'education' | 'health' | 'other';
+  variant:
+    | 'business'
+    | 'languages'
+    | 'home'
+    | 'art'
+    | 'education'
+    | 'health'
+    | 'other';
 }
 
 interface IUser {
@@ -20,7 +28,6 @@ interface IUser {
   learningSkills: ISkill[];
   isFavorite?: boolean;
 }
-
 interface ISkillData {
   id: string | number;
   title: string;
@@ -28,7 +35,6 @@ interface ISkillData {
   description?: string;
   images?: string[];
 }
-
 interface ISkillPageProps {
   user: IUser;
   skill: ISkillData;
@@ -42,16 +48,6 @@ const SkillPage: React.FC<ISkillPageProps> = ({
   onProposeExchange,
   className,
 }) => {
-  // Компонент кнопки "Предложить обмен"
-  const ProposeExchangeButton = () => (
-    <button 
-      className={styles.exchangeButton}
-      onClick={onProposeExchange}
-    >
-      Предложить обмен
-    </button>
-  );
-
   return (
     <div className={`${styles.page} ${className || ''}`}>
       {/* Основной контент */}
@@ -61,7 +57,9 @@ const SkillPage: React.FC<ISkillPageProps> = ({
           <UserProfileCard
             user={user}
             showFavorite={false}
-            onFavoriteToggle={(userId) => console.log('Favorite toggled:', userId)}
+            onFavoriteToggle={(userId) =>
+              console.log('Favorite toggled:', userId)
+            }
           />
         </div>
 
@@ -69,7 +67,14 @@ const SkillPage: React.FC<ISkillPageProps> = ({
         <div className={styles.rightColumn}>
           <SkillCard
             skill={skill}
-            proposeExchange={<ProposeExchangeButton />}
+            proposeExchange={
+              <ButtonUI
+                title="Предложить обмен"
+                variant="primary"
+                className={styles.exchangeButton}
+                onClick={onProposeExchange}
+              />
+            }
           />
         </div>
       </div>

@@ -2,9 +2,13 @@ import React, { Dispatch, SetStateAction, RefObject } from 'react';
 import styles from './SkillsDropdownUI.module.css';
 
 export interface SkillCategory {
+  id: number;
   title: string;
   icon: string;
-  skills: string[];
+  subcategories: {
+    id: number;
+    title: string;
+  }[];
 }
 
 interface Props {
@@ -33,7 +37,7 @@ const SkillsDropdownUI: React.FC<Props> = ({
         className={`${styles.dropdownContent} ${isOpen ? styles.open : styles.closed}`}
       >
         {skills.map((category) => (
-          <div key={category.title} className={styles.category}>
+          <div key={category.id} className={styles.category}>
             <img
               src={`src/assets/icons/${category.icon}`}
               alt={category.title}
@@ -41,11 +45,11 @@ const SkillsDropdownUI: React.FC<Props> = ({
             />
             <h3 className={styles.categoryTitle}>{category.title}</h3>
             <ul className={styles.skillList}>
-              {category.skills.map((skill, index) => (
-                <li key={index} className={styles.skillItem}>
-                  {skill}
+              {category.subcategories?.map((sub, index) => (  // ← исправление здесь
+                <li key={sub.id || index} className={styles.skillItem}>
+                  {sub.title}
                 </li>
-              ))}
+              )) || <li>Подкатегорий нет</li>}
             </ul>
           </div>
         ))}

@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useForm } from 'react-hook-form';
-import ProfileForm, { ProfileFormData } from './ProrileForm';
+import ProfileForm, { ProfileFormData } from '@features/forms/ProfileForm/ProrileForm';
 
 import { useEffect } from 'react';
 
 const meta = {
-  title: 'Main/Widgets/Forms/ProfileForm',
+  title: 'Main/Features/Forms/ProfileForm',
   component: ProfileForm,
   tags: ['autodocs'],
   parameters: {
