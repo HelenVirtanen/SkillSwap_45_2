@@ -1,0 +1,28 @@
+@import url('../../../styles/variables.css');
+
+.wrapper {
+  width: 284px;
+  height: 288px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: var(--ff-heading);
+font-weight: var(--fw-medium);
+font-style: Medium;
+font-size: var(--fs-h3);
+line-height: var(--lh-h3);
+letter-spacing: -0.242px;
+vertical-align: middle;
+
+}
+
+.list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+}
