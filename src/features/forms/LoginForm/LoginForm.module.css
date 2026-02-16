@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 556px;
   max-height: 692px;
-  padding: 121px 60px;
+  padding: 111px 60px;
   background-color: var(--clr-ui-surface, #ffffff);
   border-radius: var(--border-radius, 12px);
 }

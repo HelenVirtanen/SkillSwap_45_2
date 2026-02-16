@@ -6,7 +6,8 @@ type TButtonVariant =
   | 'secondary'
   | 'tertiary'
   | 'social'
-  | 'submit';
+  | 'submit'
+  | 'simple';
 
 export interface IButtonProps {
   variant: TButtonVariant;

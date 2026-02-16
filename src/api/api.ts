@@ -11,20 +11,12 @@ type TServerResponse<T> = {
   data: T;
 };
 
-// Вспомогательная функция для распаковки data
-const unwrapData = <T>(response: TServerResponse<T>): T => {
-  if (!response.success) {
-    return Promise.reject(response) as T;
-  }
-  return response.data;
-};
-
-type TRefreshData = {
+type TRefreshResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
-};
+}>;
 
-export const refreshToken = (): Promise<TRefreshData> =>
+export const refreshToken = (): Promise<TRefreshResponse> =>
   fetch(`/api/auth/token`, {
     method: 'POST',
     headers: {
@@ -35,11 +27,13 @@ export const refreshToken = (): Promise<TRefreshData> =>
       token: localStorage.getItem('refreshToken'),
     }),
   })
-    .then((res) => checkResponse<TServerResponse<TRefreshData>>(res))
-    .then(unwrapData)
+    .then((res) => checkResponse<TRefreshResponse>(res))
     .then((refreshData) => {
-      localStorage.setItem('refreshToken', refreshData.refreshToken);
-      setCookie('accessToken', refreshData.accessToken);
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
+      }
+      localStorage.setItem('refreshToken', refreshData.data.refreshToken);
+      setCookie('accessToken', refreshData.data.accessToken);
       return refreshData;
     });
 
@@ -49,16 +43,16 @@ export const fetchWithRefresh = async <T>(
 ) => {
   try {
     const res = await fetch(url, options);
-    return await checkResponse<TServerResponse<T>>(res).then(unwrapData);
+    return await checkResponse<T>(res);
   } catch (err) {
     if ((err as { message: string }).message === 'jwt expired') {
       const refreshData = await refreshToken();
       if (options.headers) {
         (options.headers as { [key: string]: string }).authorization =
-          refreshData.accessToken;
+          refreshData.data.accessToken;
       }
       const res = await fetch(url, options);
-      return await checkResponse<TServerResponse<T>>(res).then(unwrapData);
+      return await checkResponse<T>(res);
     } else {
       return Promise.reject(err);
     }
@@ -75,82 +69,89 @@ export type TRegisterData = {
   password: string;
 };
 
-type TAuthData = {
+type TAuthResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
   user: TUser;
-};
+}>;
 
-export const registerUserApi = (data: TRegisterData): Promise<TAuthData> =>
+export const registerUserApi = (data: TRegisterData) =>
   fetch(`/api/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'X-API-Key': `${API_KEY}`,
+      'X-API-Key': `${API_KEY}`
     },
     body: JSON.stringify(data),
   })
-    .then((res) => checkResponse<TServerResponse<TAuthData>>(res))
-    .then(unwrapData);
+    .then((res) => checkResponse<TAuthResponse>(res))
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
 
 export type TLoginData = {
   email: string;
   password: string;
 };
 
-export const loginUserApi = (data: TLoginData): Promise<TAuthData> =>
+export const loginUserApi = (data: TLoginData) =>
   fetch(`/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'X-API-Key': `${API_KEY}`,
+      'X-API-Key': `${API_KEY}`
     },
     body: JSON.stringify(data),
   })
-    .then((res) => checkResponse<TServerResponse<TAuthData>>(res))
-    .then(unwrapData);
+    .then((res) => checkResponse<TAuthResponse>(res))
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
 
-export const forgotPasswordApi = (data: { email: string }): Promise<object> =>
+export const forgotPasswordApi = (data: { email: string }) =>
   fetch(`/api/password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'X-API-Key': `${API_KEY}`,
+      'X-API-Key': `${API_KEY}`
     },
     body: JSON.stringify(data),
   })
     .then((res) => checkResponse<TServerResponse<object>>(res))
-    .then(unwrapData);
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
 
-export const resetPasswordApi = (data: {
-  password: string;
-  token: string;
-}): Promise<object> =>
+export const resetPasswordApi = (data: { password: string; token: string }) =>
   fetch(`/api/password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'X-API-Key': `${API_KEY}`,
+      'X-API-Key': `${API_KEY}`
     },
     body: JSON.stringify(data),
   })
     .then((res) => checkResponse<TServerResponse<object>>(res))
-    .then(unwrapData);
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
 
-type TUserData = { user: TUser };
+type TUserResponse = TServerResponse<{ user: TUser }>;
 
-export const getUserApi = (): Promise<TUserData> =>
-  fetchWithRefresh<TUserData>(`/api/auth/user`, {
+export const getUserApi = () =>
+  fetchWithRefresh<TUserResponse>(`/api/auth/user`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
     } as HeadersInit,
   });
 
-export const updateUserApi = (
-  user: Partial<TRegisterData>,
-): Promise<TUserData> =>
-  fetchWithRefresh<TUserData>(`/api/auth/user`, {
+export const updateUserApi = (user: Partial<TRegisterData>) =>
+  fetchWithRefresh<TUserResponse>(`/api/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -160,19 +161,17 @@ export const updateUserApi = (
     body: JSON.stringify(user),
   });
 
-export const logoutApi = (): Promise<object> =>
+export const logoutApi = () =>
   fetch(`/api/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'X-API-Key': `${API_KEY}`,
+      'X-API-Key': `${API_KEY}`
     },
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken'),
     }),
-  })
-    .then((res) => checkResponse<TServerResponse<object>>(res))
-    .then(unwrapData);
+  }).then((res) => checkResponse<TServerResponse<object>>(res));
 
 // ============================================
 // STATIC DATA TYPES & API
@@ -184,23 +183,22 @@ export type TSkillCategory = {
   skills: string[];
 };
 
-export const getSkillsApi = (): Promise<TSkillCategory[]> =>
+type TSkillsResponse = TServerResponse<TSkillCategory[]>;
+type TCitiesResponse = TServerResponse<string[]>;
+
+export const getSkillsApi = () =>
   fetch(`/api/static/skills`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
-  })
-    .then((res) => checkResponse<TServerResponse<TSkillCategory[]>>(res))
-    .then(unwrapData);
+  }).then((res) => checkResponse<TSkillsResponse>(res));
 
-export const getCitiesApi = (): Promise<string[]> =>
+export const getCitiesApi = () =>
   fetch(`/api/static/cities`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
-  })
-    .then((res) => checkResponse<TServerResponse<string[]>>(res))
-    .then(unwrapData);
+  }).then((res) => checkResponse<TCitiesResponse>(res));
 
 // ============================================
 // PROFILE TYPES & API
@@ -240,37 +238,36 @@ export type TUpdateProfileData = {
   photosOnAbout?: string[];
 };
 
+export type TProfileResponse = TServerResponse<TProfile>;
+export type TProfilesResponse = TServerResponse<TProfile[]>;
+
 // Get all profiles
-export const getProfilesApi = (): Promise<TProfile[]> =>
+export const getProfilesApi = () =>
   fetch(`/api/profiles`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
-  })
-    .then((res) => checkResponse<TServerResponse<TProfile[]>>(res))
-    .then(unwrapData);
+  }).then((res) => checkResponse<TProfilesResponse>(res));
 
 // Get specific profile by ID
-export const getProfileByIdApi = (id: number): Promise<TProfile> =>
+export const getProfileByIdApi = (id: number) =>
   fetch(`/api/profiles/${id}`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
     },
-  })
-    .then((res) => checkResponse<TServerResponse<TProfile>>(res))
-    .then(unwrapData);
+  }).then((res) => checkResponse<TProfileResponse>(res));
 
 // Если авторизован - с токеном (для отображения избранного)
-export const getProfilesAuthApi = (): Promise<TProfile[]> =>
-  fetchWithRefresh<TProfile[]>(`/api/profiles`, {
+export const getProfilesAuthApi = () =>
+  fetchWithRefresh<TProfilesResponse>(`/api/profiles`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
     } as HeadersInit,
   });
 
-export const getProfileByIdAuthApi = (id: number): Promise<TProfile> =>
-  fetchWithRefresh<TProfile>(`/api/profiles/${id}`, {
+export const getProfileByIdAuthApi = (id: number) =>
+  fetchWithRefresh<TProfileResponse>(`/api/profiles/${id}`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -278,8 +275,8 @@ export const getProfileByIdAuthApi = (id: number): Promise<TProfile> =>
   });
 
 // Get current user's profile
-export const getMyProfileApi = (): Promise<TProfile> =>
-  fetchWithRefresh<TProfile>(`/api/profiles/me`, {
+export const getMyProfileApi = () =>
+  fetchWithRefresh<TProfileResponse>(`/api/profiles/me`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -287,10 +284,8 @@ export const getMyProfileApi = (): Promise<TProfile> =>
   });
 
 // Update current user's profile
-export const updateMyProfileApi = (
-  data: TUpdateProfileData,
-): Promise<TProfile> =>
-  fetchWithRefresh<TProfile>(`/api/profiles/me`, {
+export const updateMyProfileApi = (data: TUpdateProfileData) =>
+  fetchWithRefresh<TProfileResponse>(`/api/profiles/me`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -305,8 +300,8 @@ export const updateMyProfileApi = (
 // ============================================
 
 // Get user's favourites
-export const getFavouritesApi = (): Promise<TProfile[]> =>
-  fetchWithRefresh<TProfile[]>(`/api/profiles/favourites`, {
+export const getFavouritesApi = () =>
+  fetchWithRefresh<TProfilesResponse>(`/api/profiles/favourites`, {
     headers: {
       'X-API-Key': `${API_KEY}`,
       authorization: getCookie('accessToken'),
@@ -314,8 +309,8 @@ export const getFavouritesApi = (): Promise<TProfile[]> =>
   });
 
 // Add user to favourites
-export const addToFavouritesApi = (userId: number): Promise<object> =>
-  fetchWithRefresh<object>(`/api/profiles/favourites/${userId}`, {
+export const addToFavouritesApi = (userId: number) =>
+  fetchWithRefresh<TServerResponse<object>>(`/api/profiles/favourites/${userId}`, {
     method: 'POST',
     headers: {
       'X-API-Key': `${API_KEY}`,
@@ -324,8 +319,8 @@ export const addToFavouritesApi = (userId: number): Promise<object> =>
   });
 
 // Remove user from favourites
-export const removeFromFavouritesApi = (userId: number): Promise<object> =>
-  fetchWithRefresh<object>(`/api/profiles/favourites/${userId}`, {
+export const removeFromFavouritesApi = (userId: number) =>
+  fetchWithRefresh<TServerResponse<object>>(`/api/profiles/favourites/${userId}`, {
     method: 'DELETE',
     headers: {
       'X-API-Key': `${API_KEY}`,

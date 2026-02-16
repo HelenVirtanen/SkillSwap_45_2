@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { FC } from 'react';
-import styles from './CheckboxGroupUI.module.css';
+import styles from './CategoryGroupUI.module.css';
 import { CheckboxUI, type CheckboxState } from '../CheckboxUI/CheckboxUI';
 
 import ChevronDown from '@assets/icons/chevron-down.svg?react';
