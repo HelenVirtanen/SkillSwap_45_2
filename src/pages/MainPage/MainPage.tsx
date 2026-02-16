@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import UsersCatalog from '@widgets/UsersCatalog/UsersCatalog';
 import type { IUserCardData } from '@widgets/UserCardsGroup/UserCardsGroup';
 import { getProfilesApi, type TProfile } from '@api/api';
+import FilterSidebar from '@shared/ui/FiltersSidebar/FiltersSidebar';
+import Loader from '@shared/ui/Loader/Loader';
+import styles from './MainPage.module.css';
 
 const MainPage: React.FC = () => {
   const [users, setUsers] = useState<TProfile[]>([]);
@@ -52,20 +55,20 @@ const MainPage: React.FC = () => {
     isFavorite: false,
   });
 
-  const mappedUsers = useMemo(
-    () => users.map(mapProfileToCard),
-    [users]
-  );
+  const mappedUsers = useMemo(() => users.map(mapProfileToCard), [users]);
 
   if (loading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка: {error}</div>;
+  if (error) return <Loader />;
 
   return (
-    <UsersCatalog
-      popularUsers={mappedUsers.slice(0, 6)}
-      newUsers={mappedUsers.slice(6, 12)}
-      recommendedUsers={mappedUsers.slice(12, 18)}
-    />
+    <div className={styles.mainContainer}>
+      <FilterSidebar />
+      <UsersCatalog
+        popularUsers={mappedUsers.slice(0, 6)}
+        newUsers={mappedUsers.slice(6, 12)}
+        recommendedUsers={mappedUsers.slice(12, 18)}
+      />
+    </div>
   );
 };
 
