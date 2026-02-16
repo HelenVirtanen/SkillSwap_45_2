@@ -1,22 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { rootReducer } from './rootReducer';
-
-import {
-  TypedUseSelectorHook,
-  useDispatch as dispatchHook,
-  useSelector as selectorHook
-} from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootReducer } from './rootReducer'; // твой объединённый редьюсер
 
 const store = configureStore({
   reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production'
+  // middleware уже включает thunk по умолчанию в RTK
+  devTools: process.env.NODE_ENV !== 'production', // удобно для dev
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
-
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export const useDispatch: () => AppDispatch = () => dispatchHook();
-export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+// Кастомные хуки (твои — они правильные)
+import {
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook,
+} from 'react-redux';
+
+export const useAppDispatch: () => AppDispatch = () => dispatchHook();
+export const useAppSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 export default store;

@@ -1,6 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { userSlice } from '../store/slices/user';
+import  usersReducer  from '../store/slices/User/usersSlise';
+import staticDataReduser from '../store/slices/staticData/staticDataSlice'
+import likesReducer from './slices/likes/likesSlice';
 
 export const rootReducer = combineReducers({
-  user: userSlice.reducer
+  user: usersReducer,
+  staticData: staticDataReduser,
+  likes: likesReducer,
 });
