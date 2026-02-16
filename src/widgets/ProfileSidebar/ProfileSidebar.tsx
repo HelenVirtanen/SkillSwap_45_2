@@ -11,6 +11,7 @@ const ProfileSidebar = () => {
             title={conItem.title}
             route={conItem.route}
             Icon={conItem.icon}
+            disabled={conItem.dis}
           />
         </li>
       ))}
