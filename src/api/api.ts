@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from '../features/auth/cookie.ts';
+import { getCookie, setCookie } from '../features/auth/cookie';
 import type { TUser } from '../entities/User.ts';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
