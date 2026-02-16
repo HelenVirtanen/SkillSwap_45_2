@@ -223,6 +223,7 @@ export type TProfile = {
   photosOnAbout?: string[];
   isFavourite?: boolean;
   favouritesCount?: number;
+  createdAt?: Date;
 };
 
 export type TUpdateProfileData = {
