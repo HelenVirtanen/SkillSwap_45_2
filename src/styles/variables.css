@@ -1,5 +1,4 @@
 :root {
-
   /* ===== LIGHT THEME ===== */
 
   /* -Текстовый стек цветов- */
@@ -74,7 +73,7 @@
 }
 
 /* ===== DARK THEME ===== */
-  [data-theme='dark'] {
+[data-theme='dark'] {
   --clr-text-primary: #f5f7f2;
   --clr-text-secondary: #c3c9b8;
   --clr-text-disabled: #7c8372;
@@ -92,4 +91,12 @@
 
   --clr-alarm: #ff8c7f;
   --clr-error: #ff5a3d;
+
+  --clr-pastel-violet: #5a4d8a;
+  --clr-pastel-pink:   #b05a93;
+  --clr-pastel-sand:   #a88f3d;
+  --clr-pastel-sky:    #4fa3c1;
+  --clr-pastel-peach:  #c47a5a;
+  --clr-pastel-mint:   #4aa36a;
+  --clr-pastel-blue:   #4f6ecf;
 }
