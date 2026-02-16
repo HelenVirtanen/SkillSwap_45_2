@@ -4,7 +4,7 @@ import HeaderMain from './HeaderMain';
 
 
 const meta = {
-  title: 'Main/HeaderMain',
+  title: 'Main/Layout/HeaderMain',
   component: HeaderMain,
   tags: ['autodocs']
 } satisfies Meta<typeof HeaderMain>;
