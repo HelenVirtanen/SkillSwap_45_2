@@ -1,9 +1,12 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Loader from '@shared/ui/Loader/Loader';
 import RegisterPageStep2 from '@pages/RegisterPages/RegisterPageStep2/RegisterPageStep2';
 import RegisterPageStep3 from '@pages/RegisterPages/RegisterPageStep3/RegisterPageStep3';
+import { useAppDispatch } from './store/store';
+import { fetchCities, fetchCategories } from './store/slices/staticData/staticDataSlice';
+import { fetchLikes } from './store/slices/likes/likesSlice';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
 const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));
@@ -20,6 +23,14 @@ const FavoritesPage = lazy(() => import('@pages/FavoritesPage/FavoritesPage'));
 const AboutPage = lazy(() => import('@pages/AboutPage/AboutPage'));
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Загружаем города и категории один раз при старте приложения
+    dispatch(fetchCities());
+    dispatch(fetchCategories());
+    dispatch(fetchLikes())
+  }, [dispatch]); // пустой массив зависимостей — выполнится один раз{
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
