@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import HeaderAuth from './HeaderAuth';
 
 const meta = {
-  title: 'Main/HeaderAuth',
+  title: 'Main/Layout/HeaderAuth',
   component: HeaderAuth,
   tags: ['autodocs'],
 } satisfies Meta<typeof HeaderAuth>;

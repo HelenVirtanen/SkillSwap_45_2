@@ -1,7 +1,6 @@
-import { getCookie, setCookie } from '../features/auth/cookie.ts';
+import { getCookie, setCookie } from '../features/auth/cookie';
 import type { TUser } from '../entities/User.ts';
 
-const URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const checkResponse = <T>(res: Response): Promise<T> =>
@@ -9,7 +8,8 @@ const checkResponse = <T>(res: Response): Promise<T> =>
 
 type TServerResponse<T> = {
   success: boolean;
-} & T;
+  data: T;
+};
 
 type TRefreshResponse = TServerResponse<{
   refreshToken: string;
@@ -32,8 +32,8 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      localStorage.setItem('refreshToken', refreshData.refreshToken);
-      setCookie('accessToken', refreshData.accessToken);
+      localStorage.setItem('refreshToken', refreshData.data.refreshToken);
+      setCookie('accessToken', refreshData.data.accessToken);
       return refreshData;
     });
 
@@ -49,7 +49,7 @@ export const fetchWithRefresh = async <T>(
       const refreshData = await refreshToken();
       if (options.headers) {
         (options.headers as { [key: string]: string }).authorization =
-          refreshData.accessToken;
+          refreshData.data.accessToken;
       }
       const res = await fetch(url, options);
       return await checkResponse<T>(res);

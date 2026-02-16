@@ -1,4 +1,6 @@
 :root {
+  /* ===== LIGHT THEME ===== */
+
   /* -Текстовый стек цветов- */
   --clr-text-primary: #253017;
   --clr-text-secondary: #69735d;
@@ -11,7 +13,6 @@
   --clr-ui-background: #f9faf7;
   --clr-ui-border: #000000;
   --clr-ui-overlay: #8e8e8e99;
-
 
   /* -primary- */
   --clr-primary: #abd27a;
@@ -69,4 +70,33 @@
   /* -Обводка- */
   --border-width: 1px;
   --border-radius: 12px;
+}
+
+/* ===== DARK THEME ===== */
+[data-theme='dark'] {
+  --clr-text-primary: #f5f7f2;
+  --clr-text-secondary: #c3c9b8;
+  --clr-text-disabled: #7c8372;
+
+  --clr-ui-toggle: #3c4435;
+  --clr-ui-disabled: #2a2f25;
+  --clr-ui-surface: #1e231b;
+  --clr-ui-background: #141811;
+  --clr-ui-border: #ffffff;
+  --clr-ui-overlay: #00000099;
+
+  --clr-primary: #9cd45b;
+  --clr-primary-hover: #7db43f;
+  --clr-primary-pressed: #c4f28c;
+
+  --clr-alarm: #ff8c7f;
+  --clr-error: #ff5a3d;
+
+  --clr-pastel-violet: #5a4d8a;
+  --clr-pastel-pink:   #b05a93;
+  --clr-pastel-sand:   #a88f3d;
+  --clr-pastel-sky:    #4fa3c1;
+  --clr-pastel-peach:  #c47a5a;
+  --clr-pastel-mint:   #4aa36a;
+  --clr-pastel-blue:   #4f6ecf;
 }

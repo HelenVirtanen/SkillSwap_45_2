@@ -6,11 +6,15 @@ type TItemProp = {
   title: string;
   route: string;
   Icon?: React.ReactNode;
+  disabled: boolean;
 };
 
-const ProfileMenuItemUI = ({ title, route, Icon }: TItemProp) => {
+const ProfileMenuItemUI = ({ title, route, Icon, disabled }: TItemProp) => {
   return (
-    <NavLink to={route} className={styles.item}>
+    <NavLink
+      to={route}
+      className={`${styles.item} ${disabled ? styles.disabled : ''}`}
+    >
       {Icon}
       <span className={styles.link}>{title}</span>
     </NavLink>

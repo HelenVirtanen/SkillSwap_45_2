@@ -10,6 +10,13 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div style={{ width: '700px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   args: { placeholder: 'Искать навык', onClear: fn(), onChange: fn() },
 } satisfies Meta<typeof SearchInputUI>;
 

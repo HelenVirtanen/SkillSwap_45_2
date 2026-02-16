@@ -1,71 +1,47 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@app/store/store'; 
+import { fetchAllUsers } from '@app/store/slices/User/usersSlise'; 
 import UsersCatalog from '@widgets/UsersCatalog/UsersCatalog';
-import type { IUserCardData } from '@widgets/UserCardsGroup/UserCardsGroup';
-import type { TProfile } from '@api/api';
-
-type TUsersMock = {
-  users: TProfile[];
-};
+import FilterSidebar from '@shared/ui/FiltersSidebar/FiltersSidebar';
+import styles from './MainPage.module.css';
+import { selectCities } from '@app/store/slices/staticData/staticDataSlice';
 
 const MainPage: React.FC = () => {
-  const [usersData, setUsersData] = useState<TUsersMock | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const { mappedUsers, status, error } = useAppSelector(state => state.user); 
+
+  // берём города из стора
+  const cities = useAppSelector(selectCities);
 
   useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        const response = await fetch('/db/users.json');
-        if (!response.ok) {
-          throw new Error(`Ошибка загрузки: ${response.status}`);
-        }
-        const data = await response.json();
-        setUsersData(data);
-      } catch (err: any) {
-        setError(err.message || 'Не удалось загрузить пользователей');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (status === 'idle') {
+      dispatch(fetchAllUsers());
+    }
 
-    loadUsers();
-  }, []);
+    // Выводим города в консоль при каждом обновлении
+    console.log('Города из стора на MainPage:', cities);
+  }, [status, dispatch, cities]); // cities в зависимостях, чтобы видеть изменения
 
-  const mapProfileToCard = (profile: TProfile): IUserCardData => ({
-    id: String(profile.id),
-    avatar: profile.avatar || 'https://i.pravatar.cc/300',
-    name: profile.name,
-    birthDate: profile.birthDate || '1990-01-01',
-    city: profile.city || 'Город не указан',
-
-    teachingSkill: {
-      title: profile.teach_skills?.title || 'Навык не указан',
-      variant: 'education' as const,
-    },
-
-    learningSkills: profile.learn_skills?.map((skill: string) => ({
-      title: skill,
-      variant: 'education' as const,
-    })) || [],
-
-    isFavorite: profile.isFavourite ?? false,
-  });
-
-  const mappedUsers = useMemo(() => {
-     const users: TProfile[] = usersData?.users || [];
-     return users.map(mapProfileToCard);
-  }, [usersData]);
-
-  if (loading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка: {error}</div>;
+  // Распределяем пользователей по секциям
+  const popularUsers = mappedUsers.slice(0, 6);
+  const newUsers = mappedUsers.slice(6, 12);
+  const recommendedUsers = mappedUsers.slice(12, 18);
 
   return (
-    <UsersCatalog
-      popularUsers={mappedUsers.slice(0, 6)}
-      newUsers={mappedUsers.slice(6, 12)}
-      recommendedUsers={mappedUsers.slice(12, 18)}
-    />
+    <div className={styles.mainContainer}>
+      <FilterSidebar />
+
+      {status === 'loading' && <div>Загрузка пользователей...</div>}
+      {status === 'failed' && <div>Ошибка: {error}</div>}
+
+      {status === 'succeeded' && (
+        <UsersCatalog
+          popularUsers={popularUsers}
+          newUsers={newUsers}
+          recommendedUsers={recommendedUsers}
+        />
+      )}
+    </div>
   );
 };
 

@@ -9,12 +9,16 @@
 }
 
 .item:hover {
-  background-color: var(--clr-ui-disabled);
+  background-color: var(--clr-primary-hover);
   cursor: pointer;
 }
 
-.item:active {
-  background-color: var(--clr-primary-hover);
+.disabled {
+  opacity: 0.5;
+  background-color: var(--clr-ui-disabled);
+  color: var(--clr-text-secondary);
+  cursor: default;
+  pointer-events: none;
 }
 
 .link {

@@ -88,7 +88,8 @@ const DatePicker: React.FC<DatePickerProps> = ({
   );
 
   return (
-    <>
+    
+    <div className={styles.flex}>
       {title && <h4 className={`${styles.text} ${styles.title}`}>{title}</h4>}
       <ReactDatePicker
         placeholderText={placeholder}
@@ -102,6 +103,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           <div onClick={handleIconClick} style={{ cursor: 'pointer' }}>
             <CalendarIcon />
           </div>
+    
         }
         toggleCalendarOnIconClick={false}
         shouldCloseOnSelect={false}
@@ -160,7 +162,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           />
         </div>
       </ReactDatePicker>
-    </>
+    </div>
   );
 };
 

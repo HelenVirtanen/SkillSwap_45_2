@@ -15,9 +15,19 @@
 /* Форма регистрации */
 
 .register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
   border-radius: 12px;
   background-color: var(--clr-ui-surface);
-  padding: 121.5px 60px;
+  padding: 60px;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .loginWith {
@@ -30,7 +40,6 @@
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 27px 0;
   color: var(--clr-text-primary);
 }
 
@@ -42,18 +51,10 @@
   background-color: var(--clr-ui-disabled);
 }
 
-.registerForm {
-  margin-top: 32px;
-}
-
 .registerForm__inputContainer {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
-
-.registerForm__submit {
-  margin-top: 30px;
 }
 
 /* onBoarding */

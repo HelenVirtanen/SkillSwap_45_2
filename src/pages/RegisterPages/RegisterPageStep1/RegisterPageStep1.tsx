@@ -48,18 +48,20 @@ const RegisterPageStep1: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.stepper}>
       <Stepper currentStep={1} />
+      </div>
       <div className={styles.content}>
         <div className={styles.register}>
           <div className={styles.loginWith}>
             <ButtonUI
               variant="social"
-              title="Продлжить с Google"
+              title="Продолжить с Google"
               iconLeft={<GoogleIcon />}
             />
             <ButtonUI
               variant="social"
-              title="Продлжить с Apple"
+              title="Продолжить с Apple"
               iconLeft={<AppleIcon />}
             />
           </div>
@@ -95,6 +97,7 @@ const RegisterPageStep1: React.FC = () => {
               className={styles.registerForm__submit}
             />
           </form>
+         
         </div>
         <IllustrationPanel
           image={<BulbIcon />}

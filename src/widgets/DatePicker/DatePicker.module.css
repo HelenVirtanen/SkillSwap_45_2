@@ -43,10 +43,11 @@
     font-size: var(--fs-h4);
     font-family: var(--ff-body), serif;
     line-height: var(--lh-h4);
+    letter-spacing: 0.02em;
 }
 
 .title {
-    margin-bottom: 4px;
+    padding-block-end: 4px;
 }
 
 :global(.react-datepicker__children-container) {
@@ -225,4 +226,9 @@
 :global(.react-datepicker__day--keyboard-selected:hover),
 :global(.react-datepicker__day--highlighted:hover){
     background-color: var(--clr-primary-hover) !important;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
 }

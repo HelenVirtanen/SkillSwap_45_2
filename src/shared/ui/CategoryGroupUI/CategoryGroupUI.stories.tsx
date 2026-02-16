@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { CategoryGroupUI } from './CheckboxGroupUI';
+import { CategoryGroupUI } from './CategoryGroupUI';
 
 const meta: Meta<typeof CategoryGroupUI> = {
-  title: 'Main/Shared/CategoryGroupUI',
+  title: 'Main/UI/CategoryGroupUI',
   component: CategoryGroupUI,
   parameters: {
     layout: 'centered',

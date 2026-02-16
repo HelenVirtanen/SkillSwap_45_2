@@ -2,10 +2,10 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
 import Loader from '@shared/ui/Loader/Loader';
-import RegisterPageStep2 from '@pages/RegisterPages/RegisterPageStep2/RegisterPageStep2';
-import RegisterPageStep3 from '@pages/RegisterPages/RegisterPageStep3/RegisterPageStep3';
 import ProtectedRoute from '@features/navigation/ProtectedRoute';
-import { useDispatch } from './store/store';
+import { useAppDispatch } from './store/store';
+import { fetchCities, fetchCategories } from './store/slices/staticData/staticDataSlice';
+import { fetchLikes } from './store/slices/likes/likesSlice';
 import { checkUserAuth } from './store/slices/authUser/actions';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
@@ -17,17 +17,26 @@ const ServerErrorPage = lazy(
   () => import('@pages/ServerErrorPage/ServerErrorPage'),
 );
 const RegisterPageStep1 = lazy(() => import('@pages/RegisterPages/RegisterPageStep1/RegisterPageStep1'));
+const RegisterPageStep2 = lazy(() => import('@pages/RegisterPages/RegisterPageStep2/RegisterPageStep2'));
+const RegisterPageStep3 = lazy(() => import('@pages/RegisterPages/RegisterPageStep3/RegisterPageStep3'));
 const LoginPage = lazy(() => import('@pages/LoginPage/LoginPage'));
 const ProfilePage = lazy(() => import('@pages/ProfilePage/ProfilePage'));
 const FavoritesPage = lazy(() => import('@pages/FavoritesPage/FavoritesPage'));
 const AboutPage = lazy(() => import('@pages/AboutPage/AboutPage'));
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(checkUserAuth());
   }, [dispatch]);
+
+  useEffect(() => {
+    // Загружаем города и категории один раз при старте приложения
+    dispatch(fetchCities());
+    dispatch(fetchCategories());
+    dispatch(fetchLikes())
+  }, [dispatch]); // пустой массив зависимостей — выполнится один раз{
 
   return (
     <Suspense fallback={<Loader />}>

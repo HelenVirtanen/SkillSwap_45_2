@@ -15,6 +15,7 @@ const meta = {
     title: 'Личные данные',
     route: '/',
     Icon: React.createElement(UserIcon),
+    disabled: true,
   },
 } satisfies Meta<typeof ProfileMenuItemUI>;
 

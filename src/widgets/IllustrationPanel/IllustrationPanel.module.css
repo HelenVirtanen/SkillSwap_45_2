@@ -7,14 +7,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 60px;
+  padding: 132px 60px;
   border-radius: 12px;
 }
 
 .image {
   width: 300px;
-  height: 300px;
-  margin-bottom: 40px;
+  height: 300px;  
 }
 
 .image svg {
@@ -23,14 +22,14 @@
 }
 
 .title {
-  text-align: center;
-  margin-bottom: 12px;
+  text-align: center;  
   font-family: var(--ff-heading, 'Jost', sans-serif);
   font-size: var(--fs-h2, 24px);
   color: var(--clr-text-primary, #253017);
   line-height: 28px;
   font-weight: var(--fw-medium, 500);
   letter-spacing: -0.011em;
+  padding-block-end: 10px;
 }
 
 .description {
@@ -40,6 +39,10 @@
   color: var(--clr-text-primary, #253017);
   line-height: 1.5;
   font-weight: var(--fw-regular, 400);
-  letter-spacing: 0.02em;
-  width: 420px;
+  letter-spacing: 0.02em;  
+}
+
+.textWrapper {
+  padding-block-start: 40px;  
+  max-width: 410px;
 }

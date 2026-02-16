@@ -28,7 +28,11 @@ const UserInfoUI: FC<UserInfoProps> = ({
   return (
     <div className={styles.userInfo}>
       <div className={styles.avatarContainer}>
-        <img src={avatar} alt={name} className={styles.avatar} />
+         <img
+          src={avatar && avatar.trim() !== '' ? avatar : '/avatars/default.png'}
+          alt={name}
+          className={styles.avatar}
+        />
       </div>
         <div className={styles.info}>
           <h4 className={styles.name}>{name}</h4>

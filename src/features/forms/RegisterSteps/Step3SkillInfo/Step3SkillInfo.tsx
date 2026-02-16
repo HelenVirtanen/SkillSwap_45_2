@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
@@ -7,6 +7,8 @@ import InputUI from '@shared/ui/InputUI/InputUI';
 import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
 import styles from './Step3SkillInfo.module.css';
 import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';
+import { getSkills } from '@api/skills';
+import { TSkillCategory } from '@api/api';
 
 // Типы данных формы (убрали tagging)
 export interface Step3Data {
@@ -54,6 +56,8 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
   onBack,
   initialData,
 }) => {
+  const [skillsData, setSkillsData] = useState<TSkillCategory[]>([]);
+
   const {
     control,
     handleSubmit,
@@ -71,6 +75,35 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     },
   });
 
+  const selectedCategory = useWatch({
+    control,
+    name: 'category',
+  });
+
+  const subcategoryOptions = React.useMemo(() => {
+    if (!selectedCategory || skillsData.length === 0) return [];
+    const category = skillsData.find((c) => c.title === selectedCategory);
+    return category?.skills || [];
+  }, [selectedCategory, skillsData]);
+
+  // Обновляем подкатегории при изменении категории
+  useEffect(() => {
+    setValue('subcategory', '');
+  }, [selectedCategory, setValue]);
+
+  // Загружаем JSON с категориями
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const data = await getSkills();
+        setSkillsData(data);
+      } catch (error) {
+        console.error('Ошибка загрузки категорий', error);
+      }
+    };
+    fetchSkills();
+  }, []);
+
   // Обработчик загрузки изображения
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -83,28 +116,6 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
   const onSubmit = (data: Step3Data) => {
     onNext(data);
   };
-
-  // Варианты категорий для DropDownUI
-  const categoryOptions = [
-    'Творчество и искусство',
-    'Бизнес и карьера',
-    'Здоровье и лайфстайл',
-    'Образование и развитие',
-    'Иностранные языки',
-    'Дом и уют',
-  ];
-
-  // Варианты подкатегорий (такие же как категории)
-  const subcategoryOptions = [
-    'Рисование и иллюстрация',
-    'Фотография',
-    'Видеомонтаж',
-    'Музыка и звук',
-    'Актёрское мастерство',
-    'Креативное письмо',
-    'Арт-терапия',
-    'Декор и DIY',
-  ];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -132,14 +143,16 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           control={control}
           render={({ field }) => (
             <div className={styles.formGroup}>
-              <DropDownUI
-                title="Категория навыка"
-                value={field.value}
-                options={categoryOptions}
-                onChange={field.onChange}
-                widthDepOnContent={false}
-                placeholder="Выберите категорию навыка"
-              />
+              <div className={styles.dropDownWrapper}>
+                <DropDownUI
+                  title="Категория навыка"
+                  value={field.value}
+                  options={skillsData.map((c) => c.title)}
+                  onChange={field.onChange}
+                  widthDepOnContent={false}
+                  placeholder="Выберите категорию навыка"
+                />
+              </div>
               {errors.category && (
                 <span className={styles.errorMessage}>
                   {errors.category.message}
@@ -155,14 +168,16 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           control={control}
           render={({ field }) => (
             <div className={styles.formGroup}>
-              <DropDownUI
-                title="Подкатегория навыка"
-                value={field.value}
-                options={subcategoryOptions}
-                onChange={field.onChange}
-                widthDepOnContent={false}
-                placeholder="Выберите подкатегорию навыка"
-              />
+              <div className={styles.dropDownWrapper}>
+                <DropDownUI
+                  title="Подкатегория навыка"
+                  value={field.value}
+                  options={subcategoryOptions}
+                  onChange={field.onChange}
+                  widthDepOnContent={false}
+                  placeholder="Выберите подкатегорию навыка"
+                />
+              </div>
               {errors.subcategory && (
                 <span className={styles.errorMessage}>
                   {errors.subcategory.message}
@@ -178,16 +193,18 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           control={control}
           render={({ field }) => (
             <div className={styles.formGroup}>
-              <InputUI
-                {...field}
-                label="Описание"
-                placeholder="Коротко опишите, чему можете научить"
-                type="textarea"
-                rows={4}
-                maxLength={500}
-                error={errors.description?.message}
-                className={errors.description ? styles.inputError : ''}
-              />
+              <div className={styles.textareaWrapper}>
+                <InputUI
+                  {...field}
+                  label="Описание"
+                  placeholder="Коротко опишите, чему можете научить"
+                  type="textarea"
+                  rows={4}
+                  maxLength={500}
+                  error={errors.description?.message}
+                  className={errors.description ? styles.inputError : ''}
+                />
+              </div>
             </div>
           )}
         />

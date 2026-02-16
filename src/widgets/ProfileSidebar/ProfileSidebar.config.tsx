@@ -9,25 +9,30 @@ export const ProfileSidebarconfig = [
     title: 'Заявки',
     route: '/profile/requests',
     icon: <RequestIdea />,
+    dis: false,
   },
   {
     title: 'Мои обмены',
     route: '/profile/offers',
     icon: <MessageIdea />,
+    dis: true,
   },
   {
     title: 'Избранное',
     route: '/profile/favorite',
     icon: <FavoriteIdea />,
+    dis: false,
   },
   {
     title: 'Мои навыки',
     route: '/profile/skills',
     icon: <SkillsIdea />,
+    dis: true,
   },
   {
     title: 'Личные данные',
     route: '/profile/details',
     icon: <DetailIdea />,
+    dis: false,
   },
 ];
