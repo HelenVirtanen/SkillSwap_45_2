@@ -57,8 +57,8 @@ const MainPage: React.FC = () => {
 
   const mappedUsers = useMemo(() => users.map(mapProfileToCard), [users]);
 
-  if (loading) return <div>Загрузка...</div>;
-  if (error) return <Loader />;
+  if (loading) return <Loader />;
+  if (error) return <div>Ошибка: {error}</div>;
 
   return (
     <div className={styles.mainContainer}>
