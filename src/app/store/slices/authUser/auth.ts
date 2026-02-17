@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { RootState } from '@app/store/store';
 import { fetchUsers } from './actions';
 import { loginUserApi } from '@api/api';
 import { setCookie } from '@features/auth/cookie';

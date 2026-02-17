@@ -47,6 +47,7 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
   const submitHandler = (data: UserData) => {
+    console.log('Запускаем ручку')
     dispatch(loginUser(data));
     console.log('Submitting data:', data);
   };
