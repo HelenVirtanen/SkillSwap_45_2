@@ -44,19 +44,7 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
 // Thunk для загрузки всех пользователей
 export const fetchAllUsers = createAsyncThunk(
   'users/fetchAll',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getProfilesApi();
-
-      if (!response.success) {
-        throw new Error('Ошибка загрузки профилей');
-      }
-
-      return response.data as TProfile[];
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка сервера');
-    }
-  }
+  async () => getProfilesApi(),
 );
 
 const usersSlice = createSlice({

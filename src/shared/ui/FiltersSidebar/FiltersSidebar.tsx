@@ -1,27 +1,27 @@
 import { FC, useEffect } from 'react';
 import RadioGroupUI from '@shared/ui/RadioGroupUI/RadioGroupUI';
 import styles from './FiltersSidebar.module.css';
+import { TCategory } from '@entities/Skills.ts';
+import { getSkills, fetchSkills } from '@app/store/slices/filters';
 import {
   Category,
   CategoryGroupUI,
-} from '@shared/ui/CheckboxGroupUI/CheckboxGroupUI.tsx';
-import { TCategory } from '@entities/Skills.ts';
-import { useDispatch, useSelector } from '@app/store/store.ts';
-import { getSkills, fetchSkills } from '@app/store/slices/filters';
+} from '@shared/ui/CategoryGroupUI/CategoryGroupUI.tsx';
+import { useAppDispatch, useAppSelector } from '@app/store/store.ts';
 
 interface FilterSidebarProps {
   className?: string;
 }
 
 const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
-  const skills: TCategory[] = useSelector(getSkills);
-  const dispatch = useDispatch();
+  const skills: TCategory[] = useAppSelector(getSkills);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!skills.length) {
       dispatch(fetchSkills());
     }
-  }, []);
+  }, [dispatch, skills.length]);
 
   const convertTCategoriesToCategories = (
     tCategories: TCategory[],
@@ -52,7 +52,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
         <CategoryGroupUI
           categories={convertTCategoriesToCategories(skills)}
           selectedSubcategories={[]}
-          onSubcategoryToggle={(id: string) => {}}
+          onSubcategoryToggle={(subcategoryId: string) => {}}
         />
         <RadioGroupUI
           label="Пол автора"
