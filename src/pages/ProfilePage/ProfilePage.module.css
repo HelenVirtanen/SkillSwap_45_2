@@ -1,9 +1,6 @@
 .mainContainer {
     display: flex;
     gap: 24px;
-    padding-block-start: 34px;
-    padding-inline-start: 36px;
-    margin-block-end: 60px;
 }
 
 .profileWrapper {
