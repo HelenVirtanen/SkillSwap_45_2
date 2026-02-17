@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import UserCardsGroup from './UserCardsGroup';
 
 // Моковые данные из users.json
@@ -135,11 +135,6 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-  argTypes: {
-    showFavorite: {
-      control: 'boolean',
-    },
-  },
 } satisfies Meta<typeof UserCardsGroup>;
 
 export default meta;
@@ -149,7 +144,6 @@ type Story = StoryObj<typeof UserCardsGroup>;
 export const ThreeCards: Story = {
   args: {
     users: mockUsers.slice(0, 3),
-    showFavorite: false,
     onMessageClick: (id) => console.log('Message to:', id),
   },
 };
@@ -158,7 +152,6 @@ export const ThreeCards: Story = {
 export const FourCards: Story = {
   args: {
     users: mockUsers.slice(0, 4),
-    showFavorite: false,
     onMessageClick: (id) => console.log('Message to:', id),
   },
 };
@@ -167,7 +160,6 @@ export const FourCards: Story = {
 export const SixCards: Story = {
   args: {
     users: mockUsers.slice(0, 6),
-    showFavorite: false,
     onMessageClick: (id) => console.log('Message to:', id),
   },
 };
@@ -176,7 +168,6 @@ export const SixCards: Story = {
 export const SevenCards: Story = {
   args: {
     users: mockUsers.slice(0, 7),
-    showFavorite: false,
     onMessageClick: (id) => console.log('Message to:', id),
   },
 };
@@ -185,7 +176,6 @@ export const SevenCards: Story = {
 export const WithFavorites: Story = {
   args: {
     users: mockUsers.filter(u => u.isFavorite).slice(0, 3),
-    showFavorite: true,
     onFavoriteToggle: (id) => console.log('Toggle favorite:', id),
     onMessageClick: (id) => console.log('Message to:', id),
   },
@@ -195,7 +185,6 @@ export const WithFavorites: Story = {
 export const TabletView: Story = {
   args: {
     users: mockUsers.slice(0, 4),
-    showFavorite: false,
   },
   parameters: {
     viewport: {
@@ -208,7 +197,6 @@ export const TabletView: Story = {
 export const MobileView: Story = {
   args: {
     users: mockUsers.slice(0, 3),
-    showFavorite: false,
   },
   parameters: {
     viewport: {
@@ -221,6 +209,5 @@ export const MobileView: Story = {
 export const Empty: Story = {
   args: {
     users: [],
-    showFavorite: false,
   },
 };
