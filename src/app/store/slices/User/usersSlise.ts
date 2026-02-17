@@ -37,8 +37,13 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
   name: profile.name,
   birthDate: profile.birthDate ?? 'Не указано',
   city: profile.city ?? 'Город не указан',
+  gender: profile.gender ?? 'any',
+
   teachingSkill: {
-    title: profile.teach_skills?.title ?? 'Навык не указан',
+    title:
+      profile.teach_skills?.skills ??
+      profile.teach_skills?.title ??
+      'Навык не указан',
     variant: 'education',
   },
   learningSkills:

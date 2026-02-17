@@ -16,6 +16,7 @@ export interface IUserCardData {
   name: string;
   birthDate: string;
   city: string;
+  gender?: string;
   teachingSkill: ISkill;
   learningSkills: ISkill[];
   isFavorite?: boolean;
