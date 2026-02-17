@@ -14,6 +14,7 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+  overflow: hidden; 
 }
 
 .userInfo {
@@ -22,7 +23,7 @@
   align-items: flex-start;
   padding: 0px;
   gap: 20px;
-  width: 260px;
+  width: 100%;
   flex: none;
   order: 0;
   align-self: stretch;
@@ -35,7 +36,7 @@
   flex-direction: row;
   align-items: center;
   gap: 12px;
-  width: 260px;
+  width: 100%; 
   height: 100px;
   position: relative;
 }
@@ -64,8 +65,9 @@
   justify-content: center;
   align-items: flex-start;
   gap: 4px;
-  width: 148px;
   flex: 1;
+  min-width: 0;
+  max-width: calc(100% - 112px); 
 }
 
 .userName {
@@ -78,6 +80,10 @@
   color: #253017;
   margin: 0;
   padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .userDetails {
@@ -91,10 +97,14 @@
   line-height: 16px;
   letter-spacing: 0.02em;
   color: #253017;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .about {
-  width: 260px;
+  width: 100%;
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -123,7 +133,7 @@
   align-items: flex-start;
   padding: 0px;
   gap: 23px;
-  width: 260px;
+  width: 100%; 
   flex: none;
   order: 2;
   align-self: stretch;
@@ -155,6 +165,7 @@
 
 .skillsRow {
   display: flex;
+  flex-wrap: wrap; 
   align-items: flex-start;
   padding: 0px;
   gap: 8px;

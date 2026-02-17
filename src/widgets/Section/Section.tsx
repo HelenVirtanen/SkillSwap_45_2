@@ -9,9 +9,15 @@ export interface SectionProps {
   title: string;
   users: IUserCardData[];
   onShowAll?: () => void;
+  onDetailsClick?: (userId: string) => void; 
 }
 
-const Section: React.FC<SectionProps> = ({ title, users, onShowAll }) => {
+const Section: React.FC<SectionProps> = ({ 
+  title, 
+  users, 
+  onShowAll,
+  onDetailsClick 
+}) => {
   return (
     <section className={styles.section}>
       <div className={styles.sectionHeader}>
@@ -28,7 +34,10 @@ const Section: React.FC<SectionProps> = ({ title, users, onShowAll }) => {
         )}
       </div>
 
-      <UserCardsGroup users={users} />
+      <UserCardsGroup 
+        users={users} 
+        onDetailsClick={onDetailsClick} 
+      />
     </section>
   );
 };
