@@ -47,11 +47,11 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
 
   const submitHandler = (data: UserData) => {
-    console.log('Запускаем ручку')
+    console.log('submitHandler вызван!', data); // <--- проверка
     dispatch(loginUser(data));
     console.log('Submitting data:', data);
   };
-  
+
   console.log('Current user:', user);
   console.log('autherror', authError);
 
@@ -122,3 +122,30 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
+
+// const LoginTest: React.FC = () => {
+//   const dispatch = useAppDispatch();
+
+//   const testLogin = () => {
+//     // Пробуем твои реальные данные для логина
+//     const testData = { email: 'newuser@example.com', password: 'password123' };
+
+//     // Вызов thunk напрямую
+//     dispatch(loginUser(testData))
+//       .unwrap() // unwrap позволяет ловить ошибки как обычный try/catch
+//       .then((user) => {
+//         console.log('Login successful:', user);
+//       })
+//       .catch((err) => {
+//         console.error('Login failed:', err);
+//       });
+//   };
+
+//   return (
+//     <div>
+//       <button onClick={testLogin}>Тест логина</button>
+//     </div>
+//   );
+// };
+
+// export default LoginTest;
