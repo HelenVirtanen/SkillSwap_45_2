@@ -1,89 +1,161 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { getProfilesApi, type TProfile } from '@api/api';
+import { getProfilesApi, getProfileByIdApi, getProfileByIdAuthApi, type TProfile } from '@api/api';
 import type { IUserCardData } from '@widgets/UserCardsGroup/UserCardsGroup';
-import type { RootState } from '@app/store/store'; // ← импорт RootState
+import type { RootState } from '@app/store/store';
 
 // Состояние слайса
 interface UsersState {
-  allUsers: TProfile[]; // сырые данные из API
-  mappedUsers: IUserCardData[]; // преобразованные для карточек
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
+allUsers: TProfile[]; // сырые данные из API
+mappedUsers: IUserCardData[]; // преобразованные для карточек
+currentProfileUser: TProfile | null; // текущий пользователь для страницы профиля
+profileStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+profileError: string | null;
+status: 'idle' | 'loading' | 'succeeded' | 'failed';
+error: string | null;
 }
 
 // Начальное состояние
 const initialState: UsersState = {
-  allUsers: [],
-  mappedUsers: [],
-  status: 'idle',
-  error: null,
+allUsers: [],
+mappedUsers: [],
+currentProfileUser: null,
+profileStatus: 'idle',
+profileError: null,
+status: 'idle',
+error: null,
 };
 
 // Вспомогательная функция маппинга
 const mapProfileToCard = (profile: TProfile): IUserCardData => ({
-  id: String(profile.id),
-  avatar: profile.avatar ?? '/avatars/default.png',
-  name: profile.name,
-  birthDate: profile.birthDate ?? 'Не указано',
-  city: profile.city ?? 'Город не указан',
-
-  teachingSkill: {
-    title: profile.teach_skills?.title ?? 'Навык не указан',
-    variant: 'education',
-  },
-
-  learningSkills:
-    profile.learn_skills?.map((skill) => ({
-      title: skill,
-      variant: 'education',
-    })) ?? [],
-
-  isFavorite: false,
+id: String(profile.id),
+avatar: profile.avatar ?? '/avatars/default.png',
+name: profile.name,
+birthDate: profile.birthDate ?? 'Не указано',
+city: profile.city ?? 'Город не указан',
+teachingSkill: {
+title: profile.teach_skills?.title ?? 'Навык не указан',
+variant: 'education',
+},
+learningSkills:
+profile.learn_skills?.map((skill) => ({
+title: skill,
+variant: 'education',
+})) ?? [],
+isFavorite: false,
 });
 
 // Thunk для загрузки всех пользователей
 export const fetchAllUsers = createAsyncThunk('users/fetchAll', async () =>
-  getProfilesApi(),
+getProfilesApi(),
+);
+
+// Параметры для thunk профиля
+interface FetchUserProfileParams {
+userId: number;
+isAuthenticated: boolean;
+}
+
+// Thunk для загрузки профиля пользователя по ID
+export const fetchUserProfileById = createAsyncThunk<
+TProfile,
+FetchUserProfileParams,
+{ rejectValue: string }
+>(
+'users/fetchProfileById',
+async ({ userId, isAuthenticated }, { rejectWithValue }) => {
+try {
+const userData = isAuthenticated
+? await getProfileByIdAuthApi(userId)
+: await getProfileByIdApi(userId);
+
+if (!userData) {
+return rejectWithValue('Данные пользователя не получены');
+}
+
+return userData;
+} catch (error) {
+return rejectWithValue('Не удалось загрузить данные пользователя');
+}
+}
 );
 
 const usersSlice = createSlice({
-  name: 'users',
-  initialState,
-  reducers: {
-    clearUsers(state) {
-      state.allUsers = [];
-      state.mappedUsers = [];
-      state.status = 'idle';
-      state.error = null;
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllUsers.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
-      .addCase(fetchAllUsers.fulfilled, (state, action: PayloadAction<TProfile[]>) => {
-          state.status = 'succeeded';
-          state.allUsers = action.payload;
-          state.mappedUsers = action.payload.map(mapProfileToCard);
-        },
-      )
-      .addCase(fetchAllUsers.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload as string;
-      });
-  },
+name: 'users',
+initialState,
+reducers: {
+clearUsers(state) {
+state.allUsers = [];
+state.mappedUsers = [];
+state.status = 'idle';
+state.error = null;
+},
+clearProfileUser(state) {
+state.currentProfileUser = null;
+state.profileStatus = 'idle';
+state.profileError = null;
+},
+toggleFavoriteInProfile(state, action: PayloadAction<string>) {
+if (state.currentProfileUser) {
+state.currentProfileUser.isFavourite = !state.currentProfileUser.isFavourite;
+}
+
+// Также обновляем статус в списке всех пользователей, если есть
+const userInList = state.allUsers.find(u => u.id.toString() === action.payload);
+if (userInList) {
+userInList.isFavourite = !userInList.isFavourite;
+}
+},
+},
+extraReducers: (builder) => {
+builder
+// Обработчики для fetchAllUsers
+.addCase(fetchAllUsers.pending, (state) => {
+state.status = 'loading';
+state.error = null;
+})
+.addCase(fetchAllUsers.fulfilled, (state, action: PayloadAction<TProfile[]>) => {
+state.status = 'succeeded';
+state.allUsers = action.payload;
+state.mappedUsers = action.payload.map(mapProfileToCard);
+})
+.addCase(fetchAllUsers.rejected, (state, action) => {
+state.status = 'failed';
+state.error = action.payload as string;
+})
+
+// Обработчики для fetchUserProfileById
+.addCase(fetchUserProfileById.pending, (state) => {
+state.profileStatus = 'loading';
+state.profileError = null;
+})
+.addCase(fetchUserProfileById.fulfilled, (state, action: PayloadAction<TProfile>) => {
+state.profileStatus = 'succeeded';
+state.currentProfileUser = action.payload;
+})
+.addCase(fetchUserProfileById.rejected, (state, action) => {
+state.profileStatus = 'failed';
+state.profileError = action.payload || 'Произошла ошибка при загрузке';
+});
+},
 });
 
 // Экспорт действий
-export const { clearUsers } = usersSlice.actions;
+export const {
+clearUsers,
+clearProfileUser,
+toggleFavoriteInProfile
+} = usersSlice.actions;
 
 // Селекторы — исправленные под твой стор (state.user вместо state.users)
-export const selectAllUsers = (state: RootState) => state.user.allUsers;
-export const selectMappedUsers = (state: RootState) => state.user.mappedUsers;
-export const selectUsersStatus = (state: RootState) => state.user.status;
-export const selectUsersError = (state: RootState) => state.user.error;
+export const selectAllUsers = (state: RootState) => state.users.allUsers;
+export const selectMappedUsers = (state: RootState) => state.users.mappedUsers;
+export const selectUsersStatus = (state: RootState) => state.users.status;
+export const selectUsersError = (state: RootState) => state.users.error;
+
+// Селекторы для профиля
+export const selectCurrentProfileUser = (state: RootState) => state.users.currentProfileUser;
+export const selectProfileStatus = (state: RootState) => state.users.profileStatus;
+export const selectProfileError = (state: RootState) => state.users.profileError;
 
 // Экспорт редьюсера
 export default usersSlice.reducer;

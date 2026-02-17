@@ -1,5 +1,9 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import {
+  loginUser,
+  selectAuthStatus,
+} from '@app/store/slices/authUser/auth';
+import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputUI from '@shared/ui/InputUI/InputUI';
@@ -7,9 +11,9 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import styles from './LoginForm.module.css';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
 import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
-import { loginUserApi } from '@api/api';
 // import { setCookie } from '@features/auth/cookie';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
 
 const INVALID_CREDENTIALS =
   'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных';
@@ -29,31 +33,20 @@ type UserData = {
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
   const from = (location.state as any)?.from?.pathname || '/';
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<UserData>({
+  const { control, handleSubmit } = useForm<UserData>({
     resolver: yupResolver(validationSchema),
   });
 
-  const submitHandler = async (data: UserData) => {
-    try {
-      const success = await loginUserApi(data);
+  const status = useAppSelector(selectAuthStatus);
 
-      if (success) {
-        navigate(from, {replace: true});
-        reset();
-      }
-      else {
-        console.log('Неверные данные');
-      }
-    } catch (error) {
-      console.error('Ошибка входа:', error);
+  const submitHandler = async (data: UserData) => {
+    const resultAction = await dispatch(loginUser(data));
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate(from, { replace: true });
     }
   };
 
@@ -80,27 +73,42 @@ const LoginForm: React.FC = () => {
         <div className={styles.orSeparator}>или</div>
 
         <div className={styles.inputWrapper}>
-          <InputUI
-            {...register('email')}
-            label="Email"
-            type="email"
-            placeholder="Введите email"
-            error={errors.email?.message}
+          <Controller
+            name="email"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Email"
+                type="email"
+                placeholder="Введите email"
+                error={fieldState.error?.message}
+              />
+            )}
           />
 
-          <InputUI
-            {...register('password')}
-            label="Пароль"
-            type="password"
-            placeholder="Введите ваш пароль"
-            error={
-              errors.email || errors.password ? INVALID_CREDENTIALS : undefined
-            }
+          <Controller
+            name="password"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Пароль"
+                type="password"
+                placeholder="Введите ваш пароль"
+                error={fieldState.error?.message}
+              />
+            )}
           />
         </div>
 
         <div className={styles.loginButtonsWrapper}>
-          <ButtonUI variant="primary" type="submit" title="Войти" />
+          <ButtonUI
+            variant="primary"
+            type="submit"
+            title={status === 'loading' ? 'Входим...' : 'Войти'}
+            disabled={status === 'loading'}
+          />
           <ButtonUI
             variant="tertiary"
             type="button"

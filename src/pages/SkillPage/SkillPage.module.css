@@ -3,7 +3,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 24px;
   background-color: #f8f9fa;
   box-sizing: border-box;
 }
@@ -19,7 +18,7 @@
 
 .leftColumn {
   flex: 0 0 auto;
-  width: 324px; /* Фиксированная ширина для карточки пользователя */
+  width: 324px;
 }
 
 .rightColumn {

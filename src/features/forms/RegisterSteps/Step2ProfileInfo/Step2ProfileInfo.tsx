@@ -150,7 +150,16 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
           <DatePicker
             title="Дата рождения"
             placeholder="дд.мм.гггг"
-          ></DatePicker>
+            selected={
+              localData.birthDate ? new Date(localData.birthDate) : null
+            }
+            onChange={(date) => {
+              handleFieldChange(
+                'birthDate',
+                date ? date.toISOString().split('T')[0] : '',
+              );
+            }}
+          />
         </div>
         <div className={styles.dropDownUI}>
           <DropDownUI

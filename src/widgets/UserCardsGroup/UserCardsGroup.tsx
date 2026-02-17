@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './UserCardsGroup.module.css';
-
 import UserCard from '../UserCard/UserCard';
-import ButtonUI from '@shared/ui/ButtonUI/ButtonUI'
-
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
+import { toggleFavorite, selectFavorites } from '@app/store/slices/favorites/favoritesSlice';
 
 interface ISkill {
   title: string;
@@ -23,38 +23,38 @@ export interface IUserCardData {
 
 export interface UserCardsGroupProps {
   users: IUserCardData[];
-  showFavorite?: boolean;
   onFavoriteToggle?: (userId: string) => void;
   onMessageClick?: (userId: string) => void;
 }
 
-const UserCardsGroup: React.FC<UserCardsGroupProps> = ({
-  users,
-  showFavorite = false,
-  onFavoriteToggle,
-  onMessageClick
-}) => {
+const UserCardsGroup: React.FC<UserCardsGroupProps> = ({ users, onMessageClick }) => {
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(selectFavorites);
+
   return (
     <section className={styles.section}>
-      {/* Сетка карточек - всегда 3 колонки на десктопе, управление через CSS */}
       <div className={styles.grid}>
-        {users.map((user) => (
-          <UserCard
-            key={user.id}
-            avatar={user.avatar}
-            name={user.name}
-            birthDate={user.birthDate}
-            city={user.city}
-            teachingSkill={user.teachingSkill}
-            learningSkills={user.learningSkills}
-            isFavorite={showFavorite ? user.isFavorite : false}
-            onFavoriteToggle={onFavoriteToggle ? () => onFavoriteToggle(user.id) : () => {}}
-            onMessageClick={onMessageClick ? () => onMessageClick(user.id) : undefined}
-          />
-        ))}
+        {users.map(user => {
+          const isFavorite = favorites.includes(user.id);
+
+          return (
+            <UserCard
+              id={user.id}
+              key={user.id}
+              avatar={user.avatar}
+              name={user.name}
+              birthDate={user.birthDate}
+              city={user.city}
+              teachingSkill={user.teachingSkill}
+              learningSkills={user.learningSkills}
+              isFavorite={isFavorite}
+              onFavoriteToggle={() => dispatch(toggleFavorite(user.id))}
+              onMessageClick={onMessageClick ? () => onMessageClick(user.id) : undefined}
+            />
+          );
+        })}
       </div>
 
-      {/* Пустое состояние */}
       {users.length === 0 && (
         <div className={styles.emptyState}>
           <p className={styles.emptyText}>Нет пользователей для отображения</p>

@@ -8,7 +8,7 @@ import { selectCities } from '@app/store/slices/staticData/staticDataSlice';
 
 const MainPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { mappedUsers, status, error } = useAppSelector(state => state.user); 
+  const { mappedUsers, status, error } = useAppSelector(state => state.users); 
 
   // берём города из стора
   const cities = useAppSelector(selectCities);

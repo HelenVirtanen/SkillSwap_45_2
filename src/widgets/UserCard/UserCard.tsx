@@ -17,6 +17,7 @@ interface ISkill {
 }
 
 interface IUserCardProps {
+  id: string;
   avatar: string;
   name: string;
   birthDate: string;
@@ -26,9 +27,11 @@ interface IUserCardProps {
   isFavorite?: boolean;
   onFavoriteToggle: () => void;
   onMessageClick?: () => void;
+  onDetailsClick?: (userId: string) => void;
 }
 
 const UserCard: React.FC<IUserCardProps> = ({
+  id,
   avatar,
   name,
   birthDate,
@@ -37,43 +40,36 @@ const UserCard: React.FC<IUserCardProps> = ({
   learningSkills,
   isFavorite = false,
   onFavoriteToggle,
-  onMessageClick,
+  onDetailsClick,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const tag1Ref = useRef<HTMLDivElement>(null);
   const tag2Ref = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
 
-  const [visibleCount, setVisibleCount] = useState(1); // По умолчанию 1
+  const [visibleCount, setVisibleCount] = useState(1);
 
   useEffect(() => {
     const calculateVisibleTags = () => {
       const containerWidth = containerRef.current?.offsetWidth || 284;
 
-      // Получаем ширины тегов
       const tag1Width = tag1Ref.current?.offsetWidth || 0;
       const tag2Width = tag2Ref.current?.offsetWidth || 0;
       const counterWidth = counterRef.current?.offsetWidth || 0;
 
-      const gap = 4; // gap между тегами
+      const gap = 4;
 
-      // Пробуем поместить 2 тега + счетчик
       const twoTagsPlusCounter =
         tag1Width + gap + tag2Width + gap + counterWidth;
 
       if (twoTagsPlusCounter <= containerWidth && learningSkills.length >= 2) {
-        // Помещается 2 тега + счетчик
         setVisibleCount(2);
       } else {
-        // Не помещается - показываем 1 тег + счетчик
         setVisibleCount(1);
       }
     };
 
-    // Даем время на отрисовку тегов
     const timeoutId = setTimeout(calculateVisibleTags, 50);
-
-    // Добавляем обработчик изменения размера окна
     window.addEventListener('resize', calculateVisibleTags);
 
     return () => {
@@ -84,6 +80,12 @@ const UserCard: React.FC<IUserCardProps> = ({
 
   const visibleSkills = learningSkills.slice(0, visibleCount);
   const hiddenCount = learningSkills.length - visibleSkills.length;
+
+  const handleDetailsClick = () => {
+    if (onDetailsClick) {
+      onDetailsClick(id);
+    }
+  };
 
   return (
     <article className={styles.card}>
@@ -99,99 +101,108 @@ const UserCard: React.FC<IUserCardProps> = ({
         />
       </div>
 
-      {/* Skills секция */}
+      {/* Skills секция*/}
       <div className={styles.skills}>
         <div className={styles.skillsContainer}>
-          {/* Может научить */}
+          {/* Секция "Может научить" */}
           <div className={styles.section}>
             <h4 className={styles.sectionTitle}>Может научить:</h4>
             <div className={styles.skillsRow}>
-              <SkillTagUI
-                title={teachingSkill.title}
-                variant={teachingSkill.variant || 'other'}
-              />
+              {teachingSkill.title !== 'Не указано' ? (
+                <SkillTagUI
+                  title={teachingSkill.title}
+                  variant={teachingSkill.variant || 'other'}
+                />
+              ) : (
+                <span className={styles.emptySkill}>Не указано</span>
+              )}
             </div>
           </div>
 
-          {/* Хочет научиться */}
+          {/* Секция "Хочет научиться" */}
           <div className={styles.section}>
             <h4 className={styles.sectionTitle}>Хочет научиться:</h4>
             <div className={styles.skillsRow} ref={containerRef}>
-              {/* Скрытые теги для измерения */}
-              {learningSkills.length > 0 && (
-                <div
-                  ref={tag1Ref}
-                  style={{
-                    position: 'absolute',
-                    visibility: 'hidden',
-                    pointerEvents: 'none',
-                    zIndex: -1,
-                  }}
-                >
-                  <SkillTagUI
-                    title={learningSkills[0].title}
-                    variant={learningSkills[0].variant || 'other'}
-                  />
-                </div>
-              )}
+              {learningSkills.length > 0 ? (
+                <>
+                  {/* Скрытые теги для измерения */}
+                  {learningSkills.length > 0 && (
+                    <div
+                      ref={tag1Ref}
+                      style={{
+                        position: 'absolute',
+                        visibility: 'hidden',
+                        pointerEvents: 'none',
+                        zIndex: -1,
+                      }}
+                    >
+                      <SkillTagUI
+                        title={learningSkills[0].title}
+                        variant={learningSkills[0].variant || 'other'}
+                      />
+                    </div>
+                  )}
 
-              {learningSkills.length > 1 && (
-                <div
-                  ref={tag2Ref}
-                  style={{
-                    position: 'absolute',
-                    visibility: 'hidden',
-                    pointerEvents: 'none',
-                    zIndex: -1,
-                  }}
-                >
-                  <SkillTagUI
-                    title={learningSkills[1].title}
-                    variant={learningSkills[1].variant || 'other'}
-                  />
-                </div>
-              )}
+                  {learningSkills.length > 1 && (
+                    <div
+                      ref={tag2Ref}
+                      style={{
+                        position: 'absolute',
+                        visibility: 'hidden',
+                        pointerEvents: 'none',
+                        zIndex: -1,
+                      }}
+                    >
+                      <SkillTagUI
+                        title={learningSkills[1].title}
+                        variant={learningSkills[1].variant || 'other'}
+                      />
+                    </div>
+                  )}
 
-              <div
-                ref={counterRef}
-                style={{
-                  position: 'absolute',
-                  visibility: 'hidden',
-                  pointerEvents: 'none',
-                  zIndex: -1,
-                }}
-              >
-                <SkillTagUI
-                  title={`+${learningSkills.length > 2 ? learningSkills.length - 2 : 1}`}
-                  variant="other"
-                />
-              </div>
+                  <div
+                    ref={counterRef}
+                    style={{
+                      position: 'absolute',
+                      visibility: 'hidden',
+                      pointerEvents: 'none',
+                      zIndex: -1,
+                    }}
+                  >
+                    <SkillTagUI
+                      title={`+${learningSkills.length > 2 ? learningSkills.length - 2 : 1}`}
+                      variant="other"
+                    />
+                  </div>
 
-              {/* Видимые теги */}
-              {visibleSkills.map((skill, index) => (
-                <SkillTagUI
-                  key={index}
-                  title={skill.title}
-                  variant={skill.variant || 'other'}
-                />
-              ))}
+                  {/* Видимые теги */}
+                  {visibleSkills.map((skill, index) => (
+                    <SkillTagUI
+                      key={index}
+                      title={skill.title}
+                      variant={skill.variant || 'other'}
+                    />
+                  ))}
 
-              {/* Счетчик скрытых тегов */}
-              {hiddenCount > 0 && (
-                <SkillTagUI title={`+${hiddenCount}`} variant="other" />
+                  {hiddenCount > 0 && (
+                    <SkillTagUI title={`+${hiddenCount}`} variant="other" />
+                  )}
+                </>
+              ) : (
+                <span className={styles.emptySkill}>Не указано</span>
               )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Actions секция - только кнопка "Подробнее" */}
+      {/* Actions секция */}
       <div className={styles.actions}>
         <ButtonUI
           title="Подробнее"
           variant="primary"
           className={styles.messageButton}
-          onClick={onMessageClick}
+          onClick={handleDetailsClick}
         />
       </div>
     </article>
