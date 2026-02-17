@@ -153,9 +153,9 @@ export const selectUsersStatus = (state: RootState) => state.users.status;
 export const selectUsersError = (state: RootState) => state.users.error;
 
 // Селекторы для профиля
-export const selectCurrentProfileUser = (state: RootState) => state.user.currentProfileUser;
-export const selectProfileStatus = (state: RootState) => state.user.profileStatus;
-export const selectProfileError = (state: RootState) => state.user.profileError;
+export const selectCurrentProfileUser = (state: RootState) => state.users.currentProfileUser;
+export const selectProfileStatus = (state: RootState) => state.users.profileStatus;
+export const selectProfileError = (state: RootState) => state.users.profileError;
 
 // Экспорт редьюсера
 export default usersSlice.reducer;
