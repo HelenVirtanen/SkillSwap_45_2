@@ -6,7 +6,7 @@ import {
   selectAuthError,
   selectAuthUser,
 } from '@app/store/slices/authUser/auth';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputUI from '@shared/ui/InputUI/InputUI';
@@ -33,9 +33,9 @@ type UserData = {
 
 const LoginForm: React.FC = () => {
   const {
-    register,
+    control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<UserData>({
     resolver: yupResolver(validationSchema),
   });
@@ -84,23 +84,33 @@ const LoginForm: React.FC = () => {
         <div className={styles.orSeparator}>или</div>
 
         <div className={styles.inputWrapper}>
+          <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState }) => (
           <InputUI
-            {...register('email')}
+            {...field}
             label="Email"
             type="email"
             placeholder="Введите email"
-            error={errors.email?.message}
+            error={fieldState.error?.message}
+          />
+          )}
           />
 
-          <InputUI
-            {...register('password')}
-            label="Пароль"
-            type="password"
-            placeholder="Введите ваш пароль"
-            error={
-              errors.email || errors.password ? INVALID_CREDENTIALS : undefined
-            }
-          />
+          <Controller
+  name="password"
+  control={control}
+  render={({ field, fieldState }) => (
+    <InputUI
+      {...field}
+      label="Пароль"
+      type="password"
+      placeholder="Введите ваш пароль"
+      error={fieldState.error?.message}
+    />
+  )}
+/>
         </div>
 
         <div className={styles.loginButtonsWrapper}>
