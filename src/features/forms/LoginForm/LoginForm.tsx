@@ -8,7 +8,8 @@ import styles from './LoginForm.module.css';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
 import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
 import { loginUserApi } from '@api/api';
-import { setCookie } from '@features/auth/cookie';
+// import { setCookie } from '@features/auth/cookie';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const INVALID_CREDENTIALS =
   'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных';
@@ -26,6 +27,11 @@ type UserData = {
 };
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = (location.state as any)?.from?.pathname || '/';
+
   const {
     register,
     handleSubmit,
@@ -37,14 +43,17 @@ const LoginForm: React.FC = () => {
 
   const submitHandler = async (data: UserData) => {
     try {
-      const response = await loginUserApi(data);
-      console.log('Успешный вход:', response);
-      localStorage.setItem('refreshToken', response.refreshToken);
-      setCookie('accessToken', response.accessToken);
+      const success = await loginUserApi(data);
+
+      if (success) {
+        navigate(from, {replace: true});
+        reset();
+      }
+      else {
+        console.log('Неверные данные');
+      }
     } catch (error) {
       console.error('Ошибка входа:', error);
-    } finally {
-      reset();
     }
   };
 
