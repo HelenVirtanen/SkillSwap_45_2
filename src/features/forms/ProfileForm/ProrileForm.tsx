@@ -88,10 +88,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
             <DatePicker
               title="Дата рождения"
               placeholder="Выберите дату"
-              //selected={field.value ? new Date(field.value) : null}
-              //onChange={(date) => {
-              //  field.onChange(date ? date.toISOString().split('T')[0] : null);
-              //}}
+              selected={field.value ? new Date(field.value) : null}
+              onChange={(date) => {
+                field.onChange(date ? date.toISOString().split('T')[0] : null);
+              }}
               classNameInput={styles.profileCol1}
             />
           )}
