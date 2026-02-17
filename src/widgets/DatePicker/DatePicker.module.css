@@ -1,7 +1,7 @@
 @import url('../../styles/variables.css');
 
 .calendarContainer {
-    background: white;
+    background: var(--clr-ui-surface, #ffffff);
     border-radius: 16px;
     box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
 }
@@ -20,7 +20,7 @@
 .cancelButton {
     padding: 12px 24px;
     color: var(--clr-text-primary);
-    background-color: white;
+    background-color: var(--clr-ui-surface, #ffffff);
     border: 1px solid var(--clr-primary);
     border-radius: 12px;
 }
@@ -79,7 +79,7 @@
     line-height: 22px;
     font-size: 16px;
     font-family: var(--ff-body);
-    background-color: white;
+    background-color: var(--clr-ui-surface, #ffffff);
     border: 1px solid var(--clr-text-secondary);
     border-radius: 12px;
     outline: none;
@@ -156,7 +156,7 @@
 
 :global(.react-datepicker__header) {
     padding: 0;
-    background-color: white;
+    background-color: var(--clr-ui-surface, #ffffff);
     border-bottom: none;
 }
 

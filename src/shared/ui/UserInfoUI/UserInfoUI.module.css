@@ -1,7 +1,7 @@
 .userInfo {
 position: relative;
 display: flex;
-background: #ffffff;
+background: var(--clr-ui-surface, #ffffff);
 }
 
 .header {
