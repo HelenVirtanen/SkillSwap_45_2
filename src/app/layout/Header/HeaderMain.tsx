@@ -8,12 +8,9 @@ import SearchInputUI from '@shared/ui/SearchInputUI/SearchInputUI';
 import SkillsDropdown from '@widgets/SkillDropDown/SkillDropdown';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import HeaderUserMenuUI from '@shared/ui/HeaderUserMenuUI/HeaderUserMenuUI';
+import { useAppSelector } from '@app/store/store';
+import { selectAuthUser } from '@app/store/slices/authUser/auth';
 import { useTheme } from '@shared/lib/theme/useTheme';
-
-const useAuth = () => {
-  // Это временная заглушка
-  return { isAuthenticated: false, userData: null };
-};
 
 export type HeaderVariant = 'guest' | 'auth';
 export type UserMenuAction = 'user' | 'favorite' | 'notifications';
@@ -33,8 +30,9 @@ const HeaderMain: React.FC<HeaderProps> = ({
   className = '',
 }) => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const user = useAppSelector(selectAuthUser);
+const isAuthenticated = Boolean(user);
 
   const handleSearchChange = (value: string) => {
     onSearchChange?.(value);
@@ -145,11 +143,11 @@ const HeaderMain: React.FC<HeaderProps> = ({
 
         {/* Правая часть */}
         <div className={styles.right}>
-          {isAuthenticated ? (
+          {isAuthenticated && user? (
             // Авторизованный пользователь - полное меню с колокольчиком внутри
             <HeaderUserMenuUI
               hasNewNotifications={true}
-              userName="Иван Иванов"
+              userName={user.name}
               userAvatarUrl="https://via.placeholder.com/40"
               onAction={handleUserMenuAction}
             />

@@ -29,7 +29,7 @@ const status = useAppSelector(selectUsersStatus);
 
   return (
     <div className={styles.wrapper}>
-      <HeaderMain />      
+      <HeaderMain />
       <main className={styles.main}>
         <Outlet />
       </main>

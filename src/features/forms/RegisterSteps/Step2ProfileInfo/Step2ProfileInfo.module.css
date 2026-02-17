@@ -1,5 +1,5 @@
 .form {
-  padding: 40px 60px;
+  padding: 50px 60px 40px;
   background-color: var(--clr-ui-surface, #ffffff);
   min-width: 556px;
   max-height: 692px;
@@ -22,8 +22,6 @@
 }
 
 .avatarWrapper {
-  min-height: 72px;
-  min-width: 72px;
   align-self: center;
 }
 

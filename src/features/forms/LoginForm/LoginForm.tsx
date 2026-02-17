@@ -1,5 +1,12 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  loginUser,
+  selectAuthStatus,
+  selectAuthError,
+  selectAuthUser,
+} from '@app/store/slices/authUser/auth';
+import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputUI from '@shared/ui/InputUI/InputUI';
@@ -7,8 +14,7 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import styles from './LoginForm.module.css';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
 import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
-import { loginUserApi } from '@api/api';
-import { setCookie } from '@features/auth/cookie';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
 
 const INVALID_CREDENTIALS =
   'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных';
@@ -27,26 +33,31 @@ type UserData = {
 
 const LoginForm: React.FC = () => {
   const {
-    register,
+    control,
     handleSubmit,
-    formState: { errors },
-    reset,
+    formState: { errors }
   } = useForm<UserData>({
     resolver: yupResolver(validationSchema),
   });
 
-  const submitHandler = async (data: UserData) => {
-    try {
-      const response = await loginUserApi(data);
-      console.log('Успешный вход:', response);
-      localStorage.setItem('refreshToken', response.refreshToken);
-      setCookie('accessToken', response.accessToken);
-    } catch (error) {
-      console.error('Ошибка входа:', error);
-    } finally {
-      reset();
-    }
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(selectAuthStatus);
+  const authError = useAppSelector(selectAuthError);
+  const user = useAppSelector(selectAuthUser);
+  const navigate = useNavigate();
+
+  const submitHandler = (data: UserData) => {
+    dispatch(loginUser(data));
   };
+
+  console.log('Current user:', user);
+  console.log('autherror', authError);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/profile');
+    }
+  }, [user, navigate]);
 
   return (
     <div className={styles.formWrapper}>
@@ -71,27 +82,42 @@ const LoginForm: React.FC = () => {
         <div className={styles.orSeparator}>или</div>
 
         <div className={styles.inputWrapper}>
+          <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState }) => (
           <InputUI
-            {...register('email')}
+            {...field}
             label="Email"
             type="email"
             placeholder="Введите email"
-            error={errors.email?.message}
+            error={fieldState.error?.message}
+          />
+          )}
           />
 
-          <InputUI
-            {...register('password')}
-            label="Пароль"
-            type="password"
-            placeholder="Введите ваш пароль"
-            error={
-              errors.email || errors.password ? INVALID_CREDENTIALS : undefined
-            }
-          />
+          <Controller
+  name="password"
+  control={control}
+  render={({ field, fieldState }) => (
+    <InputUI
+      {...field}
+      label="Пароль"
+      type="password"
+      placeholder="Введите ваш пароль"
+      error={fieldState.error?.message}
+    />
+  )}
+/>
         </div>
 
         <div className={styles.loginButtonsWrapper}>
-          <ButtonUI variant="primary" type="submit" title="Войти" />
+          <ButtonUI
+            variant="primary"
+            type="submit"
+            title={status === 'loading' ? 'Входим...' : 'Войти'}
+            disabled={status === 'loading'}
+          />
           <ButtonUI
             variant="tertiary"
             type="button"
