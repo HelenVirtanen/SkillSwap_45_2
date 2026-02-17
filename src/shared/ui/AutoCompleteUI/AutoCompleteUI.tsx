@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from 'react';
+import { useAppSelector } from '@app/store/store'; 
 import styles from './AutoCompleteUI.module.css';
 import Clear from '@assets/icons/cross.svg?react';
 import Chevron from '@assets/icons/chevron-down.svg?react';
-import { getCities } from '@api/cities';
+import { City } from '@api/cities';
+import { selectCities } from '@app/store/slices/staticData/staticDataSlice';
 
 interface AutocompleteProps {
   label?: string;
@@ -19,46 +21,27 @@ const AutoCompleteUI = ({
 }: AutocompleteProps) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [allCities, setAllCities] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const loadCities = async () => {
-    setIsLoading(true);
-    try {
-      const cities = await getCities();
-      setAllCities(cities);
-    } catch (error) {
-      console.error('Ошибка загрузки городов:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const cities: City[] = useAppSelector(selectCities);
+  const allCities: string[] = cities.map(city => city.name);
 
-  loadCities();
-  }, []);
+  const normalizeString = (str: string): string => str.trim().toLowerCase();
 
-  const normalizeString = (str: string): string => {
-    return str.trim().toLowerCase();
-  };
+  const startsWithPrefix = (city: string, prefix: string): boolean =>
+    normalizeString(city).startsWith(normalizeString(prefix));
 
-  const startsWithPrefix = (city: string, prefix: string): boolean => {
-    const normalizedCity = normalizeString(city);
-    const normalizedPrefix = normalizeString(prefix);
-    return normalizedCity.startsWith(normalizedPrefix);
-  };
-
+  // Обработка изменения инпута
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
     setSelectedIndex(-1);
 
-    if (value.trim() === '') {
+    if (!value.trim()) {
       setSuggestions([]);
       setShowSuggestions(false);
       return;
@@ -75,10 +58,7 @@ const AutoCompleteUI = ({
     setShowSuggestions(false);
     setSelectedIndex(-1);
 
-    if (onCitySelect) {
-      onCitySelect(city);
-    }
-
+    onCitySelect?.(city);
     inputRef.current?.focus();
   };
 
@@ -88,13 +68,11 @@ const AutoCompleteUI = ({
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setSelectedIndex((prev) =>
-          prev < suggestions.length - 1 ? prev + 1 : prev,
-        );
+        setSelectedIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
         break;
       case 'ArrowUp':
         e.preventDefault();
-        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
+        setSelectedIndex(prev => (prev > 0 ? prev - 1 : -1));
         break;
       case 'Enter':
         e.preventDefault();
@@ -135,17 +113,14 @@ const AutoCompleteUI = ({
     setShowSuggestions(false);
     setSelectedIndex(-1);
     inputRef.current?.focus();
-
-    if (onCitySelect) {
-      onCitySelect('');
-    }
+    onCitySelect?.('');
   };
 
   return (
     <div className={`${styles.cityAutocomplete} ${className}`}>
       <label className={styles.cityAutocompleteLabel}>{label}</label>
       <div className={`${styles.cityAutocompleteInputContainerFull} ${showSuggestions ? styles.isOpen : ""}`}>
-        <div className={`${styles.cityAutocompleteInputContainer} `}>
+        <div className={`${styles.cityAutocompleteInputContainer}`}>
           <input
             ref={inputRef}
             type="text"
@@ -153,7 +128,10 @@ const AutoCompleteUI = ({
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onFocus={() => {
-              if (inputValue.trim() !== '' && suggestions.length > 0) {
+              if (!inputValue.trim() && allCities.length) {
+                setSuggestions(allCities);
+                setShowSuggestions(true);
+              } else if (suggestions.length) {
                 setShowSuggestions(true);
               }
             }}
@@ -163,43 +141,21 @@ const AutoCompleteUI = ({
             aria-expanded={showSuggestions}
             aria-autocomplete="list"
             aria-controls="city-suggestions"
-            style={{
-              paddingRight: inputValue ? '40px' : '16px',
-            }}
+            style={{ paddingRight: inputValue ? '40px' : '16px' }}
           />
 
-          {isLoading && (
-            <div className={styles.cityAutocompleteLoading}>
-              <div className={styles.cityAutocompleteSpinner}></div>
-            </div>
-          )}
-
-          {isLoading ? null : (
-            <button
-              type="button"
-              className={styles.cityAutocompleteClear}
-              onClick={
-                inputValue.trim() === ''
-                  ? () => {
-                      setSuggestions(allCities);
-                      setShowSuggestions(true);
-                      setSelectedIndex(-1);
-                    }
-                  : handleClearInput
-              }
-              aria-label={
-                inputValue.trim() === ''
-                  ? 'Показать предложения'
-                  : 'Очистить поле'
-              }
-            >
-              {inputValue.trim() === '' ? (
-                <Chevron className={styles.clear} />
-              ) : (
-                <Clear className={styles.clear} />
-              )}
-            </button>
-          )}
+          <button
+            type="button"
+            className={styles.cityAutocompleteClear}
+            onClick={inputValue.trim() ? handleClearInput : () => {
+              setSuggestions(allCities);
+              setShowSuggestions(true);
+              setSelectedIndex(-1);
+            }}
+            aria-label={inputValue.trim() ? 'Очистить поле' : 'Показать предложения'}
+          >
+            {inputValue.trim() ? <Clear className={styles.clear} /> : <Chevron className={styles.clear} />}
+          </button>
         </div>
 
         {showSuggestions && suggestions.length > 0 && (
@@ -214,9 +170,7 @@ const AutoCompleteUI = ({
               <div
                 key={`${city}-${index}`}
                 className={`${styles.cityAutocompleteSuggestion} ${
-                  index === selectedIndex
-                    ? styles.cityAutocompleteSuggestionSelected
-                    : ''
+                  index === selectedIndex ? styles.cityAutocompleteSuggestionSelected : ''
                 }`}
                 onClick={() => handleCitySelect(city)}
                 onMouseEnter={() => setSelectedIndex(index)}

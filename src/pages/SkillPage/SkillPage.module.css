@@ -3,8 +3,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  background-color: #f8f9fa;
+  background-color: var(--clr-ui-background, #f9faf7);
   box-sizing: border-box;
 }
 
@@ -19,7 +18,7 @@
 
 .leftColumn {
   flex: 0 0 auto;
-  width: 324px; /* Фиксированная ширина для карточки пользователя */
+  width: 324px;
 }
 
 .rightColumn {
@@ -36,5 +35,5 @@
 }
 
 .exchangeButton:active {
-  background: var(--clr-primary-pressed);
+  background: var(--clr-primary-pressed, #508826);
 }

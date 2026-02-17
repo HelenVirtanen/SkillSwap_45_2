@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import {
   loginUser,
   selectAuthStatus,
-  selectAuthError,
-  selectAuthUser,
 } from '@app/store/slices/authUser/auth';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -14,6 +11,8 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import styles from './LoginForm.module.css';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
 import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
+// import { setCookie } from '@features/auth/cookie';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@app/store/store';
 
 const INVALID_CREDENTIALS =
@@ -32,32 +31,24 @@ type UserData = {
 };
 
 const LoginForm: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<UserData>({
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  const from = (location.state as any)?.from?.pathname || '/';
+
+  const { control, handleSubmit } = useForm<UserData>({
     resolver: yupResolver(validationSchema),
   });
 
-  const dispatch = useAppDispatch();
   const status = useAppSelector(selectAuthStatus);
-  const authError = useAppSelector(selectAuthError);
-  const user = useAppSelector(selectAuthUser);
-  const navigate = useNavigate();
 
-  const submitHandler = (data: UserData) => {
-    dispatch(loginUser(data));
-  };
-
-  console.log('Current user:', user);
-  console.log('autherror', authError);
-
-  useEffect(() => {
-    if (user) {
-      navigate('/profile');
+  const submitHandler = async (data: UserData) => {
+    const resultAction = await dispatch(loginUser(data));
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate(from, { replace: true });
     }
-  }, [user, navigate]);
+  };
 
   return (
     <div className={styles.formWrapper}>
@@ -83,32 +74,32 @@ const LoginForm: React.FC = () => {
 
         <div className={styles.inputWrapper}>
           <Controller
-          name="email"
-          control={control}
-          render={({ field, fieldState }) => (
-          <InputUI
-            {...field}
-            label="Email"
-            type="email"
-            placeholder="Введите email"
-            error={fieldState.error?.message}
-          />
-          )}
+            name="email"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Email"
+                type="email"
+                placeholder="Введите email"
+                error={fieldState.error?.message}
+              />
+            )}
           />
 
           <Controller
-  name="password"
-  control={control}
-  render={({ field, fieldState }) => (
-    <InputUI
-      {...field}
-      label="Пароль"
-      type="password"
-      placeholder="Введите ваш пароль"
-      error={fieldState.error?.message}
-    />
-  )}
-/>
+            name="password"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Пароль"
+                type="password"
+                placeholder="Введите ваш пароль"
+                error={fieldState.error?.message}
+              />
+            )}
+          />
         </div>
 
         <div className={styles.loginButtonsWrapper}>

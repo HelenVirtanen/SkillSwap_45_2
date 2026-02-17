@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 import styles from './SearchInputUI.module.css';
 import SearchIcon from '@assets/icons/search.svg?react';
 
@@ -20,7 +20,7 @@ const SearchInputUI: React.FunctionComponent<SearchInputUIProps> = ({
   const [inputValue, setInputValue] = useState('');
 
   const handleDebouncedChange = useMemo(
-    () => _.debounce((value: string) => onChange?.(value), 500),
+    () => debounce((value: string) => onChange?.(value), 500),
     [onChange],
   );
 

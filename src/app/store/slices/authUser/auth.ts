@@ -31,10 +31,10 @@ export const loginUser = createAsyncThunk(
     try {
       const res = await loginUserApi(data);
       console.log('API response:', res);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-      setCookie('accessToken', res.data.accessToken);
+      localStorage.setItem('refreshToken', res.refreshToken);
+      setCookie('accessToken', res.accessToken);
 
-      return res.data.user;
+      return res.user;
     } catch (err: any) {
       return rejectWithValue(err?.message);
     }
