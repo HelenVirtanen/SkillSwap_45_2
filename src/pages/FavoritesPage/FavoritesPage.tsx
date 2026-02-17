@@ -56,10 +56,10 @@ const FavoritesPage: FC = () => {
 
   const usersWithFavorites = mockFavorites.map(user => ({
     ...user,
-    isFavorite: favorites.includes(user.id),
+    isFavorite: favorites.includes(Number(user.id)),
   }));
 
-  const handleFavoriteToggle = (userId: string) => {
+  const handleFavoriteToggle = (userId: number) => {
     dispatch(toggleFavorite(userId));
   };
 

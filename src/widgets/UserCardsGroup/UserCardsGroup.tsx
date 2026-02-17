@@ -23,7 +23,7 @@ export interface IUserCardData {
 
 export interface UserCardsGroupProps {
   users: IUserCardData[];
-  onFavoriteToggle?: (userId: string) => void;
+  onFavoriteToggle?: (userId: number) => void;
   onMessageClick?: (userId: string) => void;
   onDetailsClick?: (userId: string) => void;
 }
@@ -36,7 +36,7 @@ const UserCardsGroup: React.FC<UserCardsGroupProps> = ({ users, onMessageClick, 
     <section className={styles.section}>
       <div className={styles.grid}>
         {users.map(user => {
-          const isFavorite = favorites.includes(user.id);
+          const isFavorite = favorites.includes(Number(user.id));
 
           return (
             <UserCard
@@ -49,7 +49,7 @@ const UserCardsGroup: React.FC<UserCardsGroupProps> = ({ users, onMessageClick, 
               teachingSkill={user.teachingSkill}
               learningSkills={user.learningSkills}
               isFavorite={isFavorite}
-              onFavoriteToggle={() => dispatch(toggleFavorite(user.id))}
+              onFavoriteToggle={() => dispatch(toggleFavorite(Number(user.id)))}
               onMessageClick={onMessageClick ? () => onMessageClick(user.id) : undefined}
               onDetailsClick={onDetailsClick}
             />
