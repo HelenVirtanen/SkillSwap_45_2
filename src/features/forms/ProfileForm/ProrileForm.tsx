@@ -79,38 +79,39 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           />
         )}
       />
+      <div className={styles.userWrapper}>
+        {/* Дата рождения */}
+        <Controller
+          name="birthDate"
+          control={control}
+          render={({ field }) => (
+            <DatePicker
+              title="Дата рождения"
+              placeholder="Выберите дату"
+              //selected={field.value ? new Date(field.value) : null}
+              //onChange={(date) => {
+              //  field.onChange(date ? date.toISOString().split('T')[0] : null);
+              //}}
+              classNameInput={styles.profileCol1}
+            />
+          )}
+        />
 
-      {/* Дата рождения */}
-      <Controller
-        name="birthDate"
-        control={control}
-        render={({ field }) => (
-          <DatePicker
-            title="Дата рождения"
-            placeholder="Выберите дату"
-            selected={field.value ? new Date(field.value) : null}
-            onChange={(date) => {
-              field.onChange(date ? date.toISOString().split('T')[0] : null);
-            }}
-            classNameInput={styles.profileCol1}
-          />
-        )}
-      />
-
-      {/* Пол */}
-      <Controller
-        name="gender"
-        control={control}
-        render={({ field }) => (
-          <DropDownUI
-            title="Пол"
-            value={field.value ?? undefined}
-            options={['Женский', 'Мужской']}
-            onChange={field.onChange}
-            className={styles.profileCol2}
-          />
-        )}
-      />
+        {/* Пол */}
+        <Controller
+          name="gender"
+          control={control}
+          render={({ field }) => (
+            <DropDownUI
+              title="Пол"
+              value={field.value ?? undefined}
+              options={['Женский', 'Мужской']}
+              onChange={field.onChange}
+              className={styles.profileCol2}
+            />
+          )}
+        />
+      </div>
 
       {/* Город */}
       <Controller
@@ -144,15 +145,16 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           />
         )}
       />
-
-      {/* Кнопка сохранения */}
-      <ButtonUI
-        variant="primary"
-        type="submit"
-        title="Сохранить"
-        className={styles.profileSubmitButton}
-        disabled={!isDirty} // ← кнопка неактивна, пока нет изменений
-      />
+      <div className={styles.buttonWrapper}>
+        {/* Кнопка сохранения */}
+        <ButtonUI
+          variant="primary"
+          type="submit"
+          title="Сохранить"
+          className={styles.profileSubmitButton}
+          disabled={!isDirty} // ← кнопка неактивна, пока нет изменений
+        />
+      </div>
     </form>
   );
 };

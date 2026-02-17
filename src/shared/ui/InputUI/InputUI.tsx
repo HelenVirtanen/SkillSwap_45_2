@@ -6,7 +6,7 @@ import styles from './InputUI.module.css';
 export interface InputUIProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   value?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   error?: string | boolean;
   helperText?: string;
   rightAddon?: React.ReactNode;
@@ -86,7 +86,7 @@ const InputUI: React.FC<InputUIProps> = ({
             autoComplete={autoComplete}
             rows={rows}
             value={value}
-            onChange={onChange}
+            onChange={onChange ? (e) => onChange(e) : undefined}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />
@@ -97,7 +97,7 @@ const InputUI: React.FC<InputUIProps> = ({
             className={styles.input}
             type={inputType}
             value={value}
-            onChange={onChange}
+            onChange={onChange ? (e) => onChange(e) : undefined}
             onClick={onClick}
             placeholder={placeholder}
             name={name}

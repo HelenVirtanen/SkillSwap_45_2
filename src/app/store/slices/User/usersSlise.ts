@@ -80,10 +80,10 @@ const usersSlice = createSlice({
 export const { clearUsers } = usersSlice.actions;
 
 // Селекторы — исправленные под твой стор (state.user вместо state.users)
-export const selectAllUsers = (state: RootState) => state.user.allUsers;
-export const selectMappedUsers = (state: RootState) => state.user.mappedUsers;
-export const selectUsersStatus = (state: RootState) => state.user.status;
-export const selectUsersError = (state: RootState) => state.user.error;
+export const selectAllUsers = (state: RootState) => state.users.allUsers;
+export const selectMappedUsers = (state: RootState) => state.users.mappedUsers;
+export const selectUsersStatus = (state: RootState) => state.users.status;
+export const selectUsersError = (state: RootState) => state.users.error;
 
 // Экспорт редьюсера
 export default usersSlice.reducer;
