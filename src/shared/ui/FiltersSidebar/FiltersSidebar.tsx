@@ -1,38 +1,64 @@
-import { FC, useEffect } from 'react';
+import { FC, useState } from 'react';
 import RadioGroupUI from '@shared/ui/RadioGroupUI/RadioGroupUI';
 import styles from './FiltersSidebar.module.css';
-import { TCategory } from '@entities/Skills.ts';
-import { getSkills, fetchSkills } from '@app/store/slices/filters';
+// import { getSkills, getCities, fetchSkills } from '@app/store/slices/filters';
 import {
   Category,
   CategoryGroupUI,
 } from '@shared/ui/CategoryGroupUI/CategoryGroupUI.tsx';
-import { useAppDispatch, useAppSelector } from '@app/store/store.ts';
+import { useAppSelector } from '@app/store/store.ts';
+import {
+  CheckboxGroupItem,
+  CityGroupUI,
+} from '@shared/ui/CityGroupUI/CityGroupUI.tsx';
+import {
+  City,
+  selectCategories,
+  selectCities,
+  SkillCategory,
+} from '@app/store/slices/staticData/staticDataSlice.ts';
 
 interface FilterSidebarProps {
   className?: string;
 }
 
 const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
-  const skills: TCategory[] = useAppSelector(getSkills);
-  const dispatch = useAppDispatch();
+  const skills = useAppSelector(selectCategories);
+  const cities = useAppSelector(selectCities);
 
-  useEffect(() => {
-    if (!skills.length) {
-      dispatch(fetchSkills());
-    }
-  }, [dispatch, skills.length]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
 
-  const convertTCategoriesToCategories = (
-    tCategories: TCategory[],
-  ): Category[] =>
-    tCategories.map((tCategory, categoryIndex) => ({
-      id: categoryIndex.toString(),
-      label: tCategory.title,
-      subcategories: tCategory.skills.map((skill, skillIndex) => ({
-        id: skillIndex.toString(),
-        label: skill,
+  const handleSubcategoryToggle = (subId: string) => {
+    setSelectedSubcategories((prev) =>
+      prev.includes(subId)
+        ? prev.filter((id) => id !== subId)
+        : [...prev, subId],
+    );
+  };
+
+  const handleCityToggle = (id: string) => {
+    setSelectedCities((prev) =>
+      prev.includes(id)
+        ? prev.filter((cityId) => cityId !== id)
+        : [...prev, id],
+    );
+  };
+
+  const convertSkills = (skillCategories: SkillCategory[]): Category[] =>
+    skillCategories.map((category) => ({
+      id: category.id.toString(),
+      label: category.title,
+      subcategories: category.subcategories.map((skill) => ({
+        id: `${category.id.toString()}-${skill.id.toString()}`,
+        label: skill.title,
       })),
+    }));
+
+  const convertCities = (cities: City[]): CheckboxGroupItem[] =>
+    cities.map((city) => ({
+      id: city.id.toString(),
+      label: city.name
     }));
 
   return (
@@ -50,9 +76,9 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
           ]}
         />
         <CategoryGroupUI
-          categories={convertTCategoriesToCategories(skills)}
-          selectedSubcategories={[]}
-          onSubcategoryToggle={(subcategoryId: string) => {}}
+          categories={convertSkills(skills)}
+          selectedSubcategories={selectedSubcategories}
+          onSubcategoryToggle={handleSubcategoryToggle}
         />
         <RadioGroupUI
           label="Пол автора"
@@ -64,6 +90,12 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
             { value: 'men', label: 'Мужской' },
             { value: 'women', label: 'Женский' },
           ]}
+        />
+        <CityGroupUI
+          title={'Город'}
+          items={convertCities(cities)}
+          selectedItems={selectedCities}
+          onItemToggle={handleCityToggle}
         />
       </div>
     </aside>

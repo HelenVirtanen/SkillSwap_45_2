@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TCategory } from '@entities/Skills.ts';
-import { getSkillsApi } from '@api/api.ts';
+import { getCitiesApi, getSkillsApi } from '@api/api.ts';
+import {
+  City,
+  SkillCategory,
+} from '@app/store/slices/staticData/staticDataSlice.ts';
 
 export type FiltersState = {
-  skills: TCategory[];
-  cities: string[];
+  skills: SkillCategory[];
+  cities: City[];
   selectedSkills: string[];
   selectedCities: string[];
   selectedGender: string;
@@ -58,7 +62,15 @@ export const filtersSlice = createSlice({
       .addCase(
         fetchSkills.fulfilled,
         (state, action: PayloadAction<TCategory[]>) => {
-          state.skills = action.payload;
+          state.skills = action.payload.map((category, arrayId) => ({
+            id: arrayId,
+            title: category.title,
+            icon: category.icon,
+            subcategories: category.skills.map((skill, subArrayId) => ({
+              id: subArrayId,
+              title: skill,
+            })),
+          }));
           state.isLoading = false;
         },
       );
@@ -69,6 +81,10 @@ export const fetchSkills = createAsyncThunk('skills/getAll', async () =>
   getSkillsApi(),
 );
 
-export const { getSkills, getSelectedSkills, isLoading } = filtersSlice.selectors;
+export const fetchCities = createAsyncThunk('cities/getAll', async () =>
+  getCitiesApi(),
+);
+
+export const { getSkills, getCities, getSelectedSkills, isLoading } = filtersSlice.selectors;
 export const { clearFilters } = filtersSlice.actions;
 export default filtersSlice.reducer;
