@@ -5,8 +5,8 @@ import type { RootState } from '@app/store/store'; // ← импорт RootState
 
 // Состояние слайса
 interface UsersState {
-  allUsers: TProfile[];                    // сырые данные из API
-  mappedUsers: IUserCardData[];            // преобразованные для карточек
+  allUsers: TProfile[]; // сырые данные из API
+  mappedUsers: IUserCardData[]; // преобразованные для карточек
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -42,21 +42,8 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
 });
 
 // Thunk для загрузки всех пользователей
-export const fetchAllUsers = createAsyncThunk(
-  'users/fetchAll',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getProfilesApi();
-
-      if (!response.success) {
-        throw new Error('Ошибка загрузки профилей');
-      }
-
-      return response.data as TProfile[];
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка сервера');
-    }
-  }
+export const fetchAllUsers = createAsyncThunk('users/fetchAll', async () =>
+  getProfilesApi(),
 );
 
 const usersSlice = createSlice({
@@ -77,10 +64,11 @@ const usersSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAllUsers.fulfilled, (state, action: PayloadAction<TProfile[]>) => {
-        state.status = 'succeeded';
-        state.allUsers = action.payload;
-        state.mappedUsers = action.payload.map(mapProfileToCard);
-      })
+          state.status = 'succeeded';
+          state.allUsers = action.payload;
+          state.mappedUsers = action.payload.map(mapProfileToCard);
+        },
+      )
       .addCase(fetchAllUsers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
