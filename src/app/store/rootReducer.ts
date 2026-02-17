@@ -6,7 +6,7 @@ import likesReducer from './slices/likes/likesSlice';
 import { filtersSlice } from '../store/slices/filters';
 
 export const rootReducer = combineReducers({
-  user: usersReducer,
+  users: usersReducer,
   staticData: staticDataReducer,
   likes: likesReducer,
   auth: authSlice.reducer,

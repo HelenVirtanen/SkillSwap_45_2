@@ -5,8 +5,8 @@ import type { RootState } from '@app/store/store'; // ← импорт RootState
 
 // Состояние слайса
 interface UsersState {
-  allUsers: TProfile[];                    // сырые данные из API
-  mappedUsers: IUserCardData[];            // преобразованные для карточек
+  allUsers: TProfile[]; // сырые данные из API
+  mappedUsers: IUserCardData[]; // преобразованные для карточек
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
@@ -42,9 +42,8 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
 });
 
 // Thunk для загрузки всех пользователей
-export const fetchAllUsers = createAsyncThunk(
-  'users/fetchAll',
-  async () => getProfilesApi(),
+export const fetchAllUsers = createAsyncThunk('users/fetchAll', async () =>
+  getProfilesApi(),
 );
 
 const usersSlice = createSlice({
@@ -65,10 +64,11 @@ const usersSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAllUsers.fulfilled, (state, action: PayloadAction<TProfile[]>) => {
-        state.status = 'succeeded';
-        state.allUsers = action.payload;
-        state.mappedUsers = action.payload.map(mapProfileToCard);
-      })
+          state.status = 'succeeded';
+          state.allUsers = action.payload;
+          state.mappedUsers = action.payload.map(mapProfileToCard);
+        },
+      )
       .addCase(fetchAllUsers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
@@ -80,10 +80,10 @@ const usersSlice = createSlice({
 export const { clearUsers } = usersSlice.actions;
 
 // Селекторы — исправленные под твой стор (state.user вместо state.users)
-export const selectAllUsers = (state: RootState) => state.user.allUsers;
-export const selectMappedUsers = (state: RootState) => state.user.mappedUsers;
-export const selectUsersStatus = (state: RootState) => state.user.status;
-export const selectUsersError = (state: RootState) => state.user.error;
+export const selectAllUsers = (state: RootState) => state.users.allUsers;
+export const selectMappedUsers = (state: RootState) => state.users.mappedUsers;
+export const selectUsersStatus = (state: RootState) => state.users.status;
+export const selectUsersError = (state: RootState) => state.users.error;
 
 // Экспорт редьюсера
 export default usersSlice.reducer;

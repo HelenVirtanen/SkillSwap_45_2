@@ -1,0 +1,20 @@
+.mainContainer {
+    display: flex;
+    gap: 24px;
+}
+
+.profileWrapper {
+    display: flex;
+    background-color: var(--clr-ui-surface, #ffffff);
+    min-width: 1020px;
+    min-height: 752px;
+    border-radius: var(--border-radius, 12px);
+    padding: 60px 60px 60px 60px;
+    justify-content: space-between;
+    
+}
+
+.profileForm {
+    min-width: 460px;
+    max-height: 632px;
+}
