@@ -25,9 +25,10 @@ export interface UserCardsGroupProps {
   users: IUserCardData[];
   onFavoriteToggle?: (userId: string) => void;
   onMessageClick?: (userId: string) => void;
+  onDetailsClick?: (userId: string) => void;
 }
 
-const UserCardsGroup: React.FC<UserCardsGroupProps> = ({ users, onMessageClick }) => {
+const UserCardsGroup: React.FC<UserCardsGroupProps> = ({ users, onMessageClick, onDetailsClick }) => {
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(selectFavorites);
 
@@ -50,6 +51,7 @@ const UserCardsGroup: React.FC<UserCardsGroupProps> = ({ users, onMessageClick }
               isFavorite={isFavorite}
               onFavoriteToggle={() => dispatch(toggleFavorite(user.id))}
               onMessageClick={onMessageClick ? () => onMessageClick(user.id) : undefined}
+              onDetailsClick={onDetailsClick}
             />
           );
         })}
