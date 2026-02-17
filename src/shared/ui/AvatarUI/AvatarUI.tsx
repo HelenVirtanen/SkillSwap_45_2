@@ -7,12 +7,16 @@ interface AvatarUIProps {
   value?: string | null;
   onChange?: (value: string | null) => void;
   className?: string;
+  avatarSrc?: string | React.ReactNode;
+  addIconSrc?: React.ReactNode;
 }
 
 const AvatarUI: React.FC<AvatarUIProps> = ({
   value,
   onChange,
-  className = ''
+  className = '',
+  avatarSrc,
+  addIconSrc,
 }) => {
   const [preview, setPreview] = useState<string | null>(value || null);
   const [imageError, setImageError] = useState(false);
@@ -32,7 +36,7 @@ const AvatarUI: React.FC<AvatarUIProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     console.log('📁 File selected:', file);
-    
+
     if (file) {
       const url = URL.createObjectURL(file);
       console.log('🔗 Created URL:', url);
@@ -63,10 +67,22 @@ const AvatarUI: React.FC<AvatarUIProps> = ({
             onError={handleImageError}
           />
         ) : (
-          <UserIcon className={styles.fallbackIcon} />
+          avatarSrc
+            ? typeof avatarSrc === 'string'
+              ? <img src={avatarSrc} alt="Аватар" className={`${styles.image} ${styles.fallbackIcon}`} />
+              : avatarSrc
+            : (
+              <UserIcon className={styles.fallbackIcon} />
+            )
         )}
 
-        <AddIcon className={styles.add} aria-hidden="true" />
+        {addIconSrc ? (
+          <div className={styles.add}>
+            {addIconSrc}
+          </div>
+        ) : (
+          <AddIcon className={styles.add} aria-hidden="true" />
+        )}
       </button>
 
       <input
