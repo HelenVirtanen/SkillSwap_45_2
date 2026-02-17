@@ -1,12 +1,20 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '@app/store/store';
+import { 
+  fetchUserProfileById,
+  selectCurrentProfileUser,
+  selectProfileStatus,
+  selectProfileError,
+  clearProfileUser,
+  toggleFavoriteInProfile
+} from '@app/store/slices/User/usersSlise';
+import { selectAuthUser } from '@app/store/slices/authUser/auth';
 import UserProfileCard from '@widgets/UserProfileCard/UserProfileCard';
 import SkillCard from '@widgets/SkillCard/SkillCard';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import Loader from '@shared/ui/Loader/Loader';
 import styles from './SkillPage.module.css';
-import { getProfileByIdApi, getProfileByIdAuthApi } from '@api/api';
-import { useAppSelector } from '@app/store/store';
 
 // Интерфейсы
 interface ISkill {
@@ -73,38 +81,40 @@ const getDefaultImages = (): string[] => {
 const SkillPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   
-  const [user, setUser] = useState<IUser | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Селекторы из usersSlise
+  const userData = useAppSelector(selectCurrentProfileUser);
+  const status = useAppSelector(selectProfileStatus);
+  const error = useAppSelector(selectProfileError);
   
-  const auth = useAppSelector(state => (state as any).auth);
-  const isAuthenticated = auth?.isAuthenticated || false;
+  // Селекторы из auth слайса
+  const authUser = useAppSelector(selectAuthUser);
+  // Пользователь авторизован, если есть authUser
+  const isAuthenticated = !!authUser;
 
-  const loadUserData = useCallback(async () => {
-    if (!id) {
-      setError('ID пользователя не указан');
-      setLoading(false);
-      return;
+  const [formattedUser, setFormattedUser] = useState<IUser | null>(null);
+
+  // Загрузка данных пользователя
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchUserProfileById({ 
+        userId: Number(id), 
+        isAuthenticated 
+      }));
     }
 
-    try {
-      setLoading(true);
-      console.log('Загрузка данных пользователя с ID:', id);
-      
-      const userData = isAuthenticated 
-        ? await getProfileByIdAuthApi(Number(id))
-        : await getProfileByIdApi(Number(id));
-      
-      console.log('Полученные данные пользователя:', userData);
-      
-      if (!userData) {
-        throw new Error('Данные пользователя не получены');
-      }
-      
+    // Очистка при размонтировании
+    return () => {
+      dispatch(clearProfileUser());
+    };
+  }, [id, isAuthenticated, dispatch]);
 
-      const formattedUser: IUser = {
-        id: userData.id?.toString() || id,
+  // Форматирование данных при их получении из Redux
+  useEffect(() => {
+    if (userData && status === 'succeeded') {
+      const formatted: IUser = {
+        id: userData.id?.toString() || id || '',
         avatar: userData.avatar || '/avatars/user-photo.png',
         name: userData.name || 'Пользователь',
         birthDate: userData.birthDate || '2000-01-01',
@@ -122,33 +132,21 @@ const SkillPage: React.FC = () => {
         photosOnAbout: userData.photosOnAbout || []
       };
       
-      console.log('Отформатированный пользователь:', formattedUser);
-      setUser(formattedUser);
-      setError(null);
-      
-    } catch (err) {
-      console.error('Ошибка загрузки данных:', err);
-      setError('Не удалось загрузить данные пользователя. Пожалуйста, попробуйте позже.');
-    } finally {
-      setLoading(false);
+      setFormattedUser(formatted);
     }
-  }, [id, isAuthenticated]);
-
-  useEffect(() => {
-    loadUserData();
-  }, [loadUserData]);
+  }, [userData, status, id]);
 
   const handleProposeExchange = () => {
     console.log('Предложить обмен пользователю:', id);
-
+    // Здесь будет логика для предложения обмена
   };
 
   const handleFavoriteToggle = (userId: string) => {
-    console.log('Избранное toggled для пользователя:', userId);
-
+    dispatch(toggleFavoriteInProfile(userId));
   };
 
-  if (loading) {
+  // Обработка состояний загрузки
+  if (status === 'loading') {
     return (
       <div className={styles.loaderContainer}>
         <Loader />
@@ -157,7 +155,8 @@ const SkillPage: React.FC = () => {
     );
   }
 
-  if (error || !user) {
+  // Обработка ошибок
+  if (status === 'failed' || error || !formattedUser) {
     return (
       <div className={styles.errorContainer}>
         <h2>Ошибка загрузки</h2>
@@ -171,7 +170,10 @@ const SkillPage: React.FC = () => {
           <ButtonUI 
             title="Попробовать снова" 
             variant="secondary" 
-            onClick={loadUserData} 
+            onClick={() => id && dispatch(fetchUserProfileById({ 
+              userId: Number(id), 
+              isAuthenticated
+            }))} 
           />
         </div>
       </div>
@@ -179,15 +181,15 @@ const SkillPage: React.FC = () => {
   }
 
   // Формируем данные навыка
-  const skillImages = user.photosOnAbout && user.photosOnAbout.length > 0
-    ? user.photosOnAbout
+  const skillImages = formattedUser.photosOnAbout && formattedUser.photosOnAbout.length > 0
+    ? formattedUser.photosOnAbout
     : getDefaultImages();
 
   const skill: ISkillData = {
-    id: `${user.id}-teaching`,
-    title: user.teachingSkill.title,
-    categories: user.learningSkills.map(s => s.title).slice(0, 3),
-    description: user.about || `Пользователь ${user.name} готов поделиться своими знаниями и навыками.`,
+    id: `${formattedUser.id}-teaching`,
+    title: formattedUser.teachingSkill.title,
+    categories: formattedUser.learningSkills.map(s => s.title).slice(0, 3),
+    description: formattedUser.about || `Пользователь ${formattedUser.name} готов поделиться своими знаниями и навыками.`,
     images: skillImages
   };
 
@@ -197,8 +199,8 @@ const SkillPage: React.FC = () => {
         {/* Левая колонка - Карточка пользователя */}
         <div className={styles.leftColumn}>
           <UserProfileCard
-            user={user}
-            showFavorite={false}
+            user={formattedUser}
+            showFavorite={true}
             onFavoriteToggle={handleFavoriteToggle}
           />
         </div>
