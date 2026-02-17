@@ -21,12 +21,14 @@ interface CategoryGroupProps {
   categories: Category[];
   selectedSubcategories: string[];
   onSubcategoryToggle: (subcategoryId: string) => void;
+  onCategoryToggle?: (subcategoryIds: string[], shouldSelect: boolean) => void;
 }
 
 export const CategoryGroupUI: FC<CategoryGroupProps> = ({
   categories,
   selectedSubcategories,
   onSubcategoryToggle,
+  onCategoryToggle,
 }) => {
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set());
 
@@ -69,20 +71,23 @@ export const CategoryGroupUI: FC<CategoryGroupProps> = ({
       selectedSubcategories.includes(id),
     );
 
-    // если все выбраны → снимаем все
-    if (allSelected) {
-      childIds.forEach((id) => {
-        if (selectedSubcategories.includes(id)) {
-          onSubcategoryToggle(id);
-        }
-      });
+    // Если есть batch-обработчик - используем его
+    if (onCategoryToggle) {
+      onCategoryToggle(childIds, !allSelected);
     } else {
-      // если не все выбраны → выбираем все
-      childIds.forEach((id) => {
-        if (!selectedSubcategories.includes(id)) {
+      // Fallback на старое поведение
+      if (allSelected) {
+        childIds.forEach((id) => {
           onSubcategoryToggle(id);
-        }
-      });
+        });
+      } else {
+        const idsToAdd = childIds.filter(
+          (id) => !selectedSubcategories.includes(id),
+        );
+        idsToAdd.forEach((id) => {
+          onSubcategoryToggle(id);
+        });
+      }
     }
   };
 

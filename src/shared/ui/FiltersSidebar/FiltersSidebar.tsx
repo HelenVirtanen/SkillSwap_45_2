@@ -1,7 +1,6 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import RadioGroupUI from '@shared/ui/RadioGroupUI/RadioGroupUI';
 import styles from './FiltersSidebar.module.css';
-// import { getSkills, getCities, fetchSkills } from '@app/store/slices/filters';
 import {
   Category,
   CategoryGroupUI,
@@ -18,31 +17,170 @@ import {
   SkillCategory,
 } from '@app/store/slices/staticData/staticDataSlice.ts';
 
+export interface Filters {
+  cities: City[];
+  skillCategories: Pick<SkillCategory, 'id' | 'title'>[];
+  skillSubcategories: SkillCategory['subcategories'];
+  gender: string;
+  teachStatus: string;
+}
+
 interface FilterSidebarProps {
+  filters: Filters;
+  onFiltersChange: (filters: Filters) => void;
   className?: string;
 }
 
-const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
-  const skills = useAppSelector(selectCategories);
+const FilterSidebar: FC<FilterSidebarProps> = ({
+  filters,
+  onFiltersChange,
+  className = '',
+}) => {
+  const skillCategories = useAppSelector(selectCategories);
   const cities = useAppSelector(selectCities);
 
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  // НОВЫЙ обработчик для батч-обновления категорий
+  const handleCategoryToggle = (
+    subcategoryIds: string[],
+    shouldSelect: boolean,
+  ) => {
+    if (shouldSelect) {
+      // Добавляем все подкатегории
+      const skillsToAdd: SkillCategory['subcategories'] = [];
+      let parentCategory: Pick<SkillCategory, 'id' | 'title'> | null = null;
 
-  const handleSubcategoryToggle = (subId: string) => {
-    setSelectedSubcategories((prev) =>
-      prev.includes(subId)
-        ? prev.filter((id) => id !== subId)
-        : [...prev, subId],
-    );
+      for (const subId of subcategoryIds) {
+        for (const category of skillCategories) {
+          const skill = category.subcategories.find(
+            (sub) => sub.id.toString() === subId,
+          );
+          if (
+            skill &&
+            !filters.skillSubcategories.some((s) => s.id === skill.id)
+          ) {
+            skillsToAdd.push(skill);
+            if (!parentCategory) {
+              parentCategory = { id: category.id, title: category.title };
+            }
+          }
+        }
+      }
+
+      const newSubcategories = [...filters.skillSubcategories, ...skillsToAdd];
+
+      // Добавляем категорию, если её нет
+      let newCategories = filters.skillCategories;
+      if (
+        parentCategory &&
+        !newCategories.some((c) => c.id === parentCategory!.id)
+      ) {
+        newCategories = [...newCategories, parentCategory];
+      }
+
+      onFiltersChange({
+        ...filters,
+        skillCategories: newCategories,
+        skillSubcategories: newSubcategories,
+      });
+    } else {
+      // Удаляем все подкатегории
+      const newSubcategories = filters.skillSubcategories.filter(
+        (skill) => !subcategoryIds.includes(skill.id.toString()),
+      );
+
+      // Находим и удаляем категорию
+      let categoryIdToRemove: number | null = null;
+      for (const category of skillCategories) {
+        const hasThisCategory = category.subcategories.some((sub) =>
+          subcategoryIds.includes(sub.id.toString()),
+        );
+        if (hasThisCategory) {
+          categoryIdToRemove = category.id;
+          break;
+        }
+      }
+
+      const newCategories = categoryIdToRemove
+        ? filters.skillCategories.filter((c) => c.id !== categoryIdToRemove)
+        : filters.skillCategories;
+
+      onFiltersChange({
+        ...filters,
+        skillCategories: newCategories,
+        skillSubcategories: newSubcategories,
+      });
+    }
   };
 
-  const handleCityToggle = (id: string) => {
-    setSelectedCities((prev) =>
-      prev.includes(id)
-        ? prev.filter((cityId) => cityId !== id)
-        : [...prev, id],
+  const handleSubcategoryToggle = (subId: string) => {
+    let foundSkill: SkillCategory['subcategories'][0] | null = null;
+    let parentCategory: Pick<SkillCategory, 'id' | 'title'> | null = null;
+
+    for (const category of skillCategories) {
+      const skill = category.subcategories.find(
+        (sub) => sub.id.toString() === subId,
+      );
+      if (skill) {
+        foundSkill = skill;
+        parentCategory = { id: category.id, title: category.title };
+        break;
+      }
+    }
+
+    if (!foundSkill || !parentCategory) return;
+
+    const isAlreadySelected = filters.skillSubcategories.some(
+      (s) => s.id === foundSkill!.id,
     );
+
+    const newSubcategories = isAlreadySelected
+      ? filters.skillSubcategories.filter((s) => s.id !== foundSkill!.id)
+      : [...filters.skillSubcategories, foundSkill];
+
+    const categorySubcategories =
+      skillCategories.find((c) => c.id === parentCategory!.id)?.subcategories ||
+      [];
+
+    const allSubcategoriesSelected = categorySubcategories.every((sub) =>
+      newSubcategories.some((s) => s.id === sub.id),
+    );
+
+    let newCategories = filters.skillCategories;
+
+    if (allSubcategoriesSelected) {
+      if (!newCategories.some((c) => c.id === parentCategory!.id)) {
+        newCategories = [...newCategories, parentCategory];
+      }
+    } else {
+      newCategories = newCategories.filter((c) => c.id !== parentCategory!.id);
+    }
+
+    onFiltersChange({
+      ...filters,
+      skillCategories: newCategories,
+      skillSubcategories: newSubcategories,
+    });
+  };
+
+  const handleCityToggle = (cityId: string) => {
+    const city = cities.find((c) => c.id.toString() === cityId);
+    if (!city) return;
+
+    const isAlreadySelected = filters.cities.some((c) => c.id === city.id);
+
+    const newCities = isAlreadySelected
+      ? filters.cities.filter((c) => c.id !== city.id)
+      : [...filters.cities, city];
+
+    onFiltersChange({ ...filters, cities: newCities });
+  };
+
+  const handleTeachStatusChange = (value: string) => {
+    onFiltersChange({ ...filters, teachStatus: value });
+  };
+
+  const handleGenderChange = (value: string) => {
+    onFiltersChange({ ...filters, gender: value });
   };
 
   const convertSkills = (skillCategories: SkillCategory[]): Category[] =>
@@ -50,7 +188,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
       id: category.id.toString(),
       label: category.title,
       subcategories: category.subcategories.map((skill) => ({
-        id: `${category.id.toString()}-${skill.id.toString()}`,
+        id: skill.id.toString(),
         label: skill.title,
       })),
     }));
@@ -58,8 +196,13 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
   const convertCities = (cities: City[]): CheckboxGroupItem[] =>
     cities.map((city) => ({
       id: city.id.toString(),
-      label: city.name
+      label: city.name,
     }));
+
+  const selectedSkillIds = filters.skillSubcategories.map((s) =>
+    s.id.toString(),
+  );
+  const selectedCityIds = filters.cities.map((c) => c.id.toString());
 
   return (
     <aside className={`${styles.sidebar} ${className}`}>
@@ -67,38 +210,43 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ className = '' }) => {
       <div className={styles.filterSections}>
         <RadioGroupUI
           name="role"
-          value="all"
-          onChange={() => {}}
+          value={filters.teachStatus}
+          onChange={handleTeachStatusChange}
           options={[
             { value: 'all', label: 'Всё' },
             { value: 'needLearn', label: 'Хочу научиться' },
             { value: 'canTeach', label: 'Могу научить' },
           ]}
         />
+
         <CategoryGroupUI
-          categories={convertSkills(skills)}
-          selectedSubcategories={selectedSubcategories}
+          categories={convertSkills(skillCategories)}
+          selectedSubcategories={selectedSkillIds}
           onSubcategoryToggle={handleSubcategoryToggle}
+          onCategoryToggle={handleCategoryToggle}
         />
+
         <RadioGroupUI
           label="Пол автора"
           name="gender"
-          value="any"
-          onChange={() => {}}
+          value={filters.gender}
+          onChange={handleGenderChange}
           options={[
             { value: 'any', label: 'Не имеет значения' },
-            { value: 'men', label: 'Мужской' },
-            { value: 'women', label: 'Женский' },
+            { value: 'мужской', label: 'Мужской' },
+            { value: 'женский', label: 'Женский' },
           ]}
         />
+
         <CityGroupUI
           title={'Город'}
           items={convertCities(cities)}
-          selectedItems={selectedCities}
+          selectedItems={selectedCityIds}
           onItemToggle={handleCityToggle}
         />
       </div>
     </aside>
   );
 };
+
 export default FilterSidebar;
