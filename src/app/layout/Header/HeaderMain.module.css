@@ -40,8 +40,12 @@
 
 .center {
   flex: 1;
-  max-width: 527px;
+  /* max-width: 527px; */
   min-width: 300px;
+}
+
+.center input {
+  width: 100%;       /* растягиваем инпут внутри */
 }
 
 .right {
