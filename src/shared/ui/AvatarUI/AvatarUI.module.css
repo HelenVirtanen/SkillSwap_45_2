@@ -1,6 +1,5 @@
 .main {
   position: relative;
-  
 }
 
 .imageButton {  
@@ -15,8 +14,8 @@
   height: 100%;
   object-fit: cover;  
   border-radius: 50%;
-  max-width: 244px;
-  max-height: 244px;
+  width: 244px;
+  height: 244px;
 }
 
 .add {
