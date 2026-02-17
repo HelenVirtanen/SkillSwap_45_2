@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './UsersCatalog.module.css';
 import Section from '../Section/Section';
 import Loader from '@shared/ui/Loader/Loader';
@@ -17,6 +18,7 @@ const UsersCatalog: FC<UsersCatalogProps> = ({
   newUsers,
   recommendedUsers,
 }) => {
+  const navigate = useNavigate(); 
   const [visibleCount, setVisibleCount] = useState(LOAD_LIMIT);
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
@@ -32,7 +34,7 @@ const UsersCatalog: FC<UsersCatalogProps> = ({
         }
       },
       {
-        rootMargin: '100px', // немного раньше подгружает
+        rootMargin: '100px',
       },
     );
 
@@ -47,24 +49,31 @@ const UsersCatalog: FC<UsersCatalogProps> = ({
   const visibleRecommended = recommendedUsers.slice(0, visibleCount);
   const hasMore = visibleCount < recommendedUsers.length;
 
+  // Обработчик клика на "Подробнее"
+  const handleDetailsClick = (userId: string) => {
+    navigate(`/skill/${userId}`);
+  };
+
   return (
     <main className={styles.catalog}>
       <Section
         title="Популярное"
         users={popularUsers}
         onShowAll={() => console.log('Показать все популярные')}
+        onDetailsClick={handleDetailsClick}
       />
 
       <Section
         title="Новое"
         users={newUsers}
         onShowAll={() => console.log('Показать все новое')}
+        onDetailsClick={handleDetailsClick} 
       />
 
-      {/* Infinite scroll только для "Рекомендуем" */}
       <Section
         title="Рекомендуем"
         users={visibleRecommended}
+        onDetailsClick={handleDetailsClick}
       />
 
       {hasMore && (

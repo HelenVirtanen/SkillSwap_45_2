@@ -19,7 +19,7 @@
 
 .leftColumn {
   flex: 0 0 auto;
-  width: 324px; /* Фиксированная ширина для карточки пользователя */
+  width: 324px;
 }
 
 .rightColumn {
