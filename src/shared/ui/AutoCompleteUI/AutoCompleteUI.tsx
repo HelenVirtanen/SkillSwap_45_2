@@ -153,7 +153,10 @@ const AutoCompleteUI = ({
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onFocus={() => {
-              if (inputValue.trim() !== '' && suggestions.length > 0) {
+              if (inputValue.trim() === '') {
+                setSuggestions(allCities);
+                setShowSuggestions(true);
+              } else if (suggestions.length > 0) {
                 setShowSuggestions(true);
               }
             }}

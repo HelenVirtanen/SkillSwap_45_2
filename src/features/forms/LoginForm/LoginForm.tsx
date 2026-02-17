@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   loginUser,
   selectAuthStatus,
-  selectAuthError,
   selectAuthUser,
 } from '@app/store/slices/authUser/auth';
 import { Controller, useForm } from 'react-hook-form';
@@ -35,23 +34,18 @@ const LoginForm: React.FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors }
   } = useForm<UserData>({
     resolver: yupResolver(validationSchema),
   });
 
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectAuthStatus);
-  const authError = useAppSelector(selectAuthError);
   const user = useAppSelector(selectAuthUser);
   const navigate = useNavigate();
 
   const submitHandler = (data: UserData) => {
     dispatch(loginUser(data));
   };
-
-  console.log('Current user:', user);
-  console.log('autherror', authError);
 
   useEffect(() => {
     if (user) {
