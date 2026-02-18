@@ -3,6 +3,7 @@ import styles from './HeaderUserMenuUI.module.css';
 import NotificationBell from '@widgets/NotificationBell/NotificationBell';
 import FavoriteButtonUI from '../FavoriteButtonUI/FavoriteButtonUI';
 import ThemeToggle from '@widgets/ThemeToggle/ThemeToggle';
+import { useTheme } from '@shared/lib/theme/useTheme';
 
 type HeaderUserMenuAction = 'user' | 'favorite' | 'notifications';
 interface HeaderUserMenuUIProps {
@@ -18,10 +19,12 @@ const HeaderUserMenuUI: React.FunctionComponent<HeaderUserMenuUIProps> = ({
   userAvatarUrl,
   onAction,
 }) => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className={styles.container}>
       <div className={styles.iconsContainer}>
-        <ThemeToggle isLight /> 
+        <ThemeToggle isLight={theme === 'light'} onToggle={toggleTheme} />
         <NotificationBell
           hasNewNotifications={hasNewNotifications}
           onClick={() => onAction('notifications')}
