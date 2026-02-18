@@ -6,18 +6,21 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import InputUI from '@shared/ui/InputUI/InputUI';
 import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
 import styles from './Step3SkillInfo.module.css';
-import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';
-import { getSkills } from '@api/skills';
+import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';  
 import { TSkillCategory } from '@api/api';
+import { useAppSelector } from '@app/store/store';
+import { selectCategories } from '@app/store/slices/staticData/staticDataSlice';
+import { MultiSelectDropdownUI } from '@shared/ui/MultiSelectDropdownUI/MultiSelectDropdownUI';
 
 // Типы данных формы (убрали tagging)
 export interface Step3Data {
   title: string;
-  category: string;
-  subcategory: string;
+  category: string[];
+  subcategory: string[];
   description: string;
   image: File;
 }
+
 
 // Схема валидации Yup (убрали tagging)
 const schema = yup.object().shape({
@@ -26,8 +29,14 @@ const schema = yup.object().shape({
     .min(3, 'Название должно содержать от 3 до 50 символов')
     .max(50, 'Название должно содержать от 3 до 50 символов')
     .required('Обязательное поле'),
-  category: yup.string().required('Выберите категорию'),
-  subcategory: yup.string().required('Выберите подкатегорию'),
+  category: yup
+    .array()
+    .min(1, 'Выберите хотя бы одну категорию')
+    .required(),
+  subcategory: yup
+    .array()
+    .min(1, 'Выберите хотя бы одну подкатегорию')
+    .required(),
   description: yup
     .string()
     .max(500, 'Описание не должно превышать 500 символов')
@@ -56,7 +65,8 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
   onBack,
   initialData,
 }) => {
-  const [skillsData, setSkillsData] = useState<TSkillCategory[]>([]);
+  
+  const categories = useAppSelector(selectCategories)
 
   const {
     control,
@@ -68,8 +78,8 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     mode: 'onChange',
     defaultValues: {
       title: initialData?.title || '',
-      category: initialData?.category || '',
-      subcategory: initialData?.subcategory || '',
+      category: initialData?.category || [],
+      subcategory: initialData?.subcategory || [],
       description: initialData?.description || '',
       image: undefined,
     },
@@ -80,29 +90,45 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     name: 'category',
   });
 
+
   const subcategoryOptions = React.useMemo(() => {
-    if (!selectedCategory || skillsData.length === 0) return [];
-    const category = skillsData.find((c) => c.title === selectedCategory);
-    return category?.skills || [];
-  }, [selectedCategory, skillsData]);
+    if (!selectedCategory?.length) return [];
+  
+    return categories
+      .filter((category) =>
+        selectedCategory.includes(category.title)
+      )
+      .flatMap((category) =>
+        category.subcategories.map((sub) => sub.title)
+      );
+  }, [selectedCategory, categories]);
+  
 
-  // Обновляем подкатегории при изменении категории
-  useEffect(() => {
-    setValue('subcategory', '');
-  }, [selectedCategory, setValue]);
+  const selectedSubcategory = useWatch({
+    control,
+    name: 'subcategory',
+  });
 
-  // Загружаем JSON с категориями
   useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const data = await getSkills();
-        setSkillsData(data);
-      } catch (error) {
-        console.error('Ошибка загрузки категорий', error);
-      }
-    };
-    fetchSkills();
-  }, []);
+    if (!selectedCategory) {
+      setValue('subcategory', []);
+      return;
+    }
+  
+    const validSubcategories =
+    selectedSubcategory?.filter((sub) =>
+      subcategoryOptions.includes(sub)
+    ) || [];
+  
+    if (validSubcategories.length !== selectedSubcategory?.length) {
+      setValue('subcategory', validSubcategories);
+    }
+  }, [
+    selectedCategory,
+    subcategoryOptions,
+    selectedSubcategory,
+    setValue,
+  ]);
 
   // Обработчик загрузки изображения
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,14 +170,17 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           render={({ field }) => (
             <div className={styles.formGroup}>
               <div className={styles.dropDownWrapper}>
-                <DropDownUI
-                  title="Категория навыка"
-                  value={field.value}
-                  options={skillsData.map((c) => c.title)}
+                <MultiSelectDropdownUI
+                  label="Категория навыка"
+                  placeholder="Выберите категории"
+                  options={categories.map((c) => ({
+                    id: c.id,
+                    label: c.title,
+                    value: c.title,
+                  }))}
+                  selected={field.value}
                   onChange={field.onChange}
-                  widthDepOnContent={false}
-                  placeholder="Выберите категорию навыка"
-                />
+                /> 
               </div>
               {errors.category && (
                 <span className={styles.errorMessage}>
@@ -169,14 +198,18 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           render={({ field }) => (
             <div className={styles.formGroup}>
               <div className={styles.dropDownWrapper}>
-                <DropDownUI
-                  title="Подкатегория навыка"
-                  value={field.value}
-                  options={subcategoryOptions}
-                  onChange={field.onChange}
-                  widthDepOnContent={false}
-                  placeholder="Выберите подкатегорию навыка"
-                />
+              <MultiSelectDropdownUI
+              label="Подкатегория навыка"
+              placeholder="Выберите подкатегории"
+              options={subcategoryOptions.map((s, index) => ({
+                id: index,
+                label: s,
+                value: s,
+              }))}
+              selected={field.value}
+              onChange={field.onChange}
+              disabled={!selectedCategory?.length}
+            />
               </div>
               {errors.subcategory && (
                 <span className={styles.errorMessage}>

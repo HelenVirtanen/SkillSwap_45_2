@@ -2,92 +2,18 @@ import InputUI from '@shared/ui/InputUI/InputUI';
 import styles from './Step2ProfileInfo.module.css';
 import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
 import { MultiSelectDropdownUI } from '@shared/ui/MultiSelectDropdownUI/MultiSelectDropdownUI';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import AutoCompleteUI from '@shared/ui/AutoCompleteUI/AutoCompleteUI';
 import DatePicker from '@widgets/DatePicker/DatePicker';
 import AvatarUI from '@shared/ui/AvatarUI/AvatarUI';
 
-//
-//
-//3) Добавить datapicker потом
-//4) Убрать фейковые данные
-//5) Подправить как для навыков DropDown
-//6) Связать категории подкатегории (аля функция и на входи название приходит(категории или подкатегории)
-// и значит пересчитываем выдаваемые значения для второго списка
-//7) Сделать input для городов на основе моего DropDown
-//8)
-//9) Ещё надо сделать label + input скорее всего но я хз
+import { useAppSelector } from '@app/store/store';
+import { selectCategories } from '@app/store/slices/staticData/staticDataSlice'
+import React from 'react';
+
 const optionsGenders = ['Не указан', 'Мужской', 'Женский']; //Для пола
-const optionsCategorySkillsWantedToLearn = [
-  {
-    id: 1,
-    label: 'Бизнес и карьера',
-    value: 'бизнес и карьера',
-  },
-  {
-    id: 2,
-    label: 'Творчество и искусство',
-    value: 'творчество и искусство',
-  },
-  {
-    id: 3,
-    label: 'Иностранные языки',
-    value: 'иностранные языки',
-  },
-  {
-    id: 4,
-    label: 'Здоровье и лайфстайл',
-    value: 'здоровье и лайфстайл',
-  },
-  {
-    id: 5,
-    label: 'Дом и уют',
-    value: 'дом и уют',
-  },
-];
-const optionsSubCategorySkillsWantedToLearn = [
-  {
-    id: 1,
-    label: 'Рисование и иллюстрация',
-    value: 'Рисование и иллюстрация',
-  },
-  {
-    id: 2,
-    label: 'Фотография',
-    value: 'Фотография',
-  },
-  {
-    id: 3,
-    label: 'Видеомонтаж',
-    value: 'Видеомонтаж',
-  },
-  {
-    id: 4,
-    label: 'Музыка и звук',
-    value: 'Музыка и звук',
-  },
-  {
-    id: 5,
-    label: 'Актёрское мастерство',
-    value: 'Актёрское мастерство',
-  },
-  {
-    id: 6,
-    label: 'Креативное письмо',
-    value: 'Креативное письмо',
-  },
-  {
-    id: 7,
-    label: 'Арт-терапия',
-    value: 'Арт-терапия',
-  },
-  {
-    id: 8,
-    label: 'Декор и DIY',
-    value: 'Декор и DIY',
-  },
-];
+
 
 export type Step2Data = {
   firstName?: string;
@@ -110,6 +36,19 @@ type Step2ProfileInfoProps = {
 };
 
 const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
+  
+  
+
+  const categories = useAppSelector(selectCategories)
+
+  const categoryOptions = React.useMemo(() => {
+    return categories.map((c) => ({
+      id: c.id,
+      label: c.title,
+      value: c.title,
+    }));
+  }, [categories]);
+
   const { initialData, onFieldChange, handleBack, handleNext } = props;
 
   const [localData, setLocalData] = useState<Step2Data>(() => ({
@@ -121,6 +60,7 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
     subcategorySkill: initialData?.subcategorySkill || [],
   }));
 
+  
   const handleFieldChange = <K extends keyof Step2Data>(
     field: K,
     value: Step2Data[K],
@@ -128,6 +68,41 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
     setLocalData((prev) => ({ ...prev, [field]: value }));
     onFieldChange(field, value);
   };
+
+ 
+  const subcategoryOptions = React.useMemo(() => {
+    if (!localData.categorySkill?.length) return [];
+  
+    return categories
+      .filter((category) =>
+        localData.categorySkill?.includes(category.title)
+      )
+      .flatMap((category) =>
+        category.subcategories.map((sub) => ({
+          id: sub.id,
+          label: sub.title,
+          value: sub.title,
+        }))
+      );
+  }, [categories, localData.categorySkill]);
+
+
+  useEffect(() => {
+    if (!localData.categorySkill?.length) {
+      handleFieldChange('subcategorySkill', []);
+      return;
+    }
+  
+    const validSubcategories = localData.subcategorySkill?.filter((sub) =>
+      subcategoryOptions.some((opt) => opt.value === sub)
+    ) || [];
+  
+    if (validSubcategories.length !== localData.subcategorySkill?.length) {
+      handleFieldChange('subcategorySkill', validSubcategories);
+    }
+  }, [localData.categorySkill, subcategoryOptions]);
+
+  const isSubcategoryDisabled = !localData.categorySkill?.length;
 
   return (
     <div className={styles.form}>
@@ -179,7 +154,7 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
         <MultiSelectDropdownUI
           placeholder="Выберите категорию"
           label="Категория навыка, которому хотите научиться"
-          options={optionsCategorySkillsWantedToLearn}
+          options={categoryOptions}
           selected={localData.categorySkill ? localData.categorySkill : []}
           onChange={(value: string[]) => {
             handleFieldChange('categorySkill', value);
@@ -189,13 +164,14 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
         <MultiSelectDropdownUI
           placeholder="Выберите подкатегорию"
           label="Подкатегория навыка, которому хотите научиться"
-          options={optionsSubCategorySkillsWantedToLearn}
+          options={subcategoryOptions}
           selected={
             localData.subcategorySkill ? localData.subcategorySkill : []
           }
           onChange={(value: string[]) => {
             handleFieldChange('subcategorySkill', value);
           }}
+          disabled={isSubcategoryDisabled}
         />
       </div>
 
