@@ -84,6 +84,9 @@
 }
 
 .dropdownMenu.open {
+  /* Если выбрать две и больше категории то без прокрутки нельзя увидеть все подкатегории */
+  overflow-y: auto; 
+
   max-height: var(--max-height-dropdown, 240px);
   padding: 8px 0;
   background-color:var(--clr-ui-surface,#FFFFFF); ;
