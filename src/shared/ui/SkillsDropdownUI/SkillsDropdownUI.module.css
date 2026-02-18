@@ -30,7 +30,7 @@
   border-radius: var(--border-radius, 12px);
   margin-block-start: 24px;
   background-color: var(--clr-ui-surface, #ffffff);
-  z-index: 1;
+  z-index: 3;
   padding: 60px;
   gap: 40px;
   left: -300px;
