@@ -1,3 +1,4 @@
+// C:\Users\ispun\OneDrive\Документы\GitHub\SkillSwap_45_2\src\pages\RegisterPages\RegisterPageStep1\RegisterPageStep1.tsx
 import styles from './RegisterPageStep1.module.css';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
@@ -7,7 +8,8 @@ import InputUI from '@shared/ui/InputUI/InputUI';
 import { IllustrationPanel } from '@widgets/IllustrationPanel/IllustrationPanel';
 import Stepper from '@widgets/Stepper/Stepper';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useModals } from '@shared/hooks/useModals';
 
 const RegisterPageStep1: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -16,16 +18,40 @@ const RegisterPageStep1: React.FC = () => {
   >(undefined);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { openConfirmOffer } = useModals(); // Используем openConfirmOffer
 
-  // const [email, setEmail] = useState('');
-  // const [emailErrorText, setEmailErrorText] = useState<string | undefined>(undefined);
+  // Получаем данные из state
+  const { returnTo, shouldProposeAfterReturn, targetUserId } = location.state || {};
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password.length < 8) {
       setPasswordHelperText('Пароль должен содержать не менее 8 знаков');
     } else {
-      navigate('/register/step2');
+      // Имитация успешной регистрации
+      console.log('✅ Регистрация успешна');
+      
+      if (shouldProposeAfterReturn && targetUserId) {
+        // Открываем модалку подтверждения предложения
+        openConfirmOffer({
+          userId: targetUserId,
+          returnTo: returnTo,
+          context: 'registration',
+          shouldProposeAfterReturn: true,
+          // Эти данные должны приходить с бэка после регистрации
+          aboutSkillProps: {
+            title: 'Обучение игре на барабанах',
+            description: 'Обучаю игре на барабанах с нуля. Индивидуальный подход.',
+            categories: ['Музыка', 'Творчество'],
+          },
+          galleryProps: {
+            images: ['/assets/illustrations/drumming-main.png'],
+          },
+        });
+      } else {
+        navigate('/register/step2');
+      }
     }
   };
 
@@ -42,14 +68,10 @@ const RegisterPageStep1: React.FC = () => {
     }
   };
 
-  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   setEmail(e.target.value);
-  // }
-
   return (
     <div className={styles.container}>
       <div className={styles.stepper}>
-      <Stepper currentStep={1} />
+        <Stepper currentStep={1} />
       </div>
       <div className={styles.content}>
         <div className={styles.register}>
@@ -76,11 +98,9 @@ const RegisterPageStep1: React.FC = () => {
             <div className={styles.registerForm__inputContainer}>
               <InputUI
                 label="Email"
-                // onChange={handleEmailChange}
                 onChange={() => {}}
                 placeholder="Введите email"
                 type="email"
-                // error="Email уже используется"
               />
               <InputUI
                 label="Пароль"
@@ -97,7 +117,6 @@ const RegisterPageStep1: React.FC = () => {
               className={styles.registerForm__submit}
             />
           </form>
-         
         </div>
         <IllustrationPanel
           image={<BulbIcon />}

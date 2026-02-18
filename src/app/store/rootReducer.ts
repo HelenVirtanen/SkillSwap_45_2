@@ -4,11 +4,15 @@ import  usersReducer  from '../store/slices/User/usersSlise';
 import staticDataReducer from '../store/slices/staticData/staticDataSlice';
 import favoritesReducer from './slices/favorites/favoritesSlice';
 import likesReducer from './slices/likes/likesSlice';
+import modalsReducer from './slices/modals/modalsSlice';
 
 export const rootReducer = combineReducers({
   users: usersReducer,
   staticData: staticDataReducer,
   likes: likesReducer,
   favorites: favoritesReducer,
-  auth: authSlice.reducer
+  auth: authSlice.reducer,
+  modals: modalsReducer, 
+
+  
 });

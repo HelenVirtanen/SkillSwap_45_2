@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom'; // Добавляем useLocation
 import { useAppSelector, useAppDispatch } from '@app/store/store';
+import { useModals } from '@shared/hooks/useModals';
 import { 
   fetchUserProfileById,
   selectCurrentProfileUser,
@@ -81,7 +82,12 @@ const getDefaultImages = (): string[] => {
 const SkillPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
+  const { openOfferSent } = useModals();
+  
+  // Получаем state из навигации (для авто-предложения после регистрации)
+  const state = location.state as { shouldAutoPropose?: boolean; targetUserId?: string } | null;
   
   // Селекторы из usersSlise
   const userData = useAppSelector(selectCurrentProfileUser);
@@ -90,7 +96,6 @@ const SkillPage: React.FC = () => {
   
   // Селекторы из auth слайса
   const authUser = useAppSelector(selectAuthUser);
-  // Пользователь авторизован, если есть authUser
   const isAuthenticated = !!authUser;
 
   const [formattedUser, setFormattedUser] = useState<IUser | null>(null);
@@ -104,13 +109,12 @@ const SkillPage: React.FC = () => {
       }));
     }
 
-    // Очистка при размонтировании
     return () => {
       dispatch(clearProfileUser());
     };
   }, [id, isAuthenticated, dispatch]);
 
-  // Форматирование данных при их получении из Redux
+  // Форматирование данных
   useEffect(() => {
     if (userData && status === 'succeeded') {
       const formatted: IUser = {
@@ -136,9 +140,58 @@ const SkillPage: React.FC = () => {
     }
   }, [userData, status, id]);
 
+  // Эффект для автоматического открытия модалки предложения после регистрации
+  useEffect(() => {
+    if (state?.shouldAutoPropose && 
+        state?.targetUserId === id && 
+        isAuthenticated && 
+        formattedUser && 
+        formattedUser.id !== authUser?.id?.toString()) {
+      
+      console.log('🔄 Auto-proposing exchange after registration');
+      
+      // Небольшая задержка, чтобы всё прогрузилось
+      setTimeout(() => {
+        openOfferSent({
+          userId: id,
+          skillTitle: formattedUser.teachingSkill.title,
+          context: 'skillPage',
+        });
+      }, 500);
+      
+      // Очищаем state, чтобы не открывать снова при ререндере
+      navigate(`/skill/${id}`, { replace: true, state: {} });
+    }
+  }, [state, id, isAuthenticated, formattedUser, authUser, openOfferSent, navigate]);
+
   const handleProposeExchange = () => {
     console.log('Предложить обмен пользователю:', id);
-    // Здесь будет логика для предложения обмена
+    
+    if (!formattedUser) return;
+    
+    // Проверяем, не свой ли это профиль
+    if (authUser?.id?.toString() === id) {
+      console.log('⏭️ This is your own profile, cannot propose exchange');
+      return;
+    }
+    
+    // Проверяем, авторизован ли пользователь
+    if (!isAuthenticated) {
+      console.log('🔴 User not authenticated, redirecting to login');
+      // Сохраняем в state, куда вернуться после регистрации
+      navigate('/register/step1', { 
+        state: { from: `/skill/${id}`, proposeExchange: true }
+      });
+      return;
+    }
+    
+    // Если авторизован - открываем модалку предложения
+    console.log('✅ User authenticated, opening offer modal');
+    openOfferSent({
+      userId: id,
+      skillTitle: formattedUser.teachingSkill.title,
+      context: 'skillPage',
+    });
   };
 
   const handleFavoriteToggle = (userId: string) => {
@@ -180,6 +233,9 @@ const SkillPage: React.FC = () => {
     );
   }
 
+  // Проверяем, свой ли это профиль
+  const isOwnProfile = authUser?.id?.toString() === id;
+
   // Формируем данные навыка
   const skillImages = formattedUser.photosOnAbout && formattedUser.photosOnAbout.length > 0
     ? formattedUser.photosOnAbout
@@ -200,7 +256,7 @@ const SkillPage: React.FC = () => {
         <div className={styles.leftColumn}>
           <UserProfileCard
             user={formattedUser}
-            showFavorite={true}
+            showFavorite={!isOwnProfile} // Не показываем избранное на своём профиле
             onFavoriteToggle={handleFavoriteToggle}
           />
         </div>
@@ -210,12 +266,14 @@ const SkillPage: React.FC = () => {
           <SkillCard
             skill={skill}
             proposeExchange={
-              <ButtonUI
-                title="Предложить обмен"
-                variant="primary"
-                className={styles.exchangeButton}
-                onClick={handleProposeExchange}
-              />
+              !isOwnProfile ? ( // Не показываем кнопку на своём профиле
+                <ButtonUI
+                  title="Предложить обмен"
+                  variant="primary"
+                  className={styles.exchangeButton}
+                  onClick={handleProposeExchange}
+                />
+              ) : null
             }
           />
         </div>
