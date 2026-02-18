@@ -18,38 +18,55 @@ const UsersCatalog: FC<UsersCatalogProps> = ({
   newUsers,
   recommendedUsers,
 }) => {
-  const navigate = useNavigate(); 
+  console.log('recommendedUsers length:', recommendedUsers.length);
+  const navigate = useNavigate();
   const [visibleCount, setVisibleCount] = useState(LOAD_LIMIT);
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
+  //заглушка
+  const handleShowAll = (section: string) => {
+    alert(`Страница "Смотреть все ${section}" в разработке`);
+    console.log(`Смотреть все: ${section}`);
+  };
+
+  // Сбрасываем количество при изменении данных
   useEffect(() => {
+    setVisibleCount(LOAD_LIMIT);
+  }, [recommendedUsers]);
+
+  useEffect(() => {
+    if (!loaderRef.current) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        const first = entries[0];
+        const entry = entries[0];
 
-        if (first.isIntersecting) {
-          setVisibleCount((prev) =>
-            Math.min(prev + LOAD_LIMIT, recommendedUsers.length),
-          );
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) => {
+            const next = prev + LOAD_LIMIT;
+            return next > recommendedUsers.length
+              ? recommendedUsers.length
+              : next;
+          });
         }
       },
       {
-        rootMargin: '100px',
-      },
+        root: null, // window
+        rootMargin: '200px', // подгружает заранее
+        threshold: 0,
+      }
     );
 
-    const current = loaderRef.current;
-    if (current) observer.observe(current);
+    observer.observe(loaderRef.current);
 
     return () => {
-      if (current) observer.unobserve(current);
+      observer.disconnect();
     };
   }, [recommendedUsers.length]);
 
   const visibleRecommended = recommendedUsers.slice(0, visibleCount);
   const hasMore = visibleCount < recommendedUsers.length;
 
-  // Обработчик клика на "Подробнее"
   const handleDetailsClick = (userId: string) => {
     navigate(`/skill/${userId}`);
   };
@@ -59,15 +76,15 @@ const UsersCatalog: FC<UsersCatalogProps> = ({
       <Section
         title="Популярное"
         users={popularUsers}
-        onShowAll={() => console.log('Показать все популярные')}
+        onShowAll={() => handleShowAll('Популярное')}
         onDetailsClick={handleDetailsClick}
       />
 
       <Section
         title="Новое"
         users={newUsers}
-        onShowAll={() => console.log('Показать все новое')}
-        onDetailsClick={handleDetailsClick} 
+        onShowAll={() => handleShowAll('Новое')}
+        onDetailsClick={handleDetailsClick}
       />
 
       <Section
@@ -86,3 +103,4 @@ const UsersCatalog: FC<UsersCatalogProps> = ({
 };
 
 export default UsersCatalog;
+

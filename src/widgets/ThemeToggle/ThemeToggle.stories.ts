@@ -20,12 +20,12 @@ type Story = StoryObj<typeof meta>;
 
 export const NoDark: Story = {
   args: {
-    isDark: false,
+    isLight: false,
   },
 };
 
 export const IsDark: Story = {
   args: {
-    isDark: true,
+    isLight: true,
   },
 };

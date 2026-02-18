@@ -1,6 +1,11 @@
-interface CityData {
-  cities: string[];
+export interface City {
+  id: number;
+  name: string;
 }
+export interface CityData {
+  cities: City[];
+}
+
 
 export const getCities = async () => {
   const response = await fetch('/db/cities.json');

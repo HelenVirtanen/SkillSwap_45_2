@@ -40,7 +40,6 @@ const UserCard: React.FC<IUserCardProps> = ({
   learningSkills,
   isFavorite = false,
   onFavoriteToggle,
-  onMessageClick,
   onDetailsClick,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);

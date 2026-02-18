@@ -73,7 +73,7 @@ export type TRegisterData = {
   password: string;
 };
 
-type TAuthResponse = {
+export type TAuthResponse = {
   refreshToken: string;
   accessToken: string;
   user: TUser;
@@ -233,7 +233,7 @@ export type TProfile = {
   photosOnAbout?: string[];
   isFavourite?: boolean;
   favouritesCount?: number;
-  createdAt?: Date;
+  createdAt?: string;
 };
 
 export type TUpdateProfileData = {

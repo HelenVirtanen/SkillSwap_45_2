@@ -3,7 +3,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f8f9fa;
+  background-color: var(--clr-ui-background, #f9faf7);
   box-sizing: border-box;
 }
 
@@ -35,5 +35,5 @@
 }
 
 .exchangeButton:active {
-  background: var(--clr-primary-pressed);
+  background: var(--clr-primary-pressed, #508826);
 }

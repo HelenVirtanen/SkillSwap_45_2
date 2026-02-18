@@ -32,7 +32,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const user = useAppSelector(selectAuthUser);
-const isAuthenticated = Boolean(user);
+  const isAuthenticated = Boolean(user);
 
   const handleSearchChange = (value: string) => {
     onSearchChange?.(value);
