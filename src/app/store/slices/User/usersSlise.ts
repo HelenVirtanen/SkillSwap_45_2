@@ -33,7 +33,7 @@ const initialState: UsersState = {
 // Вспомогательная функция маппинга
 const mapProfileToCard = (profile: TProfile): IUserCardData => ({
   id: String(profile.id),
-  avatar: profile.avatar ?? '/avatars/default.png',
+  avatar: profile.avatar || '../src/assets/avatars/default.png',
   name: profile.name,
   birthDate: profile.birthDate ?? 'Не указано',
   city: profile.city ?? 'Город не указан',
