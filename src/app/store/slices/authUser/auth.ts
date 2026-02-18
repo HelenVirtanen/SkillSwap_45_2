@@ -3,6 +3,7 @@ import { RootState } from '@app/store/store';
 import { fetchUsers } from './actions';
 import { loginUserApi } from '@api/api';
 import { setCookie } from '@features/auth/cookie';
+import { registerUserApi, type TRegisterData } from '@api/api';
 
 export type TUser = {
   id: number;
@@ -12,7 +13,7 @@ export type TUser = {
 };
 
 interface AuthState {
-  user: TUser| null;
+  user: TUser | null;
   isAuthChecked: boolean;
   error: string | null;
   status: 'idle' | 'loading' | 'failed' | 'succeeded';
@@ -37,6 +38,21 @@ export const loginUser = createAsyncThunk(
       return res.user;
     } catch (err: any) {
       return rejectWithValue(err?.message);
+    }
+  },
+);
+
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (data: TRegisterData, { rejectWithValue }) => {
+    try {
+      const res = await registerUserApi(data);
+      // Сохраняем токены
+      localStorage.setItem('refreshToken', res.refreshToken);
+      setCookie('accessToken', res.accessToken);
+      return res.user;
+    } catch (err: any) {
+      return rejectWithValue(err?.message || 'Ошибка регистрации');
     }
   },
 );
@@ -87,6 +103,20 @@ export const authSlice = createSlice({
         state.isAuthChecked = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      });
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload;
+        state.isAuthChecked = true;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
       });

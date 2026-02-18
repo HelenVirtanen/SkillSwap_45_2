@@ -9,17 +9,21 @@ import styles from './Step3SkillInfo.module.css';
 import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';
 import { getSkills } from '@api/skills';
 import { TSkillCategory } from '@api/api';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
+import { registerUser } from '@app/store/slices/authUser/auth';
+import { clearRegistration } from '@app/store/slices/registration/registrationSlice';
+import { useNavigate } from 'react-router-dom';
 
-// Типы данных формы (убрали tagging)
+// Тип данных формы (ручное объявление)
 export interface Step3Data {
   title: string;
   category: string;
   subcategory: string;
   description: string;
-  image: File;
+  image: File | undefined; // обязательно, но может быть undefined
 }
 
-// Схема валидации Yup (убрали tagging)
+// Схема валидации Yup (изображение опционально)
 const schema = yup.object().shape({
   title: yup
     .string()
@@ -34,28 +38,36 @@ const schema = yup.object().shape({
     .required('Обязательное поле'),
   image: yup
     .mixed<File>()
-    .required('Загрузите изображение')
+    .optional() 
     .test('fileSize', 'Файл не должен превышать 2 МБ', (value: unknown) => {
       const file = value as File | null;
-      return file ? file.size <= 2 * 1024 * 1024 : false;
+      return file ? file.size <= 2 * 1024 * 1024 : true;
     })
     .test('fileType', 'Разрешены только JPEG и PNG', (value: unknown) => {
       const file = value as File | null;
-      return file ? ['image/jpeg', 'image/png'].includes(file.type) : false;
+      return file ? ['image/jpeg', 'image/png'].includes(file.type) : true;
     }),
 });
 
 interface Step3SkillInfoProps {
-  onNext: (data: Step3Data) => void;
-  onBack: () => void;
   initialData?: Partial<Step3Data>;
 }
 
-export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
-  onNext,
-  onBack,
-  initialData,
-}) => {
+export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const step1Data = useAppSelector((state) => state.registration.step1);
+  const step2Data = useAppSelector((state) => state.registration.step2);
+
+  useEffect(() => {
+    if (!step1Data.email || !step1Data.password) {
+      console.warn('Данные регистрации отсутствуют. Перенаправляем на шаг 1.');
+      navigate('/register/step1', { replace: true });
+    }
+  }, [step1Data, navigate]); 
+
+  
   const [skillsData, setSkillsData] = useState<TSkillCategory[]>([]);
 
   const {
@@ -64,7 +76,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     formState: { errors, isValid, isSubmitting },
     setValue,
   } = useForm<Step3Data>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema) as any,
     mode: 'onChange',
     defaultValues: {
       title: initialData?.title || '',
@@ -86,12 +98,10 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     return category?.skills || [];
   }, [selectedCategory, skillsData]);
 
-  // Обновляем подкатегории при изменении категории
   useEffect(() => {
     setValue('subcategory', '');
   }, [selectedCategory, setValue]);
 
-  // Загружаем JSON с категориями
   useEffect(() => {
     const fetchSkills = async () => {
       try {
@@ -104,7 +114,6 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     fetchSkills();
   }, []);
 
-  // Обработчик загрузки изображения
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -112,13 +121,40 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     }
   };
 
-  // Отправка формы
-  const onSubmit = (data: Step3Data) => {
-    onNext(data);
+  const onSubmit = async (_data: Step3Data) => {
+  // Защита: проверяем критические данные
+  if (!step1Data.email || !step1Data.password) {
+    alert('Ошибка: данные регистрации повреждены. Начните регистрацию заново.');
+    navigate('/register/step1');
+    return;
+  }
+
+  // Формируем имя (если не заполнено — берём из email)
+  const userName = step2Data.firstName?.trim() || step1Data.email.split('@')[0] || 'Пользователь';
+
+  const fullRegistrationData = {
+    email: step1Data.email,
+    password: step1Data.password,
+    name: userName,
+  };
+
+  try {
+    await dispatch(registerUser(fullRegistrationData)).unwrap();
+    dispatch(clearRegistration());
+    navigate('/profile');
+  } catch (error) {
+    console.error('Registration failed:', error);
+    alert(`Ошибка регистрации: ${error || 'Неизвестная ошибка'}`);
+  }
+};
+
+  const handleBack = () => {
+    navigate('/register/step2');
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      {/* JSX без изменений (как в вашем коде) */}
       <div className={styles.formContent}>
         {/* Название навыка */}
         <Controller
@@ -154,9 +190,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
                 />
               </div>
               {errors.category && (
-                <span className={styles.errorMessage}>
-                  {errors.category.message}
-                </span>
+                <span className={styles.errorMessage}>{errors.category.message}</span>
               )}
             </div>
           )}
@@ -179,9 +213,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
                 />
               </div>
               {errors.subcategory && (
-                <span className={styles.errorMessage}>
-                  {errors.subcategory.message}
-                </span>
+                <span className={styles.errorMessage}>{errors.subcategory.message}</span>
               )}
             </div>
           )}
@@ -233,26 +265,18 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
                 </label>
               </div>
               {errors.image && (
-                <span className={styles.errorMessage}>
-                  {errors.image.message as string}
-                </span>
+                <span className={styles.errorMessage}>{errors.image.message}</span>
               )}
             </div>
           )}
         />
       </div>
 
-      {/* Кнопки навигации */}
       <div className={styles.formActions}>
-        <ButtonUI
-          variant="secondary"
-          title="Назад"
-          onClick={onBack}
-          type="button"
-        />
+        <ButtonUI variant="secondary" title="Назад" onClick={handleBack} type="button" />
         <ButtonUI
           variant="primary"
-          title="Продолжить"
+          title="Зарегистрироваться"
           type="submit"
           disabled={!isValid || isSubmitting}
         />
