@@ -38,7 +38,7 @@ const RegisterPageStep2: React.FC = () => {
     }));
   };
 
-  console.log(formData);
+ 
   return (
     <div className={styles.mainContainer}>
       <div className={styles.stepper}>
