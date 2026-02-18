@@ -73,7 +73,7 @@ export type TRegisterData = {
   password: string;
 };
 
-type TAuthResponse = {
+export type TAuthResponse = {
   refreshToken: string;
   accessToken: string;
   user: TUser;
