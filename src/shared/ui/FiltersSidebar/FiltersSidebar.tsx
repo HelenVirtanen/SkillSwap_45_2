@@ -220,6 +220,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({
         />
 
         <CategoryGroupUI
+          label={'Навыки'}
           categories={convertSkills(skillCategories)}
           selectedSubcategories={selectedSkillIds}
           onSubcategoryToggle={handleSubcategoryToggle}
@@ -241,6 +242,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({
         <CityGroupUI
           title={'Город'}
           items={convertCities(cities)}
+          maxItems={5}
           selectedItems={selectedCityIds}
           onItemToggle={handleCityToggle}
         />

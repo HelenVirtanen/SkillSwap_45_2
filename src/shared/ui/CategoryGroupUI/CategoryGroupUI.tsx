@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import type { FC } from 'react';
 import styles from './CategoryGroupUI.module.css';
 import { CheckboxUI, type CheckboxState } from '../CheckboxUI/CheckboxUI';
@@ -18,6 +18,7 @@ export interface Category {
 }
 
 interface CategoryGroupProps {
+  label?: string;
   categories: Category[];
   selectedSubcategories: string[];
   onSubcategoryToggle: (subcategoryId: string) => void;
@@ -25,6 +26,7 @@ interface CategoryGroupProps {
 }
 
 export const CategoryGroupUI: FC<CategoryGroupProps> = ({
+  label,
   categories,
   selectedSubcategories,
   onSubcategoryToggle,
@@ -37,9 +39,11 @@ export const CategoryGroupUI: FC<CategoryGroupProps> = ({
   const toggleCategoryOpen = (categoryId: string) => {
     setOpenCategories((prev) => {
       const newSet = new Set(prev);
-      newSet.has(categoryId)
-        ? newSet.delete(categoryId)
-        : newSet.add(categoryId);
+      if (newSet.has(categoryId)) {
+        newSet.delete(categoryId);
+      } else {
+        newSet.add(categoryId);
+      }
       return newSet;
     });
   };
@@ -99,51 +103,54 @@ export const CategoryGroupUI: FC<CategoryGroupProps> = ({
   /* ---------------- RENDER ---------------- */
 
   return (
-    <div className={styles.container}>
-      {categories.map((category) => {
-        const isOpen = openCategories.has(category.id);
-        const categoryState = getCategoryState(category);
+    <div>
+      {label && <h3 className={styles.label}>{label}</h3>}
+      <div className={styles.container}>
+        {categories.map((category) => {
+          const isOpen = openCategories.has(category.id);
+          const categoryState = getCategoryState(category);
 
-        return (
-          <div key={category.id} className={styles.categoryWrapper}>
-            <div className={styles.categoryRow}>
-              <CheckboxUI
-                label={category.label}
-                state={categoryState}
-                onChange={() => handleCategoryToggle(category)}
-                name={`category-${category.id}`}
-              />
+          return (
+            <div key={category.id} className={styles.categoryWrapper}>
+              <div className={styles.categoryRow}>
+                <CheckboxUI
+                  label={category.label}
+                  state={categoryState}
+                  onChange={() => handleCategoryToggle(category)}
+                  name={`category-${category.id}`}
+                />
 
-              {category.subcategories?.length ? (
-                <button
-                  type="button"
-                  className={styles.expandButton}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleCategoryOpen(category.id);
-                  }}
-                >
-                  {isOpen ? <ChevronUp /> : <ChevronDown />}
-                </button>
+                {category.subcategories?.length ? (
+                  <button
+                    type="button"
+                    className={styles.expandButton}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleCategoryOpen(category.id);
+                    }}
+                  >
+                    {isOpen ? <ChevronUp /> : <ChevronDown />}
+                  </button>
+                ) : null}
+              </div>
+
+              {isOpen && category.subcategories?.length ? (
+                <div className={styles.subcategories}>
+                  {category.subcategories.map((sub) => (
+                    <CheckboxUI
+                      key={sub.id}
+                      label={sub.label}
+                      state={getSubcategoryState(sub.id)}
+                      onChange={() => onSubcategoryToggle(sub.id)}
+                      name={`subcategory-${sub.id}`}
+                    />
+                  ))}
+                </div>
               ) : null}
             </div>
-
-            {isOpen && category.subcategories?.length ? (
-              <div className={styles.subcategories}>
-                {category.subcategories.map((sub) => (
-                  <CheckboxUI
-                    key={sub.id}
-                    label={sub.label}
-                    state={getSubcategoryState(sub.id)}
-                    onChange={() => onSubcategoryToggle(sub.id)}
-                    name={`subcategory-${sub.id}`}
-                  />
-                ))}
-              </div>
-            ) : null}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
