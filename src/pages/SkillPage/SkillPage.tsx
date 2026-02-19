@@ -19,6 +19,16 @@ import UserProfileCard from '@widgets/UserProfileCard/UserProfileCard';
 import SkillCard from '@widgets/SkillCard/SkillCard';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import Loader from '@shared/ui/Loader/Loader';
+// Импорты для related-block
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import UserCard from '@widgets/UserCard/UserCard';
+import ChevronLeftIcon from '@assets/icons/chevron-left.svg?react';
+import ChevronRightIcon from '@assets/icons/chevron-right.svg?react';
+import { selectAllUsers } from '@app/store/slices/User/usersSlise';
+import { IUserCardData } from '@widgets/UserCardsGroup/UserCardsGroup';
 import styles from './SkillPage.module.css';
 
 interface ISkill {
@@ -45,6 +55,11 @@ interface ISkillData {
   categories?: string[];
   description?: string;
   images?: string[];
+}
+
+interface IRelatedUser extends IUserCardData {
+  relevanceScore: number;
+  matchType: 'sameTeacher' | 'wantsToLearnFromCurrent' | 'sameLearner' | 'canTeachCurrent';
 }
 
 const determineSkillVariant = (skillTitle: string): ISkill['variant'] => {
@@ -92,7 +107,11 @@ const SkillPage: React.FC = () => {
     openOfferSent,
   } = useModals();
   
-  // Загружаем мои предложения обмена из localStorage при монтировании
+  // Состояния для related-block
+  const [relatedUsers, setRelatedUsers] = useState<IUserCardData[]>([]);
+  const [isRelatedLoading, setIsRelatedLoading] = useState(false);
+  
+  // Загружаем мои предложения обмена
   useEffect(() => {
     dispatch(loadMyProposals());
   }, [dispatch]);
@@ -101,7 +120,7 @@ const SkillPage: React.FC = () => {
     proposeExchange?: boolean; 
     targetUserId?: string;
     from?: string;
-    shouldAutoPropose?: boolean;
+    shouldAutoPropose?: boolean; // Восстанавливаем поле
   } | null;
   
   const userData = useAppSelector(selectCurrentProfileUser);
@@ -111,7 +130,10 @@ const SkillPage: React.FC = () => {
   const authUser = useAppSelector(selectAuthUser);
   const isAuthenticated = !!authUser;
   
-  // Проверяем, предлагали ли уже обмен этому пользователю
+  // Получаем всех пользователей для related-block
+  const allUsers = useAppSelector(selectAllUsers);
+  
+  // Проверяем, предлагали ли уже обмен
   const hasProposedToThisUser = useAppSelector((state) => 
     id ? selectHasProposedToUser(state, id) : false
   );
@@ -158,7 +180,41 @@ const SkillPage: React.FC = () => {
     }
   }, [userData, status, id]);
 
-  // Открываем модалку подтверждения после регистрации
+  // ВОССТАНАВЛИВАЕМ: Эффект для автоматического открытия модалки после регистрации
+  useEffect(() => {
+    if (state?.shouldAutoPropose && 
+        state?.targetUserId === id && 
+        isAuthenticated && 
+        formattedUser && 
+        formattedUser.id !== authUser?.id?.toString()) {
+      
+      // Небольшая задержка для загрузки всех данных
+      setTimeout(() => {
+        openOfferSent({
+          userId: id,
+          skillTitle: formattedUser.teachingSkill.title,
+          context: 'skillPage',
+          aboutSkillProps: {
+            title: formattedUser.teachingSkill.title,
+            category: formattedUser.learningSkills[0]?.title || 'Категория',
+            subcategory: formattedUser.teachingSkill.title,
+            description: formattedUser.about || 'Описание навыка',
+          },
+          galleryProps: {
+            images: formattedUser.photosOnAbout?.length ? 
+              formattedUser.photosOnAbout : 
+              getDefaultImages(),
+          },
+          returnTo: `/skill/${id}`,
+        });
+      }, 500);
+      
+      // Очищаем state
+      navigate(`/skill/${id}`, { replace: true, state: {} });
+    }
+  }, [state, id, isAuthenticated, formattedUser, authUser, openOfferSent, navigate]);
+
+  // Оставляем эффект для предложения после регистрации (через confirm)
   useEffect(() => {
     if (state?.proposeExchange && 
         state?.targetUserId === id && 
@@ -189,33 +245,142 @@ const SkillPage: React.FC = () => {
     }
   }, [state, id, isAuthenticated, formattedUser, authUser, openConfirmOffer, navigate, hasProposedToThisUser]);
 
+  // Функция для расчета релевантности (для related-block)
+  const getRelevanceScore = (
+    user: any,
+    currentTeachingSkill: string,
+    currentLearningSkills: string[]
+  ): { score: number; matchType: IRelatedUser['matchType'] } => {
+    const userTeachingSkill = user.teach_skills?.skills || '';
+    const userLearningSkills = user.learn_skills || [];
+    
+    if (userTeachingSkill === currentTeachingSkill) {
+      return { score: 4, matchType: 'sameTeacher' };
+    }
+    
+    if (userLearningSkills.some((skill: string) => skill === currentTeachingSkill)) {
+      return { score: 3, matchType: 'wantsToLearnFromCurrent' };
+    }
+    
+    if (currentLearningSkills.includes(userTeachingSkill)) {
+      return { score: 2, matchType: 'canTeachCurrent' };
+    }
+    
+    if (userLearningSkills.some((skill: string) => currentLearningSkills.includes(skill))) {
+      return { score: 1, matchType: 'sameLearner' };
+    }
+    
+    return { score: 0, matchType: 'sameLearner' };
+  };
+
+  // Эффект для поиска похожих пользователей
+  useEffect(() => {
+    if (!formattedUser || !allUsers.length) {
+      setRelatedUsers([]);
+      return;
+    }
+
+    setIsRelatedLoading(true);
+
+    const findRelatedUsers = () => {
+      const otherUsers = allUsers.filter(user => user.id.toString() !== id);
+      
+      const currentTeachingSkill = formattedUser.teachingSkill.title;
+      const currentLearningSkills = formattedUser.learningSkills.map(s => s.title);
+      
+      const usersWithScores = otherUsers
+        .map(user => {
+          const { score, matchType } = getRelevanceScore(
+            user,
+            currentTeachingSkill,
+            currentLearningSkills
+          );
+          
+          if (score === 0) return null;
+          
+          const teachingSkill = {
+            title: user.teach_skills?.skills || 'Навык не указан',
+            variant: determineSkillVariant(user.teach_skills?.skills || '')
+          };
+          
+          const learningSkills = (user.learn_skills || []).map((skill: string) => ({
+            title: skill,
+            variant: determineSkillVariant(skill)
+          }));
+          
+          const relatedUser: IRelatedUser = {
+            id: user.id.toString(),
+            avatar: user.avatar || '/avatars/user-photo.png',
+            name: user.name || 'Пользователь',
+            birthDate: user.birthDate || '2000-01-01',
+            city: user.city || 'Город не указан',
+            teachingSkill: {
+              title: teachingSkill.title,
+              variant: teachingSkill.variant as ISkill['variant']
+            },
+            learningSkills: learningSkills.map(skill => ({
+              title: skill.title,
+              variant: skill.variant as ISkill['variant']
+            })),
+            isFavorite: user.isFavourite || false,
+            relevanceScore: score,
+            matchType
+          };
+          
+          return relatedUser;
+        })
+        .filter((user): user is IRelatedUser => user !== null);
+      
+      const sortedUsers = [...usersWithScores].sort((a, b) => b.relevanceScore - a.relevanceScore);
+      
+      const topUsers: IRelatedUser[] = [];
+      const matchTypes = new Set<string>();
+      
+      for (const user of sortedUsers) {
+        if (!matchTypes.has(user.matchType)) {
+          topUsers.push(user);
+          matchTypes.add(user.matchType);
+        }
+        if (topUsers.length >= 4) break;
+      }
+      
+      for (const user of sortedUsers) {
+        if (!topUsers.find(u => u.id === user.id) && topUsers.length < 8) {
+          topUsers.push(user);
+        }
+      }
+      
+      setRelatedUsers(topUsers);
+      setIsRelatedLoading(false);
+    };
+
+    const timer = setTimeout(findRelatedUsers, 300);
+    return () => clearTimeout(timer);
+  }, [formattedUser, allUsers, id]);
+
   const handleProposeExchange = () => {
     if (!formattedUser) return;
     
-    // Нельзя предложить обмен самому себе
     if (authUser?.id?.toString() === id) {
       return;
     }
     
-    // Неавторизованный пользователь -> регистрация
     if (!isAuthenticated) {
       navigate('/register/step1', { 
         state: { 
-          returnTo: `/skill/${id}`,
+          from: `/skill/${id}`, // ВОССТАНАВЛИВАЕМ упрощенную навигацию
           proposeExchange: true,
-          targetUserId: id 
+          targetUserId: id
         }
       });
       return;
     }
     
-    // Уже предлагали обмен
     if (hasProposedToThisUser) {
       alert('Вы уже предложили обмен этому пользователю');
       return;
     }
     
-    // Открываем модалку "Вы предложили обмен"
     openOfferSent({
       userId: id,
       skillTitle: formattedUser.teachingSkill.title,
@@ -237,6 +402,10 @@ const SkillPage: React.FC = () => {
 
   const handleFavoriteToggle = (userId: string) => {
     dispatch(toggleFavoriteInProfile(userId));
+  };
+
+  const handleRelatedUserClick = (userId: string) => {
+    navigate(`/skill/${userId}`);
   };
 
   if (status === 'loading') {
@@ -341,6 +510,60 @@ const SkillPage: React.FC = () => {
           />
         </div>
       </div>
+
+      {/* Related Block */}
+      {relatedUsers.length > 0 && (
+        <div className={styles.relatedSection}>
+          <h2 className={styles.relatedTitle}>Похожие предложения</h2>
+          <div className={styles.carouselWrapper}>
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={24}
+              slidesPerView="auto"
+              navigation={{
+                prevEl: `.${styles.prevButton}`,
+                nextEl: `.${styles.nextButton}`,
+              }}
+              className={styles.relatedSwiper}
+            >
+              {relatedUsers.map((user) => (
+                <SwiperSlide key={user.id} className={styles.relatedSlide}>
+                  <UserCard
+                    id={user.id}
+                    avatar={user.avatar}
+                    name={user.name}
+                    birthDate={user.birthDate}
+                    city={user.city}
+                    teachingSkill={user.teachingSkill}
+                    learningSkills={user.learningSkills}
+                    isFavorite={user.isFavorite}
+                    onFavoriteToggle={() => handleFavoriteToggle(user.id)}
+                    onDetailsClick={handleRelatedUserClick}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {relatedUsers.length > 4 && (
+              <>
+                <button className={`${styles.navButton} ${styles.prevButton}`}>
+                  <ChevronLeftIcon />
+                </button>
+                <button className={`${styles.navButton} ${styles.nextButton}`}>
+                  <ChevronRightIcon />
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+      
+      {isRelatedLoading && (
+        <div className={styles.relatedLoader}>
+          <Loader />
+          <p className={styles.relatedLoaderText}>Загрузка похожих пользователей...</p>
+        </div>
+      )}
     </div>
   );
 };
