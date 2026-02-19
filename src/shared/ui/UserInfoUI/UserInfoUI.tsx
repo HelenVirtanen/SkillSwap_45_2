@@ -23,7 +23,10 @@ const UserInfoUI: FC<UserInfoProps> = ({
 }) => {
   // Рассчитываем возраст
   const age = calculateAge(birthDate);
-  const ageLabel = getAgeWithLabel(age);
+  const ageLabel =
+    birthDate && Number.isFinite(age) && age >= 0
+      ? getAgeWithLabel(age)
+      : 'Возраст не указан';
 
   return (
     <div className={styles.userInfo}>

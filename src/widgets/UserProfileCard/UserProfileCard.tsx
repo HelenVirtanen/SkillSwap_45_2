@@ -4,6 +4,7 @@ import styles from './UserProfileCard.module.css';
 import { calculateAge, getAgeWithLabel } from '@shared/utils/calculateAge';
 import FavoriteButtonUI from '@shared/ui/FavoriteButtonUI/FavoriteButtonUI';
 import SkillTagUI from '@shared/ui/SkillTagUI/SkillTagUI';
+import { string } from 'yup';
 
 export interface UserProfileCardProps {
   user: {
@@ -16,21 +17,35 @@ export interface UserProfileCardProps {
     about?: string;
     teachingSkill: {
       title: string;
-      variant: 'business' | 'languages' | 'home' | 'art' | 'education' | 'health' | 'other';
+      variant:
+        | 'business'
+        | 'languages'
+        | 'home'
+        | 'art'
+        | 'education'
+        | 'health'
+        | 'other';
     };
     learningSkills: Array<{
       title: string;
-      variant: 'business' | 'languages' | 'home' | 'art' | 'education' | 'health' | 'other';
+      variant:
+        | 'business'
+        | 'languages'
+        | 'home'
+        | 'art'
+        | 'education'
+        | 'health'
+        | 'other';
     }>;
   };
   showFavorite?: boolean;
   onFavoriteToggle?: (userId: string) => void;
 }
 
-const UserProfileCard: React.FC<UserProfileCardProps> = ({ 
-  user, 
+const UserProfileCard: React.FC<UserProfileCardProps> = ({
+  user,
   showFavorite = false,
-  onFavoriteToggle 
+  onFavoriteToggle,
 }) => {
   const [visibleCount, setVisibleCount] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -46,12 +61,15 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       const tag2Width = tag2Ref.current?.offsetWidth || 0;
       const counterWidth = counterRef.current?.offsetWidth || 0;
 
-      const gap = 8; 
+      const gap = 8;
 
       const twoTagsPlusCounter =
         tag1Width + gap + tag2Width + gap + counterWidth;
 
-      if (twoTagsPlusCounter <= containerWidth && user.learningSkills.length >= 2) {
+      if (
+        twoTagsPlusCounter <= containerWidth &&
+        user.learningSkills.length >= 2
+      ) {
         setVisibleCount(2);
       } else {
         setVisibleCount(1);
@@ -74,16 +92,18 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   };
 
   const age = calculateAge(user.birthDate);
-  const ageLabel = getAgeWithLabel(age);
+  const ageLabel =
+    user.birthDate && Number.isFinite(age) && age >= 0
+      ? getAgeWithLabel(age)
+      : 'Возраст не указан';
 
   const visibleSkills = user.learningSkills.slice(0, visibleCount);
   const hiddenCount = user.learningSkills.length - visibleSkills.length;
 
   return (
-    <div className={clsx(
-      styles.container,
-      showFavorite && styles.showFavorite
-    )}>
+    <div
+      className={clsx(styles.container, showFavorite && styles.showFavorite)}
+    >
       {/* Блок с основной информацией о пользователе */}
       <div className={styles.userInfo}>
         <div className={styles.avatarWrapper}>
@@ -99,9 +119,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
           </div>
           <div className={styles.favoriteButton}>
             {showFavorite && (
-              <FavoriteButtonUI 
-                isActive={user.isFavorite} 
-                onClick={handleFavoriteToggle} 
+              <FavoriteButtonUI
+                isActive={user.isFavorite}
+                onClick={handleFavoriteToggle}
               />
             )}
           </div>
@@ -109,9 +129,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
       </div>
 
       {/* Описание пользователя */}
-      {user.about && (
-        <p className={styles.about}>{user.about}</p>
-      )}
+      {user.about && <p className={styles.about}>{user.about}</p>}
 
       {/* Навыки пользователя */}
       <div className={styles.skillsSection}>
@@ -119,9 +137,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         <div className={styles.skillSection}>
           <h3 className={styles.skillTitle}>Может научить:</h3>
           <div className={styles.skillsRow}>
-            <SkillTagUI 
-              title={user.teachingSkill.title} 
-              variant={user.teachingSkill.variant} 
+            <SkillTagUI
+              title={user.teachingSkill.title}
+              variant={user.teachingSkill.variant}
             />
           </div>
         </div>
@@ -182,13 +200,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
             {/* Видимые теги */}
             {visibleSkills.map((skill) => (
-              <SkillTagUI 
-                key={skill.title} 
-                title={skill.title} 
-                variant={skill.variant} 
+              <SkillTagUI
+                key={skill.title}
+                title={skill.title}
+                variant={skill.variant}
               />
             ))}
-            
+
             {hiddenCount > 0 && (
               <SkillTagUI title={`+${hiddenCount}`} variant="other" />
             )}
