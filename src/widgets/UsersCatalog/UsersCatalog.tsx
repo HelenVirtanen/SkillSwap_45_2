@@ -76,14 +76,14 @@ const UsersCatalog: FC<UsersCatalogProps> = ({
       <Section
         title="Популярное"
         users={popularUsers}
-        onShowAll={() => handleShowAll('Популярное')}
+        onButtonClick={() => handleShowAll('Популярное')}
         onDetailsClick={handleDetailsClick}
       />
 
       <Section
         title="Новое"
         users={newUsers}
-        onShowAll={() => handleShowAll('Новое')}
+        onButtonClick={() => handleShowAll('Новое')}
         onDetailsClick={handleDetailsClick}
       />
 

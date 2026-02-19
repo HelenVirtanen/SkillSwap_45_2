@@ -1,10 +1,11 @@
+@import url('../../styles/variables.css');
 
 .page {
+  width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--clr-ui-background, #f9faf7);
-  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0 auto;
+  
 }
 
 .content {
@@ -13,9 +14,8 @@
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
-  box-sizing: border-box;
+  padding: 9px 15px;
 }
-
 .leftColumn {
   flex: 0 0 auto;
   width: 324px;
@@ -23,17 +23,160 @@
 
 .rightColumn {
   flex: 1;
-  min-width: 0; 
+  min-width: 0;
   display: flex;
   justify-content: flex-start;
 }
 
-/* Кнопка предложения обмена */
-
-.exchangeButton {
-  width: 100%; 
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
 }
 
+.loaderText {
+  margin-top: 16px;
+  color: var(--text-secondary, #666);
+  font-size: 16px;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.errorContainer h2 {
+  font-size: 24px;
+  color: var(--text-primary, #000);
+  margin-bottom: 12px;
+}
+
+.errorContainer p {
+  color: var(--text-secondary, #666);
+  margin-bottom: 24px;
+}
+
+.errorActions {
+  display: flex;
+  gap: 12px;
+}
+
+.exchangeButton {
+  width: 100%;
+}
 .exchangeButton:active {
   background: var(--clr-primary-pressed, #508826);
+}
+.buttonDisabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Related Section Styles */
+.relatedSection {
+  margin-top: 53px;
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 15px ;
+}
+
+.relatedTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary, #000);
+  margin-bottom: 31px;
+}
+
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.relatedSwiper {
+  width: 100%;
+  height: auto;
+
+}
+
+.relatedSlide {
+  width: 284px !important;
+  height: auto;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: var(--clr-ui-disabled, #F0F0F0);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.navButton svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--text-primary, #333);
+}
+
+.navButton:hover {
+  background: var(--primary-color, #877EFF);
+}
+
+.navButton:hover svg {
+  fill: white;
+}
+
+.prevButton {
+  left: -16px;
+}
+
+.nextButton {
+  right: -16px;
+}
+
+.relatedLoader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  margin-top: 48px;
+  background: var(--background-secondary, #f5f5f5);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.relatedLoaderText {
+  margin-top: 16px;
+  color: var(--text-secondary, #666);
+  font-size: 14px;
+}
+
+/* Скрываем стандартные кнопки Swiper */
+:global(.swiper-button-prev),
+:global(.swiper-button-next),
+:global(.swiper-button-prev:after),
+:global(.swiper-button-next:after) {
+  display: none !important;
 }

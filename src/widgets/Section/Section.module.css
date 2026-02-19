@@ -12,6 +12,10 @@
 }
 
 .sectionTitle {
+  padding-block-start: 7px;
+  color: var(--clr-text-primary, #253017);
+  font-weight: var(--fw-medium, 500);
+  font-size: var(--lh-h2, 32px);
   font-family: var(
     --ff-heading,
     'Jost',
@@ -22,13 +26,14 @@
     arial,
     sans-serif
   );
-  font-weight: var(--fw-medium, 500);
-  font-size: var(--lh-h2, 32px);
-  color: var(--clr-text-primary, #253017);
   letter-spacing: -0.01em;
-  padding-block-start: 7px;
 }
 
 .buttonWrapper {
   max-width: 187px;
+}
+
+.sortButton {
+  max-width: 200px;
+  white-space: nowrap;
 }

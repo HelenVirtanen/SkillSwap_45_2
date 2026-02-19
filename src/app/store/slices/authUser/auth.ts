@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@app/store/store';
 import { fetchUsers } from './actions';
 import { loginUserApi } from '@api/api';
-import { setCookie } from '@features/auth/cookie';
+import { setCookie, deleteCookie } from '@features/auth/cookie';
+import { clearAllProposals } from '../exchange/exchangeSlice'; // Исправлено: было clearExchangeProposals
 
 export type TUser = {
   id: number;
@@ -12,7 +13,7 @@ export type TUser = {
 };
 
 interface AuthState {
-  user: TUser| null;
+  user: TUser | null;
   isAuthChecked: boolean;
   error: string | null;
   status: 'idle' | 'loading' | 'failed' | 'succeeded';
@@ -39,6 +40,21 @@ export const loginUser = createAsyncThunk(
       return rejectWithValue(err?.message);
     }
   },
+);
+
+// Создаем thunk для логаута
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { dispatch }) => {
+    // Очищаем localStorage и cookies
+    localStorage.removeItem('refreshToken');
+    deleteCookie('accessToken');
+    
+    // Очищаем все предложения обмена
+    dispatch(clearAllProposals()); // Исправлено: было clearExchangeProposals
+    
+    console.log('User logged out');
+  }
 );
 
 export const authSlice = createSlice({
@@ -72,8 +88,7 @@ export const authSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed';
-        state.error =
-          action.error.message || 'Ошибка при загрузке пользователя';
+        state.error = action.error.message || 'Ошибка при загрузке пользователя';
         state.isAuthChecked = false;
       });
     builder
@@ -89,6 +104,13 @@ export const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
+      })
+      // Обработчик для logoutUser
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthChecked = false;
+        state.status = 'idle';
+        state.error = null;
       });
   },
 });
@@ -96,8 +118,7 @@ export const authSlice = createSlice({
 export const selectAuthUser = (state: RootState) => state.auth.user;
 export const selectAuthStatus = (state: RootState) => state.auth.status;
 export const selectAuthError = (state: RootState) => state.auth.error;
-export const selectIsAuthChecked = (state: RootState) =>
-  state.auth.isAuthChecked;
+export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
 
 export const { clearUser, setUser, setIsAuthChecked } = authSlice.actions;
 export default authSlice.reducer;

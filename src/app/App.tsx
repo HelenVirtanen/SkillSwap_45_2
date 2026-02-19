@@ -7,6 +7,7 @@ import { useAppDispatch } from './store/store';
 import { fetchCities, fetchCategories } from './store/slices/staticData/staticDataSlice';
 import { fetchLikes } from './store/slices/likes/likesSlice';
 import { checkUserAuth } from './store/slices/authUser/actions';
+import { ModalManager } from '@widgets/modals/ModalManager';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
 const AuthLayout = lazy(() => import('@app/layout/AuthLayout/AuthLayout'));
@@ -67,6 +68,7 @@ function App() {
           <Route path="step3" element={<RegisterPageStep3 />} />
         </Route>
       </Routes>
+       <ModalManager />
     </Suspense>
   );
 }
