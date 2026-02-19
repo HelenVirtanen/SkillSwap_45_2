@@ -73,7 +73,7 @@ export const ModalManager: React.FC = () => {
         <ModalWrapperUI isOpen={true} onClose={closeCurrentModal} size="lg">
           <ModalConfirmOffer
             title="Ваше предложение"
-            description="Проверьте данные перед отправкой"
+            description="Пожалуйста, проверьте и подтвердите правильность данных"
             aboutSkillProps={modalData?.aboutSkillProps!}
             galleryProps={modalData?.galleryProps || { images: [] }}
             onEdit={handleConfirmOfferEdit}
