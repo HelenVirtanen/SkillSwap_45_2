@@ -1,13 +1,13 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 324px;
   height: fit-content;
   padding: 20px;
   background: var(--clr-ui-surface, #ffffff);
   border-radius: 12px;
-  max-width: 324px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
 }
 
 .heading {
@@ -31,4 +31,34 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.crossButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  color: var(--clr-primary-pressed, #508826);
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-h4, 16px);
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  white-space: nowrap;
+  background-color: transparent;
+  border: none;
+}
+
+.crossButton::after {
+  width: 24px;
+  height: 24px;
+  margin-left: 4px;
+  background-color: var(--clr-primary-pressed, #508826);
+  mask-image: url('src/assets/icons/cross.svg');
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  transition: transform 0.3s ease;
+  content: '';
 }

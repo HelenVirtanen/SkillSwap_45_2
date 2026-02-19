@@ -16,6 +16,7 @@ import {
   selectCities,
   SkillCategory,
 } from '@app/store/slices/staticData/staticDataSlice.ts';
+import { isEqual } from 'lodash';
 
 export interface Filters {
   cities: City[];
@@ -27,19 +28,20 @@ export interface Filters {
 
 interface FilterSidebarProps {
   filters: Filters;
+  defaultFilters: Filters;
   onFiltersChange: (filters: Filters) => void;
   className?: string;
 }
 
 const FilterSidebar: FC<FilterSidebarProps> = ({
   filters,
+  defaultFilters,
   onFiltersChange,
   className = '',
 }) => {
   const skillCategories = useAppSelector(selectCategories);
   const cities = useAppSelector(selectCities);
 
-  // НОВЫЙ обработчик для батч-обновления категорий
   const handleCategoryToggle = (
     subcategoryIds: string[],
     shouldSelect: boolean,
@@ -203,10 +205,28 @@ const FilterSidebar: FC<FilterSidebarProps> = ({
     s.id.toString(),
   );
   const selectedCityIds = filters.cities.map((c) => c.id.toString());
+  
+  const filtersCounter =
+    filters.cities.length +
+    filters.skillSubcategories.length +
+    (filters.gender !== defaultFilters.gender ? 1 : 0) +
+    (filters.teachStatus !== defaultFilters.teachStatus ? 1 : 0);
 
   return (
     <aside className={`${styles.sidebar} ${className}`}>
-      <h2 className={styles.heading}>Фильтры</h2>
+      <div className={`${styles.buttonsContainer}`}>
+        <h2 className={styles.heading}>
+          {`Фильтры${isEqual(filters, defaultFilters) ? '' : ` (${filtersCounter})`}`}
+        </h2>
+        {!isEqual(filters, defaultFilters) && (
+          <button
+            className={styles.crossButton}
+            onClick={() => onFiltersChange(defaultFilters)}
+          >
+            Сбросить
+          </button>
+        )}
+      </div>
       <div className={styles.filterSections}>
         <RadioGroupUI
           name="role"
@@ -220,6 +240,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({
         />
 
         <CategoryGroupUI
+          label={'Навыки'}
           categories={convertSkills(skillCategories)}
           selectedSubcategories={selectedSkillIds}
           onSubcategoryToggle={handleSubcategoryToggle}
@@ -241,6 +262,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({
         <CityGroupUI
           title={'Город'}
           items={convertCities(cities)}
+          maxItems={5}
           selectedItems={selectedCityIds}
           onItemToggle={handleCityToggle}
         />
