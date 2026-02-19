@@ -2,6 +2,7 @@ import { getUsers } from "@api/users";
 import { deleteCookie, getCookie } from "@features/auth/cookie";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setIsAuthChecked, setUser } from "./auth";
+import { getUserApi } from "@api/api";
 
 export const checkUserAuth = createAsyncThunk(
   'users/checkUser',
@@ -9,8 +10,9 @@ export const checkUserAuth = createAsyncThunk(
     const accessToken = getCookie('accessToken');
     if (accessToken) {
       try {
-        const res = await getUsers();
+        const res = await getUserApi();// после обновлении мтраница авторизация слетала
         dispatch(setUser(res.user));
+        dispatch(setIsAuthChecked(true));
       } catch (err) {
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');

@@ -63,6 +63,7 @@ interface Step3SkillInfoProps {
 export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isRegistered, setIsRegistered] = useState(false); // нужно для понимания зарегестрирован или нет для дальнейшего ридеректа в профиль при ttrue
 
   // Данные из предыдущих шагов регистрации
   const step1Data = useAppSelector((state) => state.registration.step1);
@@ -73,11 +74,13 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
 
   // Защита от прямого перехода на шаг 3 без данных шага 1
   useEffect(() => {
+    if (isRegistered) return;  // блокируем перенаправление если зарегестрировались
+
     if (!step1Data.email || !step1Data.password) {
       console.warn('Данные регистрации отсутствуют. Перенаправляем на шаг 1.');
       navigate('/register/step1', { replace: true });
     }
-  }, [step1Data, navigate]);
+  }, [step1Data, navigate, isRegistered]);
 
   const {
     control,
@@ -163,8 +166,9 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
 
     try {
       await dispatch(registerUser(fullRegistrationData)).unwrap();
+      setIsRegistered(true);
       dispatch(clearRegistration());
-      navigate('/profile');
+      navigate('/profile', { replace: true });
     } catch (error) {
       console.error('Registration failed:', error);
       alert(`Ошибка регистрации: ${error || 'Неизвестная ошибка'}`);
