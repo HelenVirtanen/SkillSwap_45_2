@@ -4,7 +4,6 @@ import styles from './UserProfileCard.module.css';
 import { calculateAge, getAgeWithLabel } from '@shared/utils/calculateAge';
 import FavoriteButtonUI from '@shared/ui/FavoriteButtonUI/FavoriteButtonUI';
 import SkillTagUI from '@shared/ui/SkillTagUI/SkillTagUI';
-import { string } from 'yup';
 
 export interface UserProfileCardProps {
   user: {
