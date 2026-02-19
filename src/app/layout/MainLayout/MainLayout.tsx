@@ -19,8 +19,10 @@ const users = useAppSelector(selectAllUsers);
 const status = useAppSelector(selectUsersStatus);
   const error = useAppSelector(selectUsersError);
   useEffect(() => {
+  if (status === 'idle') {
     dispatch(fetchAllUsers());
-  }, [dispatch]);
+  }
+}, [dispatch, status]);
 
   console.log('USERS', users);
 

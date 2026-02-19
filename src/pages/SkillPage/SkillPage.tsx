@@ -132,13 +132,6 @@ const SkillPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-
-  // Селекторы из usersSlise
-  const userData = useAppSelector(selectCurrentProfileUser);
-  const status = useAppSelector(selectProfileStatus);
-  const error = useAppSelector(selectProfileError);
-
-  // Селекторы из auth слайса
   
   const { 
     openConfirmOffer,
@@ -160,7 +153,7 @@ const SkillPage: React.FC = () => {
     from?: string;
     shouldAutoPropose?: boolean; // Восстанавливаем поле
   } | null;
-  
+
   const userData = useAppSelector(selectCurrentProfileUser);
   const status = useAppSelector(selectProfileStatus);
   const error = useAppSelector(selectProfileError);
@@ -487,6 +480,8 @@ const SkillPage: React.FC = () => {
   }
 
   // Формируем данные навыка
+  const isOwnProfile = authUser?.id?.toString() === id;
+  
   const skillImages =
     formattedUser.photosOnAbout && formattedUser.photosOnAbout.length > 0
       ? formattedUser.photosOnAbout
