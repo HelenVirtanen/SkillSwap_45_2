@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom'; // Добавляем useLocation
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '@app/store/store';
 import { useModals } from '@shared/hooks/useModals';
 import { 
@@ -11,13 +11,16 @@ import {
   toggleFavoriteInProfile
 } from '@app/store/slices/User/usersSlise';
 import { selectAuthUser } from '@app/store/slices/authUser/auth';
+import { 
+  selectHasProposedToUser, 
+  loadMyProposals,
+} from '@app/store/slices/exchange/exchangeSlice';
 import UserProfileCard from '@widgets/UserProfileCard/UserProfileCard';
 import SkillCard from '@widgets/SkillCard/SkillCard';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import Loader from '@shared/ui/Loader/Loader';
 import styles from './SkillPage.module.css';
 
-// Интерфейсы
 interface ISkill {
   title: string;
   variant: 'business' | 'languages' | 'home' | 'art' | 'education' | 'health' | 'other';
@@ -69,7 +72,6 @@ const determineSkillVariant = (skillTitle: string): ISkill['variant'] => {
   return 'other';
 };
 
-// Функция для получения тестовых изображений, если нет фото
 const getDefaultImages = (): string[] => {
   return [
     '/assets/illustrations/drumming-main.png',
@@ -84,19 +86,35 @@ const SkillPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { openOfferSent } = useModals();
   
-  // Получаем state из навигации (для авто-предложения после регистрации)
-  const state = location.state as { shouldAutoPropose?: boolean; targetUserId?: string } | null;
+  const { 
+    openConfirmOffer,
+    openOfferSent,
+  } = useModals();
   
-  // Селекторы из usersSlise
+  // Загружаем мои предложения обмена из localStorage при монтировании
+  useEffect(() => {
+    dispatch(loadMyProposals());
+  }, [dispatch]);
+
+  const state = location.state as { 
+    proposeExchange?: boolean; 
+    targetUserId?: string;
+    from?: string;
+    shouldAutoPropose?: boolean;
+  } | null;
+  
   const userData = useAppSelector(selectCurrentProfileUser);
   const status = useAppSelector(selectProfileStatus);
   const error = useAppSelector(selectProfileError);
   
-  // Селекторы из auth слайса
   const authUser = useAppSelector(selectAuthUser);
   const isAuthenticated = !!authUser;
+  
+  // Проверяем, предлагали ли уже обмен этому пользователю
+  const hasProposedToThisUser = useAppSelector((state) => 
+    id ? selectHasProposedToUser(state, id) : false
+  );
 
   const [formattedUser, setFormattedUser] = useState<IUser | null>(null);
 
@@ -140,57 +158,80 @@ const SkillPage: React.FC = () => {
     }
   }, [userData, status, id]);
 
-  // Эффект для автоматического открытия модалки предложения после регистрации
+  // Открываем модалку подтверждения после регистрации
   useEffect(() => {
-    if (state?.shouldAutoPropose && 
+    if (state?.proposeExchange && 
         state?.targetUserId === id && 
         isAuthenticated && 
         formattedUser && 
-        formattedUser.id !== authUser?.id?.toString()) {
+        formattedUser.id !== authUser?.id?.toString() &&
+        !hasProposedToThisUser) {
       
-      console.log('🔄 Auto-proposing exchange after registration');
+      openConfirmOffer({
+        userId: id,
+        skillTitle: formattedUser.teachingSkill.title,
+        context: 'skillPage',
+        aboutSkillProps: {
+          title: formattedUser.teachingSkill.title,
+          category: formattedUser.learningSkills[0]?.title || 'Категория',
+          subcategory: formattedUser.teachingSkill.title,
+          description: formattedUser.about || 'Описание навыка',
+        },
+        galleryProps: {
+          images: formattedUser.photosOnAbout?.length ? 
+            formattedUser.photosOnAbout : 
+            getDefaultImages(),
+        },
+        returnTo: `/skill/${id}`,
+      });
       
-      // Небольшая задержка, чтобы всё прогрузилось
-      setTimeout(() => {
-        openOfferSent({
-          userId: id,
-          skillTitle: formattedUser.teachingSkill.title,
-          context: 'skillPage',
-        });
-      }, 500);
-      
-      // Очищаем state, чтобы не открывать снова при ререндере
       navigate(`/skill/${id}`, { replace: true, state: {} });
     }
-  }, [state, id, isAuthenticated, formattedUser, authUser, openOfferSent, navigate]);
+  }, [state, id, isAuthenticated, formattedUser, authUser, openConfirmOffer, navigate, hasProposedToThisUser]);
 
   const handleProposeExchange = () => {
-    console.log('Предложить обмен пользователю:', id);
-    
     if (!formattedUser) return;
     
-    // Проверяем, не свой ли это профиль
+    // Нельзя предложить обмен самому себе
     if (authUser?.id?.toString() === id) {
-      console.log('⏭️ This is your own profile, cannot propose exchange');
       return;
     }
     
-    // Проверяем, авторизован ли пользователь
+    // Неавторизованный пользователь -> регистрация
     if (!isAuthenticated) {
-      console.log('🔴 User not authenticated, redirecting to login');
-      // Сохраняем в state, куда вернуться после регистрации
       navigate('/register/step1', { 
-        state: { from: `/skill/${id}`, proposeExchange: true }
+        state: { 
+          returnTo: `/skill/${id}`,
+          proposeExchange: true,
+          targetUserId: id 
+        }
       });
       return;
     }
     
-    // Если авторизован - открываем модалку предложения
-    console.log('✅ User authenticated, opening offer modal');
+    // Уже предлагали обмен
+    if (hasProposedToThisUser) {
+      alert('Вы уже предложили обмен этому пользователю');
+      return;
+    }
+    
+    // Открываем модалку "Вы предложили обмен"
     openOfferSent({
       userId: id,
       skillTitle: formattedUser.teachingSkill.title,
       context: 'skillPage',
+      aboutSkillProps: {
+        title: formattedUser.teachingSkill.title,
+        category: formattedUser.learningSkills[0]?.title || 'Категория',
+        subcategory: formattedUser.teachingSkill.title,
+        description: formattedUser.about || 'Описание навыка',
+      },
+      galleryProps: {
+        images: formattedUser.photosOnAbout?.length ? 
+          formattedUser.photosOnAbout : 
+          getDefaultImages(),
+      },
+      returnTo: `/skill/${id}`,
     });
   };
 
@@ -198,7 +239,6 @@ const SkillPage: React.FC = () => {
     dispatch(toggleFavoriteInProfile(userId));
   };
 
-  // Обработка состояний загрузки
   if (status === 'loading') {
     return (
       <div className={styles.loaderContainer}>
@@ -208,7 +248,6 @@ const SkillPage: React.FC = () => {
     );
   }
 
-  // Обработка ошибок
   if (status === 'failed' || error || !formattedUser) {
     return (
       <div className={styles.errorContainer}>
@@ -233,10 +272,8 @@ const SkillPage: React.FC = () => {
     );
   }
 
-  // Проверяем, свой ли это профиль
   const isOwnProfile = authUser?.id?.toString() === id;
 
-  // Формируем данные навыка
   const skillImages = formattedUser.photosOnAbout && formattedUser.photosOnAbout.length > 0
     ? formattedUser.photosOnAbout
     : getDefaultImages();
@@ -249,31 +286,57 @@ const SkillPage: React.FC = () => {
     images: skillImages
   };
 
+  const getButtonText = () => {
+    if (!isAuthenticated) return 'Предложить обмен';
+    if (isOwnProfile) return 'Это ваш профиль';
+    if (hasProposedToThisUser) return 'Обмен предложен';
+    return 'Предложить обмен';
+  };
+
+  const isButtonDisabled = () => {
+    if (!isAuthenticated) return false;
+    if (isOwnProfile) return true;
+    if (hasProposedToThisUser) return true;
+    return false;
+  };
+
+  const getButtonVariant = () => {
+    if (!isAuthenticated) return "primary";
+    if (hasProposedToThisUser) return "secondary";
+    return "primary";
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.content}>
-        {/* Левая колонка - Карточка пользователя */}
         <div className={styles.leftColumn}>
           <UserProfileCard
             user={formattedUser}
-            showFavorite={!isOwnProfile} // Не показываем избранное на своём профиле
+            showFavorite={!isOwnProfile}
             onFavoriteToggle={handleFavoriteToggle}
           />
         </div>
 
-        {/* Правая колонка - Карточка навыка */}
         <div className={styles.rightColumn}>
           <SkillCard
             skill={skill}
             proposeExchange={
-              !isOwnProfile ? ( // Не показываем кнопку на своём профиле
+              !isOwnProfile ? (
                 <ButtonUI
-                  title="Предложить обмен"
-                  variant="primary"
-                  className={styles.exchangeButton}
+                  title={getButtonText()}
+                  variant={getButtonVariant()}
+                  className={`${styles.exchangeButton} ${isButtonDisabled() ? styles.buttonDisabled : ''}`}
                   onClick={handleProposeExchange}
+                  disabled={isButtonDisabled()}
                 />
-              ) : null
+              ) : (
+                <ButtonUI
+                  title="Это ваш профиль"
+                  variant="secondary"
+                  className={styles.exchangeButton}
+                  disabled={true}
+                />
+              )
             }
           />
         </div>

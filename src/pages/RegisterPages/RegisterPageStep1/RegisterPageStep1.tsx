@@ -1,4 +1,3 @@
-// C:\Users\ispun\OneDrive\Документы\GitHub\SkillSwap_45_2\src\pages\RegisterPages\RegisterPageStep1\RegisterPageStep1.tsx
 import styles from './RegisterPageStep1.module.css';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
@@ -9,63 +8,89 @@ import { IllustrationPanel } from '@widgets/IllustrationPanel/IllustrationPanel'
 import Stepper from '@widgets/Stepper/Stepper';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useModals } from '@shared/hooks/useModals';
 
 const RegisterPageStep1: React.FC = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordHelperText, setPasswordHelperText] = useState<
-    string | undefined
-  >(undefined);
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
+  const [passwordError, setPasswordError] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { openConfirmOffer } = useModals(); // Используем openConfirmOffer
 
   // Получаем данные из state
-  const { returnTo, shouldProposeAfterReturn, targetUserId } = location.state || {};
+  const { returnTo, proposeExchange, targetUserId } = location.state || {};
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password.length < 8) {
-      setPasswordHelperText('Пароль должен содержать не менее 8 знаков');
+    
+    let isValid = true;
+    
+    if (!validateEmail(email)) {
+      setEmailError('Некорректный email');
+      isValid = false;
     } else {
-      // Имитация успешной регистрации
-      console.log('✅ Регистрация успешна');
+      setEmailError(undefined);
+    }
+    
+    if (password.length < 8) {
+      setPasswordError('Пароль должен содержать не менее 8 символов');
+      isValid = false;
+    } else {
+      setPasswordError(undefined);
+    }
+    
+    if (!isValid) return;
+
+    setIsLoading(true);
+
+    try {
+      // Имитация успешной регистрации (без вызова реального API)
+      console.log('✅ Регистрация успешна', { email, password });
       
-      if (shouldProposeAfterReturn && targetUserId) {
-        // Открываем модалку подтверждения предложения
-        openConfirmOffer({
-          userId: targetUserId,
-          returnTo: returnTo,
-          context: 'registration',
-          shouldProposeAfterReturn: true,
-          // Эти данные должны приходить с бэка после регистрации
-          aboutSkillProps: {
-            title: 'Обучение игре на барабанах',
-            description: 'Обучаю игре на барабанах с нуля. Индивидуальный подход.',
-            categories: ['Музыка', 'Творчество'],
-          },
-          galleryProps: {
-            images: ['/assets/illustrations/drumming-main.png'],
-          },
-        });
-      } else {
-        navigate('/register/step2');
-      }
+      // Небольшая задержка для имитации запроса
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // ВСЕГДА переходим на шаг 2, независимо от proposeExchange
+      // Данные о предложении обмена передаем дальше по цепочке
+      navigate('/register/step2', { 
+        state: { 
+          email, 
+          password,
+          returnTo,
+          proposeExchange, // передаем дальше
+          targetUserId // передаем дальше
+        } 
+      });
+      
+    } catch (error) {
+      console.error('Ошибка регистрации:', error);
+      setEmailError('Ошибка при регистрации. Попробуйте позже.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handlePasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const newPassword = e.target.value;
-    setPassword(e.target.value);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setEmail(e.target.value);
+    if (emailError) setEmailError(undefined);
+  };
 
-    if (newPassword.length >= 8) {
-      setPasswordHelperText('Надёжный');
-    } else {
-      setPasswordHelperText(undefined);
-    }
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setPassword(e.target.value);
+    if (passwordError) setPasswordError(undefined);
+  };
+
+  const getPasswordHelperText = () => {
+    if (password.length >= 8) return 'Надёжный пароль';
+    if (password.length > 0) return `Ещё ${8 - password.length} символов`;
+    return undefined;
   };
 
   return (
@@ -80,41 +105,46 @@ const RegisterPageStep1: React.FC = () => {
               variant="social"
               title="Продолжить с Google"
               iconLeft={<GoogleIcon />}
+              disabled={isLoading}
             />
             <ButtonUI
               variant="social"
               title="Продолжить с Apple"
               iconLeft={<AppleIcon />}
+              disabled={isLoading}
             />
           </div>
           <div className={styles.divider}>
             <span>или</span>
           </div>
-          <form
-            action=""
-            onSubmit={handleSubmit}
-            className={styles.registerForm}
-          >
+          <form onSubmit={handleSubmit} className={styles.registerForm}>
             <div className={styles.registerForm__inputContainer}>
               <InputUI
                 label="Email"
-                onChange={() => {}}
+                value={email}
+                onChange={handleEmailChange}
                 placeholder="Введите email"
                 type="email"
+                error={emailError}
+                disabled={isLoading}
               />
               <InputUI
                 label="Пароль"
+                value={password}
                 onChange={handlePasswordChange}
                 placeholder="Придумайте надёжный пароль"
                 type="password"
-                helperText={passwordHelperText}
+                helperText={getPasswordHelperText()}
+                error={passwordError}
+                disabled={isLoading}
               />
             </div>
             <ButtonUI
               variant="submit"
-              title="Далее"
+              title={isLoading ? "Регистрация..." : "Далее"}
               type="submit"
               className={styles.registerForm__submit}
+              disabled={isLoading}
             />
           </form>
         </div>

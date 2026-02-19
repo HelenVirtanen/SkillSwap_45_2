@@ -5,6 +5,7 @@ import staticDataReducer from '../store/slices/staticData/staticDataSlice';
 import favoritesReducer from './slices/favorites/favoritesSlice';
 import likesReducer from './slices/likes/likesSlice';
 import modalsReducer from './slices/modals/modalsSlice';
+import exchangeReducer from './slices/exchange/exchangeSlice';
 
 export const rootReducer = combineReducers({
   users: usersReducer,
@@ -12,7 +13,8 @@ export const rootReducer = combineReducers({
   likes: likesReducer,
   favorites: favoritesReducer,
   auth: authSlice.reducer,
-  modals: modalsReducer, 
+  modals: modalsReducer,
+  exchange: exchangeReducer, 
 
   
 });

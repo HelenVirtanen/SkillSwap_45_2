@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { AboutSkillProps } from '@widgets/AboutSkill/AboutSkill';
 import type { SkillGalleryProps } from '@widgets/SkillGallery/SkillGallery';
 
 export type ModalType = 'confirmOffer' | 'offerCreated' | 'offerSent' | null;
@@ -7,7 +6,12 @@ export type ModalType = 'confirmOffer' | 'offerCreated' | 'offerSent' | null;
 export interface ModalData {
   userId?: string;
   skillTitle?: string;
-  aboutSkillProps?: Omit<AboutSkillProps, 'actions'>;
+  aboutSkillProps?: {
+    title: string;
+    category: string;
+    subcategory: string;
+    description: string;
+  };
   galleryProps?: SkillGalleryProps;
   context?: 'registration' | 'skillPage';
   returnTo?: string;

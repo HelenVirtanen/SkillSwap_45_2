@@ -1,89 +1,87 @@
-// C:\Users\ispun\OneDrive\Документы\GitHub\SkillSwap_45_2\src\widgets\modals\ModalManager.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useModals } from '@shared/hooks/useModals';
+import { useAppDispatch } from '@app/store/store';
+import { addMyProposal } from '@app/store/slices/exchange/exchangeSlice';
 import { ModalWrapperUI } from '@shared/ui/ModalWrapperUI/ModalWrapperUI';
 import { ModalCreateOffer } from './ModalCreateOffer/ModalCreateOffer';
 import { ModalConfirmOffer } from './ModalConfirmOffer/ModalConfirmOffer';
 
 export const ModalManager: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { 
-    activeModal, 
     modalData, 
     closeCurrentModal, 
     isModalOpen,
     openOfferCreated,
-    openOfferSent,
   } = useModals();
 
-  // Обработчик для модалки подтверждения (confirmOffer)
   const handleConfirmOfferSubmit = () => {
     closeCurrentModal();
-    // После подтверждения открываем "предложение создано"
-    setTimeout(() => {
-      if (modalData) {
-        openOfferCreated(modalData);
-      }
-    }, 300);
-  };
-
-  // Обработчик для редактирования в модалке подтверждения
-  const handleConfirmOfferEdit = () => {
-    closeCurrentModal();
-    navigate('/register/step3', { 
-      state: { 
-        returnTo: modalData?.returnTo,
-        userId: modalData?.userId,
-        shouldProposeAfterReturn: modalData?.shouldProposeAfterReturn 
-      }
-    });
-  };
-
-  // Обработчик для модалки "предложение создано" (offerCreated)
-  const handleOfferCreatedSubmit = () => {
+    
     const userId = modalData?.userId;
     const returnTo = modalData?.returnTo;
-    const shouldPropose = modalData?.shouldProposeAfterReturn;
     
-    closeCurrentModal();
-    
-    if (returnTo && shouldPropose) {
-      // Возвращаемся на страницу навыка с флагом для авто-предложения
-      navigate(returnTo, { 
-        state: { shouldAutoPropose: true, targetUserId: userId }
-      });
-    } else if (returnTo) {
+    if (returnTo) {
       navigate(returnTo);
     } else {
       navigate(`/skill/${userId}`);
     }
+    
+    setTimeout(() => {
+      if (modalData) {
+        openOfferCreated(modalData);
+      }
+    }, 500);
   };
 
-  // Обработчик для модалки "предложение отправлено" (offerSent)
-  const handleOfferSentSubmit = () => {
+  const handleOfferCreatedSubmit = () => {
     closeCurrentModal();
-    // Дополнительная логика после отправки предложения
-    console.log('Предложение отправлено');
+  };
+
+  const handleOfferSentSubmit = () => {
+    const userId = modalData?.userId;
+    
+    if (userId) {
+      dispatch(addMyProposal({ toUserId: userId }));
+    }
+    
+    closeCurrentModal();
+  };
+
+  const handleConfirmOfferEdit = () => {
+    closeCurrentModal();
+    
+    if (modalData?.context === 'registration') {
+      navigate('/register/step3', { 
+        state: { 
+          returnTo: modalData?.returnTo,
+          proposeExchange: true,
+          targetUserId: modalData?.userId,
+          email: localStorage.getItem('registrationEmail') || 'user@example.com',
+        }
+      });
+    } else {
+      navigate(`/skill/${modalData?.userId}`);
+    }
   };
 
   return (
     <>
-      {/* Модалка подтверждения предложения (после регистрации) */}
-      {isModalOpen('confirmOffer') && modalData?.context === 'registration' && (
+      {isModalOpen('confirmOffer') && (
         <ModalWrapperUI isOpen={true} onClose={closeCurrentModal} size="lg">
           <ModalConfirmOffer
             title="Ваше предложение"
             description="Проверьте данные перед отправкой"
-            aboutSkillProps={modalData.aboutSkillProps!}
-            galleryProps={modalData.galleryProps || { images: [] }}
+            aboutSkillProps={modalData?.aboutSkillProps!}
+            galleryProps={modalData?.galleryProps || { images: [] }}
             onEdit={handleConfirmOfferEdit}
             onConfirm={handleConfirmOfferSubmit}
           />
         </ModalWrapperUI>
       )}
 
-      {/* Модалка "предложение создано" (после подтверждения) */}
       {isModalOpen('offerCreated') && (
         <ModalWrapperUI isOpen={true} onClose={closeCurrentModal} size="md">
           <ModalCreateOffer
@@ -93,7 +91,6 @@ export const ModalManager: React.FC = () => {
         </ModalWrapperUI>
       )}
 
-      {/* Модалка "предложение отправлено" (после авто-предложения или ручного нажатия) */}
       {isModalOpen('offerSent') && (
         <ModalWrapperUI isOpen={true} onClose={closeCurrentModal} size="md">
           <ModalCreateOffer

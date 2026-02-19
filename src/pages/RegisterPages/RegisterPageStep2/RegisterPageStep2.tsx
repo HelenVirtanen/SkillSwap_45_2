@@ -2,21 +2,44 @@ import Step2ProfileInfo, {
   Step2Data,
 } from '@features/forms/RegisterSteps/Step2ProfileInfo/Step2ProfileInfo';
 import Stepper from '@widgets/Stepper/Stepper';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './RegisterPageStep2.module.css';
 import UserInfo from '@assets/illustrations/user-info.svg?react';
 import { IllustrationPanel } from '@widgets/IllustrationPanel/IllustrationPanel';
 
 const RegisterPageStep2: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Получаем данные из state шага 1
+  const { email, password, returnTo, proposeExchange, targetUserId } = location.state || {};
+
+  // Если нет email - возвращаем на шаг 1
+  useEffect(() => {
+    if (!email) {
+      navigate('/register/step1');
+    }
+  }, [email, navigate]);
 
   const handleBack = () => {
-    navigate('/register/step1');
+    navigate('/register/step1', { 
+      state: { returnTo, proposeExchange, targetUserId } 
+    });
   };
 
   const handleNext = () => {
-    navigate('/register/step3');
+    // Передаем данные на шаг 3
+    navigate('/register/step3', { 
+      state: { 
+        ...formData,
+        email,
+        password,
+        returnTo,
+        proposeExchange,
+        targetUserId 
+      } 
+    });
   };
 
   const [formData, setFormData] = useState<Step2Data>({
@@ -38,11 +61,10 @@ const RegisterPageStep2: React.FC = () => {
     }));
   };
 
- 
   return (
     <div className={styles.mainContainer}>
       <div className={styles.stepper}>
-      <Stepper currentStep={2} />
+        <Stepper currentStep={2} />
       </div>
       <div className={styles.mainWrapper}>
         <Step2ProfileInfo
@@ -51,7 +73,6 @@ const RegisterPageStep2: React.FC = () => {
           handleBack={handleBack}
           handleNext={handleNext}
         />
-
         <div>
           <IllustrationPanel
             image={<UserInfo />}
