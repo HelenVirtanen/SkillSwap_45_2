@@ -7,49 +7,96 @@ import InputUI from '@shared/ui/InputUI/InputUI';
 import { IllustrationPanel } from '@widgets/IllustrationPanel/IllustrationPanel';
 import Stepper from '@widgets/Stepper/Stepper';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const RegisterPageStep1: React.FC = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordHelperText, setPasswordHelperText] = useState<
-    string | undefined
-  >(undefined);
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
+  const [passwordError, setPasswordError] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // const [email, setEmail] = useState('');
-  // const [emailErrorText, setEmailErrorText] = useState<string | undefined>(undefined);
+  // Получаем данные из state
+  const { returnTo, proposeExchange, targetUserId } = location.state || {};
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    let isValid = true;
+    
+    if (!validateEmail(email)) {
+      setEmailError('Некорректный email');
+      isValid = false;
+    } else {
+      setEmailError(undefined);
+    }
+    
     if (password.length < 8) {
-      setPasswordHelperText('Пароль должен содержать не менее 8 знаков');
+      setPasswordError('Пароль должен содержать не менее 8 символов');
+      isValid = false;
     } else {
-      navigate('/register/step2');
+      setPasswordError(undefined);
+    }
+    
+    if (!isValid) return;
+
+    setIsLoading(true);
+
+    try {
+      // Имитация успешной регистрации (без вызова реального API)
+      console.log('✅ Регистрация успешна', { email, password });
+      
+      // Небольшая задержка для имитации запроса
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // ВСЕГДА переходим на шаг 2, независимо от proposeExchange
+      // Данные о предложении обмена передаем дальше по цепочке
+      navigate('/register/step2', { 
+        state: { 
+          email, 
+          password,
+          returnTo,
+          proposeExchange, // передаем дальше
+          targetUserId // передаем дальше
+        } 
+      });
+      
+    } catch (error) {
+      console.error('Ошибка регистрации:', error);
+      setEmailError('Ошибка при регистрации. Попробуйте позже.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handlePasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const newPassword = e.target.value;
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setEmail(e.target.value);
+    if (emailError) setEmailError(undefined);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setPassword(e.target.value);
-
-    if (newPassword.length >= 8) {
-      setPasswordHelperText('Надёжный');
-    } else {
-      setPasswordHelperText(undefined);
-    }
+    if (passwordError) setPasswordError(undefined);
   };
 
-  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   setEmail(e.target.value);
-  // }
+  const getPasswordHelperText = () => {
+    if (password.length >= 8) return 'Надёжный пароль';
+    if (password.length > 0) return `Ещё ${8 - password.length} символов`;
+    return undefined;
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.stepper}>
-      <Stepper currentStep={1} />
+        <Stepper currentStep={1} />
       </div>
       <div className={styles.content}>
         <div className={styles.register}>
@@ -58,46 +105,48 @@ const RegisterPageStep1: React.FC = () => {
               variant="social"
               title="Продолжить с Google"
               iconLeft={<GoogleIcon />}
+              disabled={isLoading}
             />
             <ButtonUI
               variant="social"
               title="Продолжить с Apple"
               iconLeft={<AppleIcon />}
+              disabled={isLoading}
             />
           </div>
           <div className={styles.divider}>
             <span>или</span>
           </div>
-          <form
-            action=""
-            onSubmit={handleSubmit}
-            className={styles.registerForm}
-          >
+          <form onSubmit={handleSubmit} className={styles.registerForm}>
             <div className={styles.registerForm__inputContainer}>
               <InputUI
                 label="Email"
-                // onChange={handleEmailChange}
-                onChange={() => {}}
+                value={email}
+                onChange={handleEmailChange}
                 placeholder="Введите email"
                 type="email"
-                // error="Email уже используется"
+                error={emailError}
+                disabled={isLoading}
               />
               <InputUI
                 label="Пароль"
+                value={password}
                 onChange={handlePasswordChange}
                 placeholder="Придумайте надёжный пароль"
                 type="password"
-                helperText={passwordHelperText}
+                helperText={getPasswordHelperText()}
+                error={passwordError}
+                disabled={isLoading}
               />
             </div>
             <ButtonUI
               variant="submit"
-              title="Далее"
+              title={isLoading ? "Регистрация..." : "Далее"}
               type="submit"
               className={styles.registerForm__submit}
+              disabled={isLoading}
             />
           </form>
-         
         </div>
         <IllustrationPanel
           image={<BulbIcon />}

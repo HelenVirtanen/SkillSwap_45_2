@@ -1,4 +1,3 @@
-// C:\Users\ispun\OneDrive\Документы\GitHub\sales-bonus\SkillSwap_45_2\src\widgets\UserProfileCard\UserProfileCard.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileCard from './UserProfileCard';
 
