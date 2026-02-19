@@ -8,7 +8,7 @@ import {
   selectProfileStatus,
   selectProfileError,
   clearProfileUser,
-  toggleFavoriteInProfile
+  toggleFavoriteInProfile,
 } from '@app/store/slices/User/usersSlise';
 import { selectAuthUser } from '@app/store/slices/authUser/auth';
 import { 
@@ -33,7 +33,14 @@ import styles from './SkillPage.module.css';
 
 interface ISkill {
   title: string;
-  variant: 'business' | 'languages' | 'home' | 'art' | 'education' | 'health' | 'other';
+  variant:
+    | 'business'
+    | 'languages'
+    | 'home'
+    | 'art'
+    | 'education'
+    | 'health'
+    | 'other';
 }
 
 interface IUser {
@@ -64,26 +71,50 @@ interface IRelatedUser extends IUserCardData {
 
 const determineSkillVariant = (skillTitle: string): ISkill['variant'] => {
   const lowerTitle = skillTitle.toLowerCase();
-  
-  if (lowerTitle.includes('бизнес') || lowerTitle.includes('менеджмент') || lowerTitle.includes('business')) {
+
+  if (
+    lowerTitle.includes('бизнес') ||
+    lowerTitle.includes('менеджмент') ||
+    lowerTitle.includes('business')
+  ) {
     return 'business';
   }
-  if (lowerTitle.includes('язык') || lowerTitle.includes('english') || lowerTitle.includes('languages')) {
+  if (
+    lowerTitle.includes('язык') ||
+    lowerTitle.includes('english') ||
+    lowerTitle.includes('languages')
+  ) {
     return 'languages';
   }
-  if (lowerTitle.includes('дом') || lowerTitle.includes('ремонт') || lowerTitle.includes('home')) {
+  if (
+    lowerTitle.includes('дом') ||
+    lowerTitle.includes('ремонт') ||
+    lowerTitle.includes('home')
+  ) {
     return 'home';
   }
-  if (lowerTitle.includes('рис') || lowerTitle.includes('дизайн') || lowerTitle.includes('art')) {
+  if (
+    lowerTitle.includes('рис') ||
+    lowerTitle.includes('дизайн') ||
+    lowerTitle.includes('art')
+  ) {
     return 'art';
   }
-  if (lowerTitle.includes('образование') || lowerTitle.includes('курс') || lowerTitle.includes('education')) {
+  if (
+    lowerTitle.includes('образование') ||
+    lowerTitle.includes('курс') ||
+    lowerTitle.includes('education')
+  ) {
     return 'education';
   }
-  if (lowerTitle.includes('здоров') || lowerTitle.includes('спорт') || lowerTitle.includes('health')) {
+  if (
+    lowerTitle.includes('здоров') ||
+    lowerTitle.includes('спорт') ||
+    lowerTitle.includes('health')
+  ) {
     return 'health';
   }
-  
+
   return 'other';
 };
 
@@ -101,6 +132,13 @@ const SkillPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
+
+  // Селекторы из usersSlise
+  const userData = useAppSelector(selectCurrentProfileUser);
+  const status = useAppSelector(selectProfileStatus);
+  const error = useAppSelector(selectProfileError);
+
+  // Селекторы из auth слайса
   
   const { 
     openConfirmOffer,
@@ -143,10 +181,12 @@ const SkillPage: React.FC = () => {
   // Загрузка данных пользователя
   useEffect(() => {
     if (id) {
-      dispatch(fetchUserProfileById({ 
-        userId: Number(id), 
-        isAuthenticated 
-      }));
+      dispatch(
+        fetchUserProfileById({
+          userId: Number(id),
+          isAuthenticated,
+        }),
+      );
     }
 
     return () => {
@@ -161,21 +201,21 @@ const SkillPage: React.FC = () => {
         id: userData.id?.toString() || id || '',
         avatar: userData.avatar || '/avatars/user-photo.png',
         name: userData.name || 'Пользователь',
-        birthDate: userData.birthDate || '2000-01-01',
+        birthDate: userData.birthDate || '',
         city: userData.city || 'Город не указан',
         about: userData.about || '',
         teachingSkill: {
           title: userData.teach_skills?.skills || 'Навык не указан',
-          variant: determineSkillVariant(userData.teach_skills?.skills || '')
+          variant: determineSkillVariant(userData.teach_skills?.skills || ''),
         },
-        learningSkills: (userData.learn_skills || []).map(skill => ({
+        learningSkills: (userData.learn_skills || []).map((skill) => ({
           title: skill,
-          variant: determineSkillVariant(skill)
+          variant: determineSkillVariant(skill),
         })),
         isFavorite: userData.isFavourite || false,
-        photosOnAbout: userData.photosOnAbout || []
+        photosOnAbout: userData.photosOnAbout || [],
       };
-      
+
       setFormattedUser(formatted);
     }
   }, [userData, status, id]);
@@ -423,36 +463,43 @@ const SkillPage: React.FC = () => {
         <h2>Ошибка загрузки</h2>
         <p>{error || 'Пользователь не найден'}</p>
         <div className={styles.errorActions}>
-          <ButtonUI 
-            title="Вернуться на главную" 
-            variant="primary" 
-            onClick={() => navigate('/')} 
+          <ButtonUI
+            title="Вернуться на главную"
+            variant="primary"
+            onClick={() => navigate('/')}
           />
-          <ButtonUI 
-            title="Попробовать снова" 
-            variant="secondary" 
-            onClick={() => id && dispatch(fetchUserProfileById({ 
-              userId: Number(id), 
-              isAuthenticated
-            }))} 
+          <ButtonUI
+            title="Попробовать снова"
+            variant="secondary"
+            onClick={() =>
+              id &&
+              dispatch(
+                fetchUserProfileById({
+                  userId: Number(id),
+                  isAuthenticated,
+                }),
+              )
+            }
           />
         </div>
       </div>
     );
   }
 
-  const isOwnProfile = authUser?.id?.toString() === id;
-
-  const skillImages = formattedUser.photosOnAbout && formattedUser.photosOnAbout.length > 0
-    ? formattedUser.photosOnAbout
-    : getDefaultImages();
+  // Формируем данные навыка
+  const skillImages =
+    formattedUser.photosOnAbout && formattedUser.photosOnAbout.length > 0
+      ? formattedUser.photosOnAbout
+      : getDefaultImages();
 
   const skill: ISkillData = {
     id: `${formattedUser.id}-teaching`,
     title: formattedUser.teachingSkill.title,
-    categories: formattedUser.learningSkills.map(s => s.title).slice(0, 3),
-    description: formattedUser.about || `Пользователь ${formattedUser.name} готов поделиться своими знаниями и навыками.`,
-    images: skillImages
+    categories: formattedUser.learningSkills.map((s) => s.title).slice(0, 3),
+    description:
+      formattedUser.about ||
+      `Пользователь ${formattedUser.name} готов поделиться своими знаниями и навыками.`,
+    images: skillImages,
   };
 
   const getButtonText = () => {

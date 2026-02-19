@@ -35,7 +35,7 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
   id: String(profile.id),
   avatar: profile.avatar || '../src/assets/avatars/default.png',
   name: profile.name,
-  birthDate: profile.birthDate ?? 'Не указано',
+  birthDate: profile.birthDate ?? '',
   city: profile.city ?? 'Город не указан',
   gender: profile.gender ?? 'any',
 
