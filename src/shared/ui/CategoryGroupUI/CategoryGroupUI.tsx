@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { FC } from 'react';
 import styles from './CategoryGroupUI.module.css';
 import { CheckboxUI, type CheckboxState } from '../CheckboxUI/CheckboxUI';

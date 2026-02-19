@@ -68,7 +68,11 @@ const MainPage: React.FC = () => {
 
   return (
     <div className={styles.mainContainer}>
-      <FilterSidebar filters={filters} onFiltersChange={setFilters} />
+      <FilterSidebar
+        filters={filters}
+        defaultFilters={defaultFilters}
+        onFiltersChange={setFilters}
+      />
 
       {status === 'loading' && <div>Загрузка пользователей...</div>}
       {status === 'failed' && <div>Ошибка: {error}</div>}
