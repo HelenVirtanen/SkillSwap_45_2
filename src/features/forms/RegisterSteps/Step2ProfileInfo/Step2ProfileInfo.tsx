@@ -7,13 +7,17 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import AutoCompleteUI from '@shared/ui/AutoCompleteUI/AutoCompleteUI';
 import DatePicker from '@widgets/DatePicker/DatePicker';
 import AvatarUI from '@shared/ui/AvatarUI/AvatarUI';
-
-import { useAppSelector } from '@app/store/store';
-import { selectCategories } from '@app/store/slices/staticData/staticDataSlice'
+import { useAppDispatch, useAppSelector } from '@app/store/store';
+import {
+  setStep2Data,
+  setCurrentStep,
+  selectRegistrationStep1,
+} from '@app/store/slices/registration/registrationSlice';
+import { useNavigate } from 'react-router-dom';
+import { selectCategories } from '@app/store/slices/staticData/staticDataSlice';
 import React from 'react';
 
-const optionsGenders = ['Не указан', 'Мужской', 'Женский']; //Для пола
-
+const optionsGenders = ['Не указан', 'Мужской', 'Женский'];
 
 export type Step2Data = {
   firstName?: string;
@@ -24,22 +28,21 @@ export type Step2Data = {
   subcategorySkill?: string[];
 };
 
-type Step2ProfileInfoProps = {
-  initialData?: Step2Data;
-  onChangeOfWantedSkills?: () => void;
-  onFieldChange: <K extends keyof Step2Data>(
-    field: K,
-    value: Step2Data[K],
-  ) => void;
-  handleBack: () => void;
-  handleNext: () => void;
-};
+const Step2ProfileInfo: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
-  
-  
+  // Защита от прямого перехода на шаг 2 без данных шага 1
+  const step1Data = useAppSelector(selectRegistrationStep1);
+  useEffect(() => {
+    if (!step1Data.email || !step1Data.password) {
+      console.warn('Данные шага 1 отсутствуют. Перенаправляем на шаг 1.');
+      navigate('/register/step1', { replace: true });
+    }
+  }, [step1Data, navigate]);
 
-  const categories = useAppSelector(selectCategories)
+  // Данные категорий из стора
+  const categories = useAppSelector(selectCategories);
 
   const categoryOptions = React.useMemo(() => {
     return categories.map((c) => ({
@@ -49,34 +52,27 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
     }));
   }, [categories]);
 
-  const { initialData, onFieldChange, handleBack, handleNext } = props;
-
   const [localData, setLocalData] = useState<Step2Data>(() => ({
-    firstName: initialData?.firstName || '',
-    birthDate: initialData?.birthDate || '',
-    gender: initialData?.gender,
-    city: initialData?.city || '',
-    categorySkill: initialData?.categorySkill || [],
-    subcategorySkill: initialData?.subcategorySkill || [],
+    firstName: '',
+    birthDate: '',
+    gender: 'Не указан',
+    city: '',
+    categorySkill: [],
+    subcategorySkill: [],
   }));
 
-  
   const handleFieldChange = <K extends keyof Step2Data>(
     field: K,
     value: Step2Data[K],
   ) => {
     setLocalData((prev) => ({ ...prev, [field]: value }));
-    onFieldChange(field, value);
   };
 
- 
+  // Опции подкатегорий на основе выбранных категорий
   const subcategoryOptions = React.useMemo(() => {
     if (!localData.categorySkill?.length) return [];
-  
     return categories
-      .filter((category) =>
-        localData.categorySkill?.includes(category.title)
-      )
+      .filter((category) => localData.categorySkill?.includes(category.title))
       .flatMap((category) =>
         category.subcategories.map((sub) => ({
           id: sub.id,
@@ -86,23 +82,39 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
       );
   }, [categories, localData.categorySkill]);
 
-
+  // Синхронизация подкатегорий: очищаем или обрезаем некорректные
   useEffect(() => {
     if (!localData.categorySkill?.length) {
       handleFieldChange('subcategorySkill', []);
       return;
     }
-  
     const validSubcategories = localData.subcategorySkill?.filter((sub) =>
       subcategoryOptions.some((opt) => opt.value === sub)
     ) || [];
-  
     if (validSubcategories.length !== localData.subcategorySkill?.length) {
       handleFieldChange('subcategorySkill', validSubcategories);
     }
   }, [localData.categorySkill, subcategoryOptions]);
 
   const isSubcategoryDisabled = !localData.categorySkill?.length;
+
+  const handleBackClick = () => {
+    navigate('/register/step1');
+  };
+
+  const handleNextClick = () => {
+    if (!localData.firstName?.trim()) {
+      alert('Пожалуйста, введите имя');
+      return;
+    }
+    if (!localData.city?.trim()) {
+      alert('Пожалуйста, выберите город');
+      return;
+    }
+    dispatch(setStep2Data(localData));
+    dispatch(setCurrentStep(3));
+    navigate('/register/step3');
+  };
 
   return (
     <div className={styles.form}>
@@ -113,9 +125,7 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
         <InputUI
           value={localData.firstName}
           label={'Имя'}
-          onChange={(e) => {
-            handleFieldChange('firstName', e.target.value);
-          }}
+          onChange={(e) => handleFieldChange('firstName', e.target.value)}
           placeholder="Введите ваше имя"
         />
       </div>
@@ -125,13 +135,11 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
           <DatePicker
             title="Дата рождения"
             placeholder="дд.мм.гггг"
-            selected={
-              localData.birthDate ? new Date(localData.birthDate) : null
-            }
+            selected={localData.birthDate ? new Date(localData.birthDate) : null}
             onChange={(date) => {
               handleFieldChange(
                 'birthDate',
-                date ? date.toISOString().split('T')[0] : '',
+                date ? date.toISOString().split('T')[0] : ''
               );
             }}
           />
@@ -145,41 +153,40 @@ const Step2ProfileInfo = (props: Step2ProfileInfoProps) => {
           />
         </div>
       </div>
+
       <div className={styles.autoCompleteUI}>
         <AutoCompleteUI
           onCitySelect={(value) => handleFieldChange('city', value)}
         />
       </div>
+
       <div className={styles.multiSelectDropdownUI}>
         <MultiSelectDropdownUI
+          key={`category-${localData.categorySkill?.join(',')}`}
           placeholder="Выберите категорию"
           label="Категория навыка, которому хотите научиться"
           options={categoryOptions}
-          selected={localData.categorySkill ? localData.categorySkill : []}
-          onChange={(value: string[]) => {
-            handleFieldChange('categorySkill', value);
-          }}
+          selected={localData.categorySkill || []}
+          onChange={(value: string[]) => handleFieldChange('categorySkill', value)}
         />
 
         <MultiSelectDropdownUI
+          key={`subcategory-${localData.subcategorySkill?.join(',') || 'empty'}`}
           placeholder="Выберите подкатегорию"
           label="Подкатегория навыка, которому хотите научиться"
           options={subcategoryOptions}
-          selected={
-            localData.subcategorySkill ? localData.subcategorySkill : []
-          }
-          onChange={(value: string[]) => {
-            handleFieldChange('subcategorySkill', value);
-          }}
+          selected={localData.subcategorySkill || []}
+          onChange={(value: string[]) => handleFieldChange('subcategorySkill', value)}
           disabled={isSubcategoryDisabled}
         />
       </div>
 
       <div className={styles.inLineButtons}>
-        <ButtonUI variant="secondary" title="Назад" onClick={handleBack} />
-        <ButtonUI variant="primary" title="Продолжить" onClick={handleNext} />
+        <ButtonUI variant="secondary" title="Назад" onClick={handleBackClick} />
+        <ButtonUI variant="primary" title="Продолжить" onClick={handleNextClick} />
       </div>
     </div>
   );
 };
+
 export default Step2ProfileInfo;

@@ -6,23 +6,25 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import InputUI from '@shared/ui/InputUI/InputUI';
 import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
 import styles from './Step3SkillInfo.module.css';
-import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';  
+import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';
 import { TSkillCategory } from '@api/api';
-import { useAppSelector } from '@app/store/store';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
+import { registerUser } from '@app/store/slices/authUser/auth';
+import { clearRegistration } from '@app/store/slices/registration/registrationSlice';
+import { useNavigate } from 'react-router-dom';
 import { selectCategories } from '@app/store/slices/staticData/staticDataSlice';
 import { MultiSelectDropdownUI } from '@shared/ui/MultiSelectDropdownUI/MultiSelectDropdownUI';
 
-// Типы данных формы (убрали tagging)
+// Тип данных формы
 export interface Step3Data {
   title: string;
-  category: string[];
-  subcategory: string[];
+  category: string[];      // ← массив (мультивыбор)
+  subcategory: string[];   // ← массив (мультивыбор)
   description: string;
-  image: File;
+  image?: File;            // ← опционально
 }
 
-
-// Схема валидации Yup (убрали tagging)
+// Схема валидации Yup
 const schema = yup.object().shape({
   title: yup
     .string()
@@ -32,41 +34,53 @@ const schema = yup.object().shape({
   category: yup
     .array()
     .min(1, 'Выберите хотя бы одну категорию')
-    .required(),
+    .required('Выберите категорию'),
   subcategory: yup
     .array()
     .min(1, 'Выберите хотя бы одну подкатегорию')
-    .required(),
+    .required('Выберите подкатегорию'),
   description: yup
     .string()
     .max(500, 'Описание не должно превышать 500 символов')
     .required('Обязательное поле'),
   image: yup
     .mixed<File>()
-    .required('Загрузите изображение')
+    .optional()
     .test('fileSize', 'Файл не должен превышать 2 МБ', (value: unknown) => {
-      const file = value as File | null;
-      return file ? file.size <= 2 * 1024 * 1024 : false;
+      const file = value as File | null | undefined;
+      return file ? file.size <= 2 * 1024 * 1024 : true;
     })
     .test('fileType', 'Разрешены только JPEG и PNG', (value: unknown) => {
-      const file = value as File | null;
-      return file ? ['image/jpeg', 'image/png'].includes(file.type) : false;
+      const file = value as File | null | undefined;
+      return file ? ['image/jpeg', 'image/png'].includes(file.type) : true;
     }),
 });
 
 interface Step3SkillInfoProps {
-  onNext: (data: Step3Data) => void;
-  onBack: () => void;
   initialData?: Partial<Step3Data>;
 }
 
-export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
-  onNext,
-  onBack,
-  initialData,
-}) => {
-  
-  const categories = useAppSelector(selectCategories)
+export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [isRegistered, setIsRegistered] = useState(false); // нужно для понимания зарегестрирован или нет для дальнейшего ридеректа в профиль при ttrue
+
+  // Данные из предыдущих шагов регистрации
+  const step1Data = useAppSelector((state) => state.registration.step1);
+  const step2Data = useAppSelector((state) => state.registration.step2);
+
+  // Категории из статических данных
+  const categories = useAppSelector(selectCategories);
+
+  // Защита от прямого перехода на шаг 3 без данных шага 1
+  useEffect(() => {
+    if (isRegistered) return;  // блокируем перенаправление если зарегестрировались
+
+    if (!step1Data.email || !step1Data.password) {
+      console.warn('Данные регистрации отсутствуют. Перенаправляем на шаг 1.');
+      navigate('/register/step1', { replace: true });
+    }
+  }, [step1Data, navigate, isRegistered]);
 
   const {
     control,
@@ -74,7 +88,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     formState: { errors, isValid, isSubmitting },
     setValue,
   } = useForm<Step3Data>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema) as any, // ← временно для задачи #209
     mode: 'onChange',
     defaultValues: {
       title: initialData?.title || '',
@@ -90,47 +104,42 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     name: 'category',
   });
 
-
-  const subcategoryOptions = React.useMemo(() => {
-    if (!selectedCategory?.length) return [];
-  
-    return categories
-      .filter((category) =>
-        selectedCategory.includes(category.title)
-      )
-      .flatMap((category) =>
-        category.subcategories.map((sub) => sub.title)
-      );
-  }, [selectedCategory, categories]);
-  
-
   const selectedSubcategory = useWatch({
     control,
     name: 'subcategory',
   });
 
-  useEffect(() => {
-    if (!selectedCategory) {
-      setValue('subcategory', []);
-      return;
-    }
-  
-    const validSubcategories =
-    selectedSubcategory?.filter((sub) =>
-      subcategoryOptions.includes(sub)
-    ) || [];
-  
-    if (validSubcategories.length !== selectedSubcategory?.length) {
-      setValue('subcategory', validSubcategories);
-    }
-  }, [
-    selectedCategory,
-    subcategoryOptions,
-    selectedSubcategory,
-    setValue,
-  ]);
+  // Опции подкатегорий на основе выбранных категорий
+  const subcategoryOptions = React.useMemo(() => {
+    if (!selectedCategory?.length) return [];
 
-  // Обработчик загрузки изображения
+    return categories
+      .filter((category) => selectedCategory.includes(category.title))
+      .flatMap((category) => category.subcategories.map((sub) => sub.title));
+  }, [selectedCategory, categories]);
+
+  // Синхронизация подкатегорий: очищаем или обрезаем некорректные
+  useEffect(() => {
+  // Если категории не выбраны — очищаем подкатегории, если они не пусты
+  if (!selectedCategory?.length) {
+    if (selectedSubcategory?.length) {
+      setValue('subcategory', []);
+    }
+    return;
+  }
+
+  // Фильтруем выбранные подкатегории, оставляя только те, что есть в subcategoryOptions
+  const validSubcategories = selectedSubcategory?.filter((sub) => subcategoryOptions.includes(sub)) || [];
+
+  // Сравниваем текущее значение с валидным по содержимому
+  const currentSubStr = JSON.stringify(selectedSubcategory || []);
+  const validSubStr = JSON.stringify(validSubcategories);
+
+  if (currentSubStr !== validSubStr) {
+    setValue('subcategory', validSubcategories);
+  }
+}, [selectedCategory, subcategoryOptions, selectedSubcategory, setValue]);
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -138,9 +147,36 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
     }
   };
 
-  // Отправка формы
-  const onSubmit = (data: Step3Data) => {
-    onNext(data);
+  const onSubmit = async (_data: Step3Data) => {
+    // Защита: проверяем критические данные
+    if (!step1Data.email || !step1Data.password) {
+      alert('Ошибка: данные регистрации повреждены. Начните регистрацию заново.');
+      navigate('/register/step1');
+      return;
+    }
+
+    // Формируем имя (если не заполнено — берём из email)
+    const userName = step2Data.firstName?.trim() || step1Data.email.split('@')[0] || 'Пользователь';
+
+    const fullRegistrationData = {
+      email: step1Data.email,
+      password: step1Data.password,
+      name: userName,
+    };
+
+    try {
+      await dispatch(registerUser(fullRegistrationData)).unwrap();
+      setIsRegistered(true);
+      dispatch(clearRegistration());
+      navigate('/profile', { replace: true });
+    } catch (error) {
+      console.error('Registration failed:', error);
+      alert(`Ошибка регистрации: ${error || 'Неизвестная ошибка'}`);
+    }
+  };
+
+  const handleBack = () => {
+    navigate('/register/step2');
   };
 
   return (
@@ -163,7 +199,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
           )}
         />
 
-        {/* Категория */}
+        {/* Категория (мультивыбор) */}
         <Controller
           name="category"
           control={control}
@@ -180,41 +216,37 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
                   }))}
                   selected={field.value}
                   onChange={field.onChange}
-                /> 
+                />
               </div>
               {errors.category && (
-                <span className={styles.errorMessage}>
-                  {errors.category.message}
-                </span>
+                <span className={styles.errorMessage}>{errors.category.message}</span>
               )}
             </div>
           )}
         />
 
-        {/* Подкатегория */}
+        {/* Подкатегория (мультивыбор) */}
         <Controller
           name="subcategory"
           control={control}
           render={({ field }) => (
             <div className={styles.formGroup}>
               <div className={styles.dropDownWrapper}>
-              <MultiSelectDropdownUI
-              label="Подкатегория навыка"
-              placeholder="Выберите подкатегории"
-              options={subcategoryOptions.map((s, index) => ({
-                id: index,
-                label: s,
-                value: s,
-              }))}
-              selected={field.value}
-              onChange={field.onChange}
-              disabled={!selectedCategory?.length}
-            />
+                <MultiSelectDropdownUI
+                  label="Подкатегория навыка"
+                  placeholder="Выберите подкатегории"
+                  options={subcategoryOptions.map((s, index) => ({
+                    id: index,
+                    label: s,
+                    value: s,
+                  }))}
+                  selected={field.value}
+                  onChange={field.onChange}
+                  disabled={!selectedCategory?.length}
+                />
               </div>
               {errors.subcategory && (
-                <span className={styles.errorMessage}>
-                  {errors.subcategory.message}
-                </span>
+                <span className={styles.errorMessage}>{errors.subcategory.message}</span>
               )}
             </div>
           )}
@@ -266,26 +298,18 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
                 </label>
               </div>
               {errors.image && (
-                <span className={styles.errorMessage}>
-                  {errors.image.message as string}
-                </span>
+                <span className={styles.errorMessage}>{errors.image.message}</span>
               )}
             </div>
           )}
         />
       </div>
 
-      {/* Кнопки навигации */}
       <div className={styles.formActions}>
-        <ButtonUI
-          variant="secondary"
-          title="Назад"
-          onClick={onBack}
-          type="button"
-        />
+        <ButtonUI variant="secondary" title="Назад" onClick={handleBack} type="button" />
         <ButtonUI
           variant="primary"
-          title="Продолжить"
+          title="Зарегистрироваться"
           type="submit"
           disabled={!isValid || isSubmitting}
         />

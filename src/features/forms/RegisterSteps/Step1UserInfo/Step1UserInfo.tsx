@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputUI from '@shared/ui/InputUI/InputUI';
@@ -7,6 +7,12 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import styles from './Step1UserInfo.module.css';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
 import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
+import { useAppDispatch } from '@app/store/store';
+import {
+  setStep1Data,
+  setCurrentStep,
+} from '@app/store/slices/registration/registrationSlice';
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,17 +30,20 @@ type UserData = {
 
 const Step1UserInfo: React.FC = () => {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const submitHandler = async (data: UserData) => {
-    console.log(data);
-    reset();
+    dispatch(setStep1Data(data));
+    dispatch(setCurrentStep(2));
+    navigate('/register/step2');
   };
 
   return (
@@ -60,21 +69,35 @@ const Step1UserInfo: React.FC = () => {
         <div className={styles.orSeparator}>или</div>
 
         <div className={styles.inputWrapper}>
-          <InputUI
-            {...register('email')}
-            label="Email"
-            type="email"
-            placeholder="Введите email"
-            error={errors?.email?.message || undefined}
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Email"
+                type="email"
+                placeholder="Введите email"
+                error={fieldState.error?.message}
+              />
+            )}
           />
 
-          <InputUI
-            {...register('password')}
-            label="Пароль"
-            type="password"
-            placeholder="Придумайте надёжный пароль"
-            helperText="Пароль должен содержать не менее 8 знаков"
-            error={errors?.password?.message || undefined}
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Пароль"
+                type="password"
+                placeholder="Придумайте надёжный пароль"
+                helperText="Пароль должен содержать не менее 8 знаков"
+                error={fieldState.error?.message}
+              />
+            )}
           />
         </div>
 
