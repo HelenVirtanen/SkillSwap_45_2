@@ -148,7 +148,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
             <HeaderUserMenuUI
               hasNewNotifications={true}
               userName={user.name}
-              userAvatarUrl={user.avatar || '@assets/avatars/default.png'}
+              userAvatarUrl={user.avatar || '../src/assets/avatars/default.png'}
               onAction={handleUserMenuAction}
             />
           ) : (

@@ -9,7 +9,7 @@ import {
   fetchCategories,
 } from './store/slices/staticData/staticDataSlice';
 import { fetchLikes } from './store/slices/likes/likesSlice';
-import { checkAuth } from './store/slices/authUser/auth'; 
+import { checkAuth } from './store/slices/authUser/auth';
 import { ModalManager } from '@widgets/modals/ModalManager';
 
 const MainLayout = lazy(() => import('@app/layout/MainLayout/MainLayout'));
@@ -64,8 +64,26 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<MainPage />} /> {/* Главная — открыта */}
           <Route path="about" element={<AboutPage />} />
-          <Route path="skill/:id" element={<SkillPage />} /> {/* Просмотр чужих */}
+          <Route path="skill/:id" element={<SkillPage />} />{' '}
+          {/* Просмотр чужих */}
           <Route path="server-error" element={<ServerErrorPage />} />
+          {/* Защищённые роуты — ТОЛЬКО они внутри ProtectedRoute */}
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="favorites"
+            element={
+              <ProtectedRoute>
+                <FavoritesPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
 
@@ -78,19 +96,6 @@ function App() {
           <Route path="step2" element={<RegisterPageStep2 />} />
           <Route path="step3" element={<RegisterPageStep3 />} />
         </Route>
-
-        {/* Защищённые роуты — ТОЛЬКО они внутри ProtectedRoute */}
-        <Route path="profile" element={
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-        } />
-
-        <Route path="favorites" element={
-          <ProtectedRoute>
-            <FavoritesPage />
-          </ProtectedRoute>
-        } />
       </Routes>
       <ModalManager />
     </Suspense>
