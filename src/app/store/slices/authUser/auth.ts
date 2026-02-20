@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@app/store/store';
 import { fetchUsers } from './actions';
-import { loginUserApi } from '@api/api';
-import { setCookie, deleteCookie } from '@features/auth/cookie';
+import { loginUserApi, getMyProfileApi } from '@api/api';
+import { setCookie,getCookie, deleteCookie } from '@features/auth/cookie';
 import { clearAllProposals } from '../exchange/exchangeSlice'; // Исправлено: было clearExchangeProposals
 
 export type TUser = {
@@ -10,6 +10,7 @@ export type TUser = {
   name: string;
   email: string;
   city?: string;
+  avatar?: string;
 };
 
 interface AuthState {
@@ -25,6 +26,28 @@ const initialState: AuthState = {
   error: null,
   status: 'idle',
 };
+
+// Проверка авторизации при запуске приложения
+export const checkAuth = createAsyncThunk(
+  'auth/checkAuth',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = getCookie('accessToken');
+      if (!token) {
+        return rejectWithValue('No token');
+      }
+
+      const user = await getMyProfileApi();
+      console.log('checkAuth: пользователь загружен', user);
+      return user;
+    } catch (err: any) {
+      console.error('checkAuth ошибка:', err);
+      localStorage.removeItem('refreshToken');
+      deleteCookie('accessToken');
+      return rejectWithValue(err.message || 'Сессия истекла');
+    }
+  }
+);
 
 export const loginUser = createAsyncThunk(
   'auth/login',
@@ -75,6 +98,24 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Проверка авторизации
+    builder
+      .addCase(checkAuth.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(checkAuth.fulfilled, (state, action: PayloadAction<TUser>) => {
+        state.status = 'succeeded';
+        state.user = action.payload;
+        state.isAuthChecked = true;
+      })
+      .addCase(checkAuth.rejected, (state, action) => {
+        state.status = 'failed';
+        state.user = null;
+        state.isAuthChecked = true;
+        state.error = action.payload as string;
+      });
+
     builder
       .addCase(fetchUsers.pending, (state) => {
         state.status = 'loading';
@@ -91,6 +132,7 @@ export const authSlice = createSlice({
         state.error = action.error.message || 'Ошибка при загрузке пользователя';
         state.isAuthChecked = false;
       });
+
     builder
       .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
@@ -119,6 +161,6 @@ export const selectAuthUser = (state: RootState) => state.auth.user;
 export const selectAuthStatus = (state: RootState) => state.auth.status;
 export const selectAuthError = (state: RootState) => state.auth.error;
 export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
-
+export const selectIsAuthenticated = (state: RootState) => !!!!state.auth.user && state.auth.isAuthChecked;
 export const { clearUser, setUser, setIsAuthChecked } = authSlice.actions;
 export default authSlice.reducer;
