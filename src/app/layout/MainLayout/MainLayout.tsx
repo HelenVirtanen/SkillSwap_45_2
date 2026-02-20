@@ -3,7 +3,7 @@ import styles from './MainLayout.module.css';
 import HeaderMain from '../Header/HeaderMain';
 import Footer from '../Footer/Footer';
 import Loader from '@shared/ui/Loader/Loader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@app/store/store';
 import { fetchAllUsers, selectAllUsers, selectUsersStatus, selectUsersError } from '@app/store/slices/User/usersSlise';
 // import { selectAuthUser, selectAuthStatus, selectAuthError } from '@app/store/slices/authUser/auth';
@@ -14,6 +14,7 @@ const dispatch = useAppDispatch();
 // const users = useSelector(selectAuthUser);
 // const status = useSelector(selectAuthStatus);
 // const error = useSelector(selectAuthError);
+const [searchQuery, setSearchQuery] = useState('');
 
 const users = useAppSelector(selectAllUsers);
 const status = useAppSelector(selectUsersStatus);
@@ -31,9 +32,9 @@ const status = useAppSelector(selectUsersStatus);
 
   return (
     <div className={styles.wrapper}>
-      <HeaderMain />
+      <HeaderMain onSearchChange={setSearchQuery}/>
       <main className={styles.main}>
-        <Outlet />
+        <Outlet context={{ searchQuery }}/>
       </main>
       <Footer />
     </div>

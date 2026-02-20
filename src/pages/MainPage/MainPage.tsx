@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@app/store/store';
-import { fetchAllUsers } from '@app/store/slices/User/usersSlise';
+import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { useAppSelector } from '@app/store/store';
 import { selectFavouritesCountMap } from '@app/store/slices/likes/likesSlice';
 import UsersCatalog from '@widgets/UsersCatalog/UsersCatalog';
 import FilterSidebar, {
@@ -13,21 +13,18 @@ import UsersFilteredCatalog from '@widgets/UsersCatalog/UsersFilteredCatalog.tsx
 import { isEqual } from 'lodash';
 import FiltersButtons from '@shared/ui/FiltersButtons/FiltersButtons.tsx';
 
-const MainPage: React.FC = () => {
-  const dispatch = useAppDispatch();
+type OutletContextType = {
+  searchQuery: string;
+};
 
+const MainPage: React.FC = () => {
   const { mappedUsers, allUsers, status, error } = useAppSelector(
     (state) => state.users,
   );
 
   const likesMap = useAppSelector(selectFavouritesCountMap);
   const categories = useAppSelector(selectCategories);
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchAllUsers());
-    }
-  }, [status, dispatch]);
+  const { searchQuery } = useOutletContext<OutletContextType>();
 
   /* ---------------- ФИЛЬТРАЦИЯ ---------------- */
 
@@ -40,7 +37,28 @@ const MainPage: React.FC = () => {
   };
 
   const [filters, setFilters] = useState<Filters>(defaultFilters);
-  const filteredUsers = useUserFilters(mappedUsers, filters, categories);
+
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+const searchFilteredUsers = normalizedQuery
+  ? mappedUsers.filter((user) => {
+      const teachingMatch = user.teachingSkill.title
+        .toLowerCase()
+        .includes(normalizedQuery);
+
+      const learningMatch = user.learningSkills.some((skill) =>
+        skill.title.toLowerCase().includes(normalizedQuery)
+      );
+
+      return teachingMatch || learningMatch;
+    })
+  : mappedUsers;
+
+  const filteredUsers = useUserFilters(
+  searchFilteredUsers,
+  filters,
+  categories
+);
 
   /* ---------------- ПОПУЛЯРНЫЕ ---------------- */
 
