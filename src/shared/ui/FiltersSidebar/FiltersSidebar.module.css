@@ -1,13 +1,18 @@
 .sidebar {
+  position: sticky;
+  top: 20px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   width: 100%;
   max-width: 324px;
-  height: fit-content;
+  max-height: calc(100vh - 40px);
   padding: 20px;
+  overflow: hidden auto;
   background: var(--clr-ui-surface, #ffffff);
   border-radius: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-primary) transparent;
 }
 
 .heading {
@@ -15,26 +20,29 @@
   font-weight: 500;
   font-size: var(--fs-h2, 24px);
   font-family: var(
-    --ff-heading,
-    'Jost',
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    roboto,
-    arial,
-    sans-serif
-  );
+          --ff-heading,
+          'Jost',
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          roboto,
+          arial,
+          sans-serif
+  ), serif;
   letter-spacing: -0.01em;
 }
 
 .filterSections {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 32px;
+  min-height: 0;
 }
 
 .buttonsContainer {
   display: flex;
+  flex-shrink: 0;
   justify-content: space-between;
 }
 
@@ -45,10 +53,11 @@
   color: var(--clr-primary-pressed, #508826);
   font-weight: var(--fw-regular, 400);
   font-size: var(--fs-h4, 16px);
-  font-family: var(--ff-body, 'Roboto', sans-serif);
+  font-family: var(--ff-body, 'Roboto', sans-serif), serif;
   white-space: nowrap;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .crossButton::after {
@@ -61,4 +70,8 @@
   mask-size: contain;
   transition: transform 0.3s ease;
   content: '';
+}
+
+.crossButton:hover::after {
+  transform: rotate(90deg);
 }

@@ -11,6 +11,7 @@ import { selectCategories } from '@app/store/slices/staticData/staticDataSlice';
 import { useUserFilters } from '@shared/utils/useUserFilters.ts';
 import UsersFilteredCatalog from '@widgets/UsersCatalog/UsersFilteredCatalog.tsx';
 import { isEqual } from 'lodash';
+import FiltersButtons from '@shared/ui/FiltersButtons/FiltersButtons.tsx';
 
 const MainPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,15 +23,6 @@ const MainPage: React.FC = () => {
   const likesMap = useAppSelector(selectFavouritesCountMap);
   const categories = useAppSelector(selectCategories);
 
-  const defaultFilters = {
-    cities: [],
-    skillCategories: [],
-    skillSubcategories: [],
-    gender: 'any',
-    teachStatus: 'all',
-  };
-  const [filters, setFilters] = useState<Filters>(defaultFilters);
-
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchAllUsers());
@@ -39,6 +31,15 @@ const MainPage: React.FC = () => {
 
   /* ---------------- ФИЛЬТРАЦИЯ ---------------- */
 
+  const defaultFilters = {
+    cities: [],
+    skillCategories: [],
+    skillSubcategories: [],
+    gender: 'any',
+    teachStatus: 'all',
+  };
+
+  const [filters, setFilters] = useState<Filters>(defaultFilters);
   const filteredUsers = useUserFilters(mappedUsers, filters, categories);
 
   /* ---------------- ПОПУЛЯРНЫЕ ---------------- */
@@ -85,10 +86,17 @@ const MainPage: React.FC = () => {
             recommendedUsers={recommendedUsers}
           />
         ) : (
-          <UsersFilteredCatalog filteredUsers={filteredUsers} />
+          <div className={styles.catalogContainer}>
+            <FiltersButtons
+              filters={filters}
+              defaultFilters={defaultFilters}
+              onFiltersChange={setFilters}
+            />
+            <UsersFilteredCatalog filteredUsers={filteredUsers} />
+          </div>
         ))}
     </div>
   );
-};;
+};
 
 export default MainPage;
