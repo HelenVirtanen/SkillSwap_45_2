@@ -2,7 +2,7 @@ import styles from './RegisterPageStep1.module.css';
 import BulbIcon from '@assets/illustrations/light-bulb.svg?react';
 import { IllustrationPanel } from '@widgets/IllustrationPanel/IllustrationPanel';
 import Stepper from '@widgets/Stepper/Stepper';
-import Step1UserInfo from '@features/forms/RegisterSteps/Step1UserInfo/Step1UserInfo'; // ← ИМПОРТИРУЕМ ФОРМУ
+import Step1UserInfo from '@features/forms/RegisterSteps/Step1UserInfo/Step1UserInfo';
 
 const RegisterPageStep1: React.FC = () => {
   return (

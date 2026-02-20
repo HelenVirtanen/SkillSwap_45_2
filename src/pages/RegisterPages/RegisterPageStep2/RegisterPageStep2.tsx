@@ -12,7 +12,6 @@ const RegisterPageStep2: React.FC = () => {
       </div>
       <div className={styles.mainWrapper}>
         <Step2ProfileInfo />
-
         <div>
           <IllustrationPanel
             image={<UserInfo />}
