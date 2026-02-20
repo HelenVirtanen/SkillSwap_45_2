@@ -1,12 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@app/store/store';
 import { fetchUsers } from './actions';
-import {
-  loginUserApi,
-  getMyProfileApi,
-  registerUserApi,
-  type TRegisterData,
-} from '@api/api';
+import { loginUserApi, getMyProfileApi, registerUserApi, type TRegisterData } from '@api/api';
 import { setCookie, getCookie, deleteCookie } from '@features/auth/cookie';
 import { clearAllProposals } from '../exchange/exchangeSlice';
 
@@ -46,7 +41,7 @@ export const checkAuth = createAsyncThunk(
       deleteCookie('accessToken');
       return rejectWithValue(err.message || 'Сессия истекла');
     }
-  },
+  }
 );
 
 export const loginUser = createAsyncThunk(
@@ -60,7 +55,7 @@ export const loginUser = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err?.message);
     }
-  },
+  }
 );
 
 export const registerUser = createAsyncThunk(
@@ -74,7 +69,7 @@ export const registerUser = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err?.message || 'Ошибка регистрации');
     }
-  },
+  }
 );
 
 export const logoutUser = createAsyncThunk(
@@ -83,7 +78,7 @@ export const logoutUser = createAsyncThunk(
     localStorage.removeItem('refreshToken');
     deleteCookie('accessToken');
     dispatch(clearAllProposals());
-  },
+  }
 );
 
 export const authSlice = createSlice({
@@ -133,8 +128,7 @@ export const authSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed';
-        state.error =
-          action.error.message || 'Ошибка при загрузке пользователя';
+        state.error = action.error.message || 'Ошибка при загрузке пользователя';
         state.isAuthChecked = false;
       });
     builder
@@ -165,21 +159,20 @@ export const authSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload as string;
       });
-    builder.addCase(logoutUser.fulfilled, (state) => {
-      state.user = null;
-      state.isAuthChecked = false;
-      state.status = 'idle';
-      state.error = null;
-    });
+    builder
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.isAuthChecked = false;
+        state.status = 'idle';
+        state.error = null;
+      });
   },
 });
 
 export const selectAuthUser = (state: RootState) => state.auth.user;
 export const selectAuthStatus = (state: RootState) => state.auth.status;
 export const selectAuthError = (state: RootState) => state.auth.error;
-export const selectIsAuthChecked = (state: RootState) =>
-  state.auth.isAuthChecked;
-export const selectIsAuthenticated = (state: RootState) =>
-  !!state.auth.user && state.auth.isAuthChecked;
+export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;
+export const selectIsAuthenticated = (state: RootState) => !!state.auth.user && state.auth.isAuthChecked;
 export const { clearUser, setUser, setIsAuthChecked } = authSlice.actions;
 export default authSlice.reducer;

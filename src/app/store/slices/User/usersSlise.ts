@@ -8,6 +8,55 @@ import {
 import type { IUserCardData } from '@widgets/UserCardsGroup/UserCardsGroup';
 import type { RootState } from '@app/store/store';
 
+// тип навыков
+type SkillVariant =
+  | 'business'
+  | 'languages'
+  | 'home'
+  | 'art'
+  | 'education'
+  | 'health'
+  | 'other';
+
+const CATEGORY_TO_VARIANT: Record<string, SkillVariant> = {
+  'Бизнес и карьера': 'business',
+  'Иностранные языки': 'languages',
+  'Дом и уют': 'home',
+  'Творчество и искусство': 'art',
+  'Образование и развитие': 'education',
+  'Здоровье и лайфстайл': 'health',
+};
+
+const LEARN_SKILL_TO_VARIANT: Record<string, SkillVariant> = {
+  Английский: 'languages',
+  Французский: 'languages',
+  Испанский: 'languages',
+  Немецкий: 'languages',
+  Китайский: 'languages',
+  Японский: 'languages',
+  'Продажи и переговоры': 'business',
+  'Маркетинг и реклама': 'business',
+  'Тайм-менеджмент': 'business',
+  'Приготовление еды': 'home',
+  Ремонт: 'home',
+  'Домашние растения': 'home',
+  'Рисование и иллюстрация': 'art',
+  Фотография: 'art',
+  Видеомонтаж: 'art',
+  'Музыка и звук': 'art',
+  Коучинг: 'education',
+  'Навыки обучения': 'education',
+  'Йога и медитация': 'health',
+  'Питание и ЗОЖ': 'health',
+  'Физические тренировки': 'health',
+};
+
+const getVariantByCategory = (category?: string): SkillVariant =>
+  (category && CATEGORY_TO_VARIANT[category]) || 'other';
+
+const getVariantBySkill = (skill?: string): SkillVariant =>
+  (skill && LEARN_SKILL_TO_VARIANT[skill]) || 'other';
+
 // Состояние слайса
 interface UsersState {
   allUsers: TProfile[]; // сырые данные из API
@@ -35,7 +84,7 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
   id: String(profile.id),
   avatar: profile.avatar || '../src/assets/avatars/default.png',
   name: profile.name,
-  birthDate: profile.birthDate ?? 'Не указано',
+  birthDate: profile.birthDate ?? '',
   city: profile.city ?? 'Город не указан',
   gender: profile.gender ?? 'any',
 
@@ -44,12 +93,12 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
       profile.teach_skills?.skills ??
       profile.teach_skills?.title ??
       'Навык не указан',
-    variant: 'education',
+    variant: getVariantByCategory(profile.teach_skills?.title),
   },
   learningSkills:
     profile.learn_skills?.map((skill) => ({
       title: skill,
-      variant: 'education',
+      variant: getVariantBySkill(skill),
     })) ?? [],
   isFavorite: false,
 });
