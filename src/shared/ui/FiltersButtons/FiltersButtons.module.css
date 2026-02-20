@@ -1,0 +1,15 @@
+.buttonsContainer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    max-width: 1020px;
+    margin: 12px 0 40px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--clr-primary) transparent;
+}
+
+.crossButton {
+    width: auto;
+    white-space: nowrap;
+}
