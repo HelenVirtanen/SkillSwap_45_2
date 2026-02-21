@@ -5,7 +5,7 @@ import styles from '@pages/ProfilePage/ProfilePage.module.css';
 import ProfileSidebar from '@widgets/ProfileSidebar/ProfileSidebar';
 import ProfileForm, {
   ProfileFormData,
-} from '@features/forms/ProfileForm/ProrileForm';
+} from '@features/forms/ProfileForm/ProfileForm';
 import AddIcon from '@assets/icons/edit-photo.svg?react';
 import { useAppSelector } from '@app/store/store';
 import { selectUserById } from '@app/store/slices/User/usersSlise';

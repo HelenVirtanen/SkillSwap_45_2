@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useForm } from 'react-hook-form';
-import ProfileForm, { ProfileFormData } from '@features/forms/ProfileForm/ProrileForm';
+import ProfileForm, { ProfileFormData } from '@features/forms/ProfileForm/ProfileForm';
 
 import { useEffect } from 'react';
 
