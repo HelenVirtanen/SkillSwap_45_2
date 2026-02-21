@@ -8,7 +8,7 @@ interface LikesState {
   error: string | null;
 }
 
-const initialState: LikesState = {
+export const initialState: LikesState = {
   likedUserIds: [],
   favouritesCountMap: {},
   status: 'idle',
