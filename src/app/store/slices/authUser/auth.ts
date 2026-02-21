@@ -162,7 +162,7 @@ export const authSlice = createSlice({
     builder
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        state.isAuthChecked = false;
+        state.isAuthChecked = true;
         state.status = 'idle';
         state.error = null;
       });

@@ -5,6 +5,7 @@
   align-items: center;
   gap: 24px;
   width: 100%;
+  position: relative;
 }
 
 .iconsContainer {
@@ -37,3 +38,5 @@
   line-height: 1.5;
   letter-spacing: 0.02em;
 }
+
+
