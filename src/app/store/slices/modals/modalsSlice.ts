@@ -23,7 +23,7 @@ interface ModalsState {
   modalData: ModalData | null;
 }
 
-const initialState: ModalsState = {
+export const initialState: ModalsState = {
   activeModal: null,
   modalData: null,
 };
