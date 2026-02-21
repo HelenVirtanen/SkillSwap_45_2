@@ -35,18 +35,14 @@ describe('registrationSlice', () => {
     jest.clearAllMocks();
   });
 
-  // -----------------------
-  // INITIAL STATE
-  // -----------------------
+  // initial state
 
   test('возвращает initial state', () => {
     const state = reducer(undefined, { type: '@@INIT' });
     expect(state).toEqual(initialState);
   });
 
-  // -----------------------
-  // REDUCERS
-  // -----------------------
+  // reducers
 
   test('resetRegistrationState сбрасывает state', () => {
     const modifiedState = {
@@ -60,9 +56,7 @@ describe('registrationSlice', () => {
     expect(state).toEqual(initialState);
   });
 
-  // -----------------------
-  // EXTRA REDUCERS
-  // -----------------------
+  // extra reducers
 
   test('обрабатывает registerUser.pending', () => {
     const action = { type: registerUser.pending.type };
@@ -85,9 +79,7 @@ describe('registrationSlice', () => {
     expect(state.error).toBe('Ошибка при регистрации');
   });
 
-  // -----------------------
-  // THUNK
-  // -----------------------
+  // thunk
 
   test('registerUser thunk успешен', async () => {
     (registerUserApi as jest.Mock).mockResolvedValue(mockUserData);
