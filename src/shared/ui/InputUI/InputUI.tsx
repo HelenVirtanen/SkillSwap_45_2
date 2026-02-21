@@ -17,7 +17,7 @@ export interface InputUIProps extends React.InputHTMLAttributes<HTMLInputElement
 
 const InputUI: React.FC<InputUIProps> = ({
   label,
-  value,
+  value =  '',
   onChange,
   onClick,
   error,

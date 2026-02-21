@@ -6,7 +6,7 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
 import DatePicker from '@widgets/DatePicker/DatePicker';
 
-import styles from './ProrileForm.module.css';
+import styles from './ProfileForm.module.css';
 
 export type ProfileFormData = {
   email: string;
