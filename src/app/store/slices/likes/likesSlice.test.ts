@@ -5,6 +5,7 @@ import reducer, {
   selectLikesStatus,
   initialState
 } from './likesSlice';
+import type { RootState } from '@app/store/store';
 
 describe('likesSlice', () => {
   beforeEach(() => {
@@ -110,17 +111,17 @@ describe('likesSlice', () => {
   // selectors
 
   test('селекторы возвращают корректные данные', () => {
-    const mockState = {
+    const mockState: Pick<RootState, 'likes'> = {
       likes: {
         likedUserIds: [5],
         favouritesCountMap: { 5: 3 },
         status: 'succeeded',
         error: null,
       },
-    } as any;
+    };
 
-    expect(selectLikedUserIds(mockState)).toEqual([5]);
-    expect(selectFavouritesCountMap(mockState)).toEqual({ 5: 3 });
-    expect(selectLikesStatus(mockState)).toBe('succeeded');
+    expect(selectLikedUserIds(mockState as RootState)).toEqual([5]);
+    expect(selectFavouritesCountMap(mockState as RootState)).toEqual({ 5: 3 });
+    expect(selectLikesStatus(mockState as RootState)).toBe('succeeded');
   });
 });

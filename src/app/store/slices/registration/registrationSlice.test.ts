@@ -10,6 +10,7 @@ import reducer, {
   selectRegistrationStep3,
   selectCurrentStep,
 } from './registrationSlice';
+import type { RootState } from '@app/store/store';
 
 describe('registrationSlice', () => {
 
@@ -71,18 +72,18 @@ describe('registrationSlice', () => {
   });
 
   test('селекторы возвращают корректные данные', () => {
-    const mockState = {
+    const mockState: Pick<RootState, 'registration'> = {
       registration: {
         step1: { email: 'e', password: 'p' },
         step2: { firstName: 'J', birthDate: '', gender: '', city: '', categorySkill: [], subcategorySkill: [] },
         step3: { title: 'T', category: 'C', subcategory: 'S', description: 'D' },
         currentStep: 2,
       },
-    } as any;
+    };
 
-    expect(selectRegistrationStep1(mockState)).toEqual({ email: 'e', password: 'p' });
-    expect(selectRegistrationStep2(mockState)).toEqual({ firstName: 'J', birthDate: '', gender: '', city: '', categorySkill: [], subcategorySkill: [] });
-    expect(selectRegistrationStep3(mockState)).toEqual({ title: 'T', category: 'C', subcategory: 'S', description: 'D' });
-    expect(selectCurrentStep(mockState)).toBe(2);
+    expect(selectRegistrationStep1(mockState as RootState)).toEqual({ email: 'e', password: 'p' });
+    expect(selectRegistrationStep2(mockState as RootState)).toEqual({ firstName: 'J', birthDate: '', gender: '', city: '', categorySkill: [], subcategorySkill: [] });
+    expect(selectRegistrationStep3(mockState as RootState)).toEqual({ title: 'T', category: 'C', subcategory: 'S', description: 'D' });
+    expect(selectCurrentStep(mockState as RootState)).toBe(2);
   });
 });
