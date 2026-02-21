@@ -60,7 +60,7 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'auth/register',
-  async (data: TRegisterData, { rejectWithValue }) => {
+  async (data: TRegisterData , { rejectWithValue }) => {
     try {
       const res = await registerUserApi(data);
       localStorage.setItem('refreshToken', res.refreshToken);
