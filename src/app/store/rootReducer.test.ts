@@ -1,8 +1,8 @@
-jest.mock('../../shared/lib/env', () => ({
+import { rootReducer } from './rootReducer';
+
+jest.mock('@shared/lib/env', () => ({
   API_KEY: 'test-api-key',
 }));
-
-import { rootReducer } from './rootReducer';
 
 describe('rootReducer', () => {
   test('Правильная инициализация со всеми редьюсерами', () => {
