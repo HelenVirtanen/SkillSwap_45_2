@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["src/api/*"],
+      "@app/*": ["src/app/*"],
+      "@assets/*": ["src/assets/*"],
+      "@entities/*": ["src/entities/*"],
+      "@features/*": ["src/features/*"],
+      "@pages/*": ["src/pages/*"],
+      "@shared/*": ["src/shared/*"],
+      "@styles/*": ["src/styles/*"],
+      "@widgets/*": ["src/widgets/*"]
+    },
+    "types": ["jest", "node"],
+    "typeRoots": ["./node_modules/@types"],
+  },
+  "include": ["src"]
+}

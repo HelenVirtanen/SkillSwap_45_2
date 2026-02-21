@@ -5,7 +5,7 @@ interface FavoritesState {
   ids: number[];
 }
 
-const loadFavorites = (): number[] => {
+export const loadFavorites = (): number[] => {
   try {
     const stored = localStorage.getItem('favorites');
     if (!stored) return [];

@@ -10,7 +10,7 @@ interface RegistrationState {
 }
 
 // Начальное состояние
-const initialState: RegistrationState = {
+export const initialState: RegistrationState = {
   status: 'idle',
   error: null,
   userData: null,

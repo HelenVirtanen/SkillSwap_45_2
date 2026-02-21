@@ -32,7 +32,7 @@ export interface RegistrationState {
   currentStep: number;
 }
 
-const initialState: RegistrationState = {
+export const initialState: RegistrationState = {
   step1: { email: '', password: '' },
   step2: {
     firstName: '',

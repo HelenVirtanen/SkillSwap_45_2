@@ -1,7 +1,7 @@
 import { getCookie, setCookie } from '../features/auth/cookie';
 import type { TUser } from '../entities/User.ts';
 
-const API_KEY = import.meta.env.VITE_API_KEY;
+import { API_KEY } from '@shared/lib/env';
 
 const checkResponse = <T>(res: Response): Promise<T> =>
   res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
