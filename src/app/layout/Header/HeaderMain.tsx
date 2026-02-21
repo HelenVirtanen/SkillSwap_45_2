@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './HeaderMain.module.css';
 import Logo from '@features/Logo/Logo';
@@ -11,9 +11,11 @@ import HeaderUserMenuUI from '@shared/ui/HeaderUserMenuUI/HeaderUserMenuUI';
 import { useAppSelector } from '@app/store/store';
 import { selectAuthUser } from '@app/store/slices/authUser/auth';
 import { useTheme } from '@shared/lib/theme/useTheme';
+import { useAppDispatch } from '@app/store/store';
+import { logoutUser } from '@app/store/slices/authUser/auth';
 
 export type HeaderVariant = 'guest' | 'auth';
-export type UserMenuAction = 'user' | 'favorite' | 'notifications';
+export type UserMenuAction = 'user' | 'favorite' | 'notifications' | 'logout';
 
 interface HeaderProps {
   onSearchChange?: (query: string) => void;
@@ -29,6 +31,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
   variant = 'guest',
   className = '',
 }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const user = useAppSelector(selectAuthUser);
@@ -51,7 +54,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
   };
 
   const handleUserMenuAction = (action: UserMenuAction) => {
-    console.log('User menu action:', action);
+    //console.log('User menu action:', action);
     switch (action) {
       case 'user':
         navigate('/profile');
@@ -61,6 +64,11 @@ const HeaderMain: React.FC<HeaderProps> = ({
         break;
       case 'notifications':
         navigate('/notifications');
+        break;
+      case 'logout':
+        dispatch(logoutUser()).then(() => {
+          navigate('/');
+        });
         break;
       default:
         console.warn(`Unknown action: ${action}`);
@@ -95,11 +103,17 @@ const HeaderMain: React.FC<HeaderProps> = ({
               onClick={handleBackHomeClick}
               aria-label="Закрыть страницу авторизации"
               iconRight={
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path 
-                    d="M18 6L6 18M6 6L18 18" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M18 6L6 18M6 6L18 18"
+                    stroke="currentColor"
+                    strokeWidth="2"
                     strokeLinecap="round"
                   />
                 </svg>
@@ -115,7 +129,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
   // Основной вариант (для гостей)
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <header 
+      <header
         className={styles.header}
         role="banner"
         aria-label="Основной заголовок приложения"
@@ -143,7 +157,7 @@ const HeaderMain: React.FC<HeaderProps> = ({
 
         {/* Правая часть */}
         <div className={styles.right}>
-          {isAuthenticated && user? (
+          {isAuthenticated && user ? (
             // Авторизованный пользователь - полное меню с колокольчиком внутри
             <HeaderUserMenuUI
               hasNewNotifications={true}
@@ -156,12 +170,12 @@ const HeaderMain: React.FC<HeaderProps> = ({
             <div className={styles.rightContent}>
               {/* Кнопка темы рядом с поиском */}
               <div className={styles.themeSection}>
-                <ThemeToggle 
+                <ThemeToggle
                   isLight={theme === 'light'}
                   onToggle={toggleTheme}
                 />
               </div>
-              
+
               {/* Кнопки авторизации с отдельным отступом */}
               <div className={styles.authButtons}>
                 <ButtonUI
