@@ -71,8 +71,17 @@ export type TRegisterData = {
   email: string;
   name: string;
   password: string;
+  // Новые необязательные поля
+  birthDate?: string;
+  gender?: string;
+  city?: string;
+  teachSkillsTitle?: string;
+  teachSkills?: string;
+  learnSkills?: string[];
+  avatar?: string;
+  about?: string;
+  photosOnAbout?: string[];
 };
-
 export type TAuthResponse = {
   refreshToken: string;
   accessToken: string;
