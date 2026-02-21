@@ -23,7 +23,7 @@ interface StaticDataState {
   error: string | null;
 }
 
-const initialState: StaticDataState = {
+export const initialState: StaticDataState = {
   cities: [],
   categories: [],
   status: 'idle',
