@@ -89,10 +89,7 @@ const mapProfileToCard = (profile: TProfile): IUserCardData => ({
   gender: profile.gender ?? 'any',
 
   teachingSkill: {
-    title:
-      profile.teach_skills?.skills ??
-      profile.teach_skills?.title ??
-      'Навык не указан',
+    title: profile.teach_skills?.title || profile.teach_skills?.skills || 'Навык не указан',
     variant: getVariantByCategory(profile.teach_skills?.title),
   },
   learningSkills:

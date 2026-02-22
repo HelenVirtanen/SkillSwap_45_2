@@ -4,24 +4,23 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import InputUI from '@shared/ui/InputUI/InputUI';
-import DropDownUI from '@shared/ui/DropDownUI/DropDownUI';
 import styles from './Step3SkillInfo.module.css';
 import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';
-import { TSkillCategory } from '@api/api';
 import { useAppDispatch, useAppSelector } from '@app/store/store';
 import { registerUser } from '@app/store/slices/authUser/auth';
 import { clearRegistration } from '@app/store/slices/registration/registrationSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectCategories } from '@app/store/slices/staticData/staticDataSlice';
 import { MultiSelectDropdownUI } from '@shared/ui/MultiSelectDropdownUI/MultiSelectDropdownUI';
+import { updateMyProfileApi } from '@api/api';
 
 // Тип данных формы
 export interface Step3Data {
   title: string;
-  category: string[];      // ← массив (мультивыбор)
-  subcategory: string[];   // ← массив (мультивыбор)
+  category: string[]; // ← массив (мультивыбор)
+  subcategory: string[]; // ← массив (мультивыбор)
   description: string;
-  image?: File;            // ← опционально
+  image?: File; // ← опционально
 }
 
 // Схема валидации Yup
@@ -41,7 +40,7 @@ const schema = yup.object().shape({
     .required('Выберите подкатегорию'),
   description: yup
     .string()
-    .max(500, 'Описание не должно превышать 500 символов')
+    .max(300, 'Описание не должно превышать 300 символов')
     .required('Обязательное поле'),
   image: yup
     .mixed<File>()
@@ -60,10 +59,12 @@ interface Step3SkillInfoProps {
   initialData?: Partial<Step3Data>;
 }
 
+const FAKE_IMAGE_URL = 'https://placehold.co/600x400';
+
 export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [isRegistered, setIsRegistered] = useState(false); // нужно для понимания зарегестрирован или нет для дальнейшего ридеректа в профиль при ttrue
+  const [isCompleted, setIsCompleted] = useState(false);
 
   // Данные из предыдущих шагов регистрации
   const step1Data = useAppSelector((state) => state.registration.step1);
@@ -74,13 +75,12 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
 
   // Защита от прямого перехода на шаг 3 без данных шага 1
   useEffect(() => {
-    if (isRegistered) return;  // блокируем перенаправление если зарегестрировались
+    if (isCompleted) return;
 
     if (!step1Data.email || !step1Data.password) {
-      console.warn('Данные регистрации отсутствуют. Перенаправляем на шаг 1.');
       navigate('/register/step1', { replace: true });
     }
-  }, [step1Data, navigate, isRegistered]);
+  }, [step1Data, navigate, isCompleted]);
 
   const {
     control,
@@ -120,25 +120,26 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
 
   // Синхронизация подкатегорий: очищаем или обрезаем некорректные
   useEffect(() => {
-  // Если категории не выбраны — очищаем подкатегории, если они не пусты
-  if (!selectedCategory?.length) {
-    if (selectedSubcategory?.length) {
-      setValue('subcategory', []);
+    // Если категории не выбраны — очищаем подкатегории, если они не пусты
+    if (!selectedCategory?.length) {
+      if (selectedSubcategory?.length) {
+        setValue('subcategory', []);
+      }
+      return;
     }
-    return;
-  }
 
-  // Фильтруем выбранные подкатегории, оставляя только те, что есть в subcategoryOptions
-  const validSubcategories = selectedSubcategory?.filter((sub) => subcategoryOptions.includes(sub)) || [];
+    // Фильтруем выбранные подкатегории, оставляя только те, что есть в subcategoryOptions
+    const validSubcategories =
+      selectedSubcategory?.filter((sub) => subcategoryOptions.includes(sub)) || [];
 
-  // Сравниваем текущее значение с валидным по содержимому
-  const currentSubStr = JSON.stringify(selectedSubcategory || []);
-  const validSubStr = JSON.stringify(validSubcategories);
+    // Сравниваем текущее значение с валидным по содержимому
+    const currentSubStr = JSON.stringify(selectedSubcategory || []);
+    const validSubStr = JSON.stringify(validSubcategories);
 
-  if (currentSubStr !== validSubStr) {
-    setValue('subcategory', validSubcategories);
-  }
-}, [selectedCategory, subcategoryOptions, selectedSubcategory, setValue]);
+    if (currentSubStr !== validSubStr) {
+      setValue('subcategory', validSubcategories);
+    }
+  }, [selectedCategory, subcategoryOptions, selectedSubcategory, setValue]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -147,31 +148,49 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
     }
   };
 
-  const onSubmit = async (_data: Step3Data) => {
-    // Защита: проверяем критические данные
+  const onSubmit = async (data: Step3Data) => {
     if (!step1Data.email || !step1Data.password) {
-      alert('Ошибка: данные регистрации повреждены. Начните регистрацию заново.');
       navigate('/register/step1');
       return;
     }
 
-    // Формируем имя (если не заполнено — берём из email)
-    const userName = step2Data.firstName?.trim() || step1Data.email.split('@')[0] || 'Пользователь';
-
-    const fullRegistrationData = {
-      email: step1Data.email,
-      password: step1Data.password,
-      name: userName,
-    };
+    const userName =
+      step2Data.firstName?.trim() ||
+      step1Data.email.split('@')[0] ||
+      'Пользователь';
 
     try {
-      await dispatch(registerUser(fullRegistrationData)).unwrap();
-      setIsRegistered(true);
+      // 1. Регистрация (только базовые данные)
+      await dispatch(
+        registerUser({
+          email: step1Data.email,
+          password: step1Data.password,
+          name: userName,
+        })
+      ).unwrap();
+
+      // 2. Обновление профиля (всегда, даже без картинки)
+      const updateData = {
+        birthDate: step2Data.birthDate || '',
+        gender: step2Data.gender || '',
+        city: step2Data.city || '',
+        teachSkillsTitle: data.title,
+        teachSkills: data.subcategory[0] || '',
+        learnSkills: data.subcategory,
+        about: data.description,
+        // Заглушка для аватарки (если выбрано фото)
+        avatar: data.image ? FAKE_IMAGE_URL : undefined,
+        photosOnAbout: data.image ? [FAKE_IMAGE_URL] : [],
+      };
+
+      await updateMyProfileApi(updateData);
+
+      setIsCompleted(true);
       dispatch(clearRegistration());
       navigate('/profile', { replace: true });
     } catch (error) {
       console.error('Registration failed:', error);
-      alert(`Ошибка регистрации: ${error || 'Неизвестная ошибка'}`);
+      alert('Ошибка регистрации');
     }
   };
 
@@ -274,7 +293,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
           )}
         />
 
-        {/* Изображение */}
+        {/* Изображение (оставляем, но серверу отправляем заглушку) */}
         <Controller
           name="image"
           control={control}
