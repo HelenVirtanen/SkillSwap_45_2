@@ -59,11 +59,12 @@ interface Step3SkillInfoProps {
   initialData?: Partial<Step3Data>;
 }
 
-export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
-  initialData,
-}) => {
+const FAKE_IMAGE_URL = 'https://placehold.co/600x400';
+
+export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isCompleted, setIsCompleted] = useState(false);
 
   // Данные из предыдущих шагов регистрации
   const step1Data = useAppSelector((state) => state.registration.step1);
@@ -71,16 +72,15 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({
 
   // Категории из статических данных
   const categories = useAppSelector(selectCategories);
-const [isCompleted, setIsCompleted] = useState(false);
 
   // Защита от прямого перехода на шаг 3 без данных шага 1
- useEffect(() => {
-  if (isCompleted) return;
+  useEffect(() => {
+    if (isCompleted) return;
 
-  if (!step1Data.email || !step1Data.password) {
-    navigate('/register/step1', { replace: true });
-  }
-}, [step1Data, navigate, isCompleted]);
+    if (!step1Data.email || !step1Data.password) {
+      navigate('/register/step1', { replace: true });
+    }
+  }, [step1Data, navigate, isCompleted]);
 
   const {
     control,
@@ -130,8 +130,7 @@ const [isCompleted, setIsCompleted] = useState(false);
 
     // Фильтруем выбранные подкатегории, оставляя только те, что есть в subcategoryOptions
     const validSubcategories =
-      selectedSubcategory?.filter((sub) => subcategoryOptions.includes(sub)) ||
-      [];
+      selectedSubcategory?.filter((sub) => subcategoryOptions.includes(sub)) || [];
 
     // Сравниваем текущее значение с валидным по содержимому
     const currentSubStr = JSON.stringify(selectedSubcategory || []);
@@ -149,57 +148,51 @@ const [isCompleted, setIsCompleted] = useState(false);
     }
   };
 
- const FAKE_IMAGE_URL = 'https://placehold.co/600x400';
+  const onSubmit = async (data: Step3Data) => {
+    if (!step1Data.email || !step1Data.password) {
+      navigate('/register/step1');
+      return;
+    }
 
-const onSubmit = async (data: Step3Data) => {
-  if (!step1Data.email || !step1Data.password) {
-    navigate('/register/step1');
-    return;
-  }
+    const userName =
+      step2Data.firstName?.trim() ||
+      step1Data.email.split('@')[0] ||
+      'Пользователь';
 
-  const userName =
-    step2Data.firstName?.trim() ||
-    step1Data.email.split('@')[0] ||
-    'Пользователь';
+    try {
+      // 1. Регистрация (только базовые данные)
+      await dispatch(
+        registerUser({
+          email: step1Data.email,
+          password: step1Data.password,
+          name: userName,
+        })
+      ).unwrap();
 
-  try {
-    // 1️⃣ Регистрация
-    await dispatch(
-      registerUser({
-        email: step1Data.email,
-        password: step1Data.password,
-        name: userName,
-      })
-    ).unwrap();
+      // 2. Обновление профиля (всегда, даже без картинки)
+      const updateData = {
+        birthDate: step2Data.birthDate || '',
+        gender: step2Data.gender || '',
+        city: step2Data.city || '',
+        teachSkillsTitle: data.title,
+        teachSkills: data.subcategory[0] || '',
+        learnSkills: data.subcategory,
+        about: data.description,
+        // Заглушка для аватарки (если выбрано фото)
+        avatar: data.image ? FAKE_IMAGE_URL : undefined,
+        photosOnAbout: data.image ? [FAKE_IMAGE_URL] : [],
+      };
 
-    // 2️⃣ Если пользователь выбрал фото — отправляем заглушку
-    const photoUrl = data.image ? FAKE_IMAGE_URL : undefined;
+      await updateMyProfileApi(updateData);
 
-    // 3️⃣ Обновление профиля
-    await updateMyProfileApi({
-      birthDate: step2Data.birthDate || '',
-      gender: step2Data.gender || '',
-      city: step2Data.city || '',
-      teachSkillsTitle: data.title,
-      teachSkills: data.subcategory[0] || '',
-      learnSkills: data.subcategory,
-      about: data.description,
-
-      // сервер ожидает ссылку
-      avatar: photoUrl,
-      photosOnAbout: photoUrl ? [photoUrl] : [],
-    });
-
-    setIsCompleted(true);
-
-    dispatch(clearRegistration());
-    navigate('/profile', { replace: true });
-
-  } catch (error) {
-    console.error('Registration failed:', error);
-    alert('Ошибка регистрации');
-  }
-};
+      setIsCompleted(true);
+      dispatch(clearRegistration());
+      navigate('/profile', { replace: true });
+    } catch (error) {
+      console.error('Registration failed:', error);
+      alert('Ошибка регистрации');
+    }
+  };
 
   const handleBack = () => {
     navigate('/register/step2');
@@ -245,9 +238,7 @@ const onSubmit = async (data: Step3Data) => {
                 />
               </div>
               {errors.category && (
-                <span className={styles.errorMessage}>
-                  {errors.category.message}
-                </span>
+                <span className={styles.errorMessage}>{errors.category.message}</span>
               )}
             </div>
           )}
@@ -274,9 +265,7 @@ const onSubmit = async (data: Step3Data) => {
                 />
               </div>
               {errors.subcategory && (
-                <span className={styles.errorMessage}>
-                  {errors.subcategory.message}
-                </span>
+                <span className={styles.errorMessage}>{errors.subcategory.message}</span>
               )}
             </div>
           )}
@@ -304,7 +293,7 @@ const onSubmit = async (data: Step3Data) => {
           )}
         />
 
-        {/* Изображение */}
+        {/* Изображение (оставляем, но серверу отправляем заглушку) */}
         <Controller
           name="image"
           control={control}
@@ -328,9 +317,7 @@ const onSubmit = async (data: Step3Data) => {
                 </label>
               </div>
               {errors.image && (
-                <span className={styles.errorMessage}>
-                  {errors.image.message}
-                </span>
+                <span className={styles.errorMessage}>{errors.image.message}</span>
               )}
             </div>
           )}
@@ -338,12 +325,7 @@ const onSubmit = async (data: Step3Data) => {
       </div>
 
       <div className={styles.formActions}>
-        <ButtonUI
-          variant="secondary"
-          title="Назад"
-          onClick={handleBack}
-          type="button"
-        />
+        <ButtonUI variant="secondary" title="Назад" onClick={handleBack} type="button" />
         <ButtonUI
           variant="primary"
           title="Зарегистрироваться"
