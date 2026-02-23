@@ -12,6 +12,7 @@ import {
   setStep2Data,
   setCurrentStep,
   selectRegistrationStep1,
+  selectRegistrationStep2,
 } from '@app/store/slices/registration/registrationSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectCategories } from '@app/store/slices/staticData/staticDataSlice';
@@ -34,6 +35,17 @@ const Step2ProfileInfo: React.FC = () => {
 
   // Защита от прямого перехода на шаг 2 без данных шага 1
   const step1Data = useAppSelector(selectRegistrationStep1);
+  const storedStep2Data = useAppSelector(selectRegistrationStep2);
+
+  const [localData, setLocalData] = useState<Step2Data>(() => ({
+    firstName: storedStep2Data.firstName || '',
+    birthDate: storedStep2Data.birthDate || '',
+    gender: storedStep2Data.gender || 'Не указан',
+    city: storedStep2Data.city || '',
+    categorySkill: storedStep2Data.categorySkill || [],
+    subcategorySkill: storedStep2Data.subcategorySkill || [],
+  }));
+
   useEffect(() => {
     if (!step1Data.email || !step1Data.password) {
       console.warn('Данные шага 1 отсутствуют. Перенаправляем на шаг 1.');
@@ -51,15 +63,6 @@ const Step2ProfileInfo: React.FC = () => {
       value: c.title,
     }));
   }, [categories]);
-
-  const [localData, setLocalData] = useState<Step2Data>(() => ({
-    firstName: '',
-    birthDate: '',
-    gender: 'Не указан',
-    city: '',
-    categorySkill: [],
-    subcategorySkill: [],
-  }));
 
   const handleFieldChange = <K extends keyof Step2Data>(
     field: K,
@@ -99,6 +102,7 @@ const Step2ProfileInfo: React.FC = () => {
   const isSubcategoryDisabled = !localData.categorySkill?.length;
 
   const handleBackClick = () => {
+    dispatch(setStep2Data(localData));
     navigate('/register/step1');
   };
 

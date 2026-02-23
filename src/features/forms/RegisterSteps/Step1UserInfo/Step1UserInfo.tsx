@@ -7,10 +7,11 @@ import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
 import styles from './Step1UserInfo.module.css';
 import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
 import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
-import { useAppDispatch } from '@app/store/store';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
 import {
   setStep1Data,
   setCurrentStep,
+  selectRegistrationStep1,
 } from '@app/store/slices/registration/registrationSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,12 +30,19 @@ type UserData = {
 };
 
 const Step1UserInfo: React.FC = () => {
+  const storedStep1Data = useAppSelector(selectRegistrationStep1);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
+    mode: 'onChange',
+    defaultValues: {
+      email: storedStep1Data.email || '',
+      password: storedStep1Data.password || '',
+    },
   });
 
   const dispatch = useAppDispatch();
