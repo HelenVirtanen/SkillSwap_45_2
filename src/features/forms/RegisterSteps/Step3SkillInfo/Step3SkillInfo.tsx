@@ -8,7 +8,7 @@ import styles from './Step3SkillInfo.module.css';
 import { DropzoneUI } from '@shared/ui/DropzoneUI/DropzoneUI';
 import { useAppDispatch, useAppSelector } from '@app/store/store';
 import { registerUser } from '@app/store/slices/authUser/auth';
-import { clearRegistration } from '@app/store/slices/registration/registrationSlice';
+import { clearRegistration, setStep3Data } from '@app/store/slices/registration/registrationSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectCategories } from '@app/store/slices/staticData/staticDataSlice';
 import { MultiSelectDropdownUI } from '@shared/ui/MultiSelectDropdownUI/MultiSelectDropdownUI';
@@ -69,6 +69,7 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
   // Данные из предыдущих шагов регистрации
   const step1Data = useAppSelector((state) => state.registration.step1);
   const step2Data = useAppSelector((state) => state.registration.step2);
+  const storedStep3Data = useAppSelector((state) => state.registration.step3);
 
   // Категории из статических данных
   const categories = useAppSelector(selectCategories);
@@ -87,14 +88,15 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
     setValue,
+    getValues
   } = useForm<Step3Data>({
     resolver: yupResolver(schema) as any, // ← временно для задачи #209
     mode: 'onChange',
     defaultValues: {
-      title: initialData?.title || '',
-      category: initialData?.category || [],
-      subcategory: initialData?.subcategory || [],
-      description: initialData?.description || '',
+      title: storedStep3Data.title || initialData?.title || '',
+      category: storedStep3Data.category || initialData?.category || [],
+      subcategory: storedStep3Data.subcategory || initialData?.subcategory || [],
+      description: storedStep3Data.description || initialData?.description || '',
       image: undefined,
     },
   });
@@ -195,6 +197,9 @@ export const Step3SkillInfo: React.FC<Step3SkillInfoProps> = ({ initialData }) =
   };
 
   const handleBack = () => {
+    const currentFormValues = getValues(); 
+    dispatch(setStep3Data(currentFormValues));
+
     navigate('/register/step2');
   };
 

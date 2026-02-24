@@ -18,8 +18,8 @@ export interface Step2Data {
 
 export interface Step3Data {
   title: string;
-  category: string;
-  subcategory: string;
+  category: string[];
+  subcategory: string[];
   description: string;
   image?: File;
 }
@@ -44,8 +44,8 @@ export const initialState: RegistrationState = {
   },
   step3: {
     title: '',
-    category: '',
-    subcategory: '',
+    category: [],
+    subcategory: [],
     description: '',
   },
   currentStep: 1,
