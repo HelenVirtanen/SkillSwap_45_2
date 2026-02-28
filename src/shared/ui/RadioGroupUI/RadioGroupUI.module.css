@@ -1,0 +1,18 @@
+.radioGroupOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radioGroupLabel {
+  font-weight: var(--fw-medium);
+  font-family: var(--ff-heading);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

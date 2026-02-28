@@ -1,0 +1,123 @@
+import React from 'react';
+import {
+  loginUser,
+  selectAuthStatus,
+} from '@app/store/slices/authUser/auth';
+import { Controller, useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import InputUI from '@shared/ui/InputUI/InputUI';
+import ButtonUI from '@shared/ui/ButtonUI/ButtonUI';
+import styles from './LoginForm.module.css';
+import GoogleIcon from '@assets/icons/logo/google-logo.svg?react';
+import AppleIcon from '@assets/icons/logo/apple-logo.svg?react';
+// import { setCookie } from '@features/auth/cookie';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@app/store/store';
+
+const INVALID_CREDENTIALS =
+  'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных';
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required(INVALID_CREDENTIALS).email(INVALID_CREDENTIALS),
+  password: Yup.string()
+    .min(8, INVALID_CREDENTIALS)
+    .required(INVALID_CREDENTIALS),
+});
+
+type UserData = {
+  email: string;
+  password: string;
+};
+
+const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  const from = (location.state as any)?.from?.pathname || '/';
+
+  const { control, handleSubmit } = useForm<UserData>({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const status = useAppSelector(selectAuthStatus);
+
+  const submitHandler = async (data: UserData) => {
+    const resultAction = await dispatch(loginUser(data));
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate(from, { replace: true });
+    }
+  };
+
+  return (
+    <div className={styles.formWrapper}>
+      <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
+        <div className={styles.buttonSocialWrapper}>
+          <div className={styles.buttonSocial}>
+            <ButtonUI
+              variant="social"
+              title="Продолжить с Google"
+              iconLeft={<GoogleIcon />}
+            />
+          </div>
+          <div className={styles.buttonSocial}>
+            <ButtonUI
+              variant="social"
+              title="Продолжить с Apple"
+              iconLeft={<AppleIcon />}
+            />
+          </div>
+        </div>
+
+        <div className={styles.orSeparator}>или</div>
+
+        <div className={styles.inputWrapper}>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Email"
+                type="email"
+                placeholder="Введите email"
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+
+          <Controller
+            name="password"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputUI
+                {...field}
+                label="Пароль"
+                type="password"
+                placeholder="Введите ваш пароль"
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+        </div>
+
+        <div className={styles.loginButtonsWrapper}>
+          <ButtonUI
+            variant="primary"
+            type="submit"
+            title={status === 'loading' ? 'Входим...' : 'Войти'}
+            disabled={status === 'loading'}
+          />
+          <ButtonUI
+            variant="tertiary"
+            type="button"
+            title="Зарегистрироваться"
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default LoginForm;

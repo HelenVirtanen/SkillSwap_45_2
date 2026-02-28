@@ -1,0 +1,66 @@
+.notificationToast {
+  max-width: 340px;
+  max-height: 72px;
+  background-color: var(--clr-primary-hover, #deebc5);
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: var(--border-radius, 12px);
+  margin-left: 100px;
+  padding: 24px 28px 24px 24px;
+  gap: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.text {
+  color: var(--clr-text-primary, #253017);
+  font-family: var(
+    --ff-heading,
+    'Jost',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    roboto,
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-medium, 500);
+  font-size: var(--fs-h3, 20px);
+  letter-spacing: -0.01em;
+}
+
+.closeButton {
+  position: absolute;
+  top: 3px;
+  right: -2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.goButton {
+  position: absolute;
+  min-width: 74px;
+  min-height: 32px;
+  bottom: 8px;
+  right: 8px;
+  border-radius: var(--lh-caption, 16px);
+  background-color: var(--clr-ui-surface, #ffffff);
+  border: none;
+  cursor: pointer;
+  color: var(--clr-text-primary, #253017);
+  font-family: var(
+    --ff-bodym,
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    arial,
+    sans-serif
+  );
+  letter-spacing: -0.01em;
+}

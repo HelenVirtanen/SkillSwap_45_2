@@ -1,0 +1,76 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  inline-size: 100%;
+  background: var(--bg-secondary);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  inline-size: 100%;
+  max-width: 1440px;
+  padding: 36px 36px 20px;
+  background: var(--bg-secondary);
+}
+
+/* Вариант для страниц авторизации */
+.authHeader {
+  justify-content: space-between;
+  gap: 0;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.logoContainer {
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  min-width: 222px;
+}
+
+.center {
+  flex: 1;
+  /* max-width: 527px; */
+  min-width: 300px;
+}
+
+.center input {
+  width: 100%;       /* растягиваем инпут внутри */
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+/* структура для правой части */
+.rightContent {
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Общий отступ между всеми элементами правой части */
+}
+
+.themeSection {
+  display: flex;
+  align-items: center;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Отступ между кнопками Войти и Зарегистрироваться */
+}
+
+.closeButton {
+  min-width: 100px;
+}

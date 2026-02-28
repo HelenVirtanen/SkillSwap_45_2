@@ -1,0 +1,114 @@
+.dropDownContainer {
+  position: relative;
+  /* display: inline-block; */
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content:space-between;
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  letter-spacing: 0.019rem;
+  
+}
+
+.title {
+  font-size: var(--fs-h4, 16px);
+  font-weight: var(--fw-regular, 400);
+  color: var(--clr-text-primary, #253017);
+}
+
+.buttonWithIcon,
+.buttonWithIconSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: var(--border-radius, 12px);
+  border: 1px solid var(--clr-text-secondary, #69735D);
+  background-color: var(--clr-ui-surface, #FFFFFF);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: var(--fs-h4, 16px);
+  color: var(--clr-text-secondary, #69735D);
+  min-height: 48px;
+}
+
+.buttonWithIconIsOpen {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 1px solid var(--clr-text-secondary, #69735D); /* нижняя граница остаётся */
+}
+
+.buttonWithIconSecondary {
+  /* можно стилизовать отдельный тип кнопки */
+}
+
+.textInButtonWithIcon {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--clr-text-primary);
+}
+
+.placeholder{
+  color: var(--clr-text-secondary, #69735D);
+}
+
+.arrow,
+.arrowOpen {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.arrow {
+  transform: rotate(0deg);
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+.dropDownList,
+.dropDownListSecondary {
+  position: absolute;
+  top: calc(100% + -8px);
+  left: 0;
+  right: 0;
+  max-height: var(--max-height-dropdown, 240px);
+  overflow-y: auto;
+  padding: 8px 0;
+  margin: 0;
+  background-color: var(--clr-ui-surface, #FFFFFF);
+  border: 1px solid var(--clr-text-secondary, #69735D);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius, 12px) var(--border-radius, 12px);
+  z-index: 1000;
+}
+
+.dropDownListSecondary {
+  /* можно настроить отдельный стиль для secondary */
+}
+
+.dropDownItem {
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: var(--fs-h4, 16px);
+  color: var(--clr-text-primary, #253017);
+}
+
+.dropDownItem:hover {
+  background-color: #e4e8df;
+}
+
+.dropDownItemSelected {
+  color: var(--clr-primary-pressed, #508826);
+  font-weight: var(--fw-medium, 500);
+}
+
+.text {
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+}

@@ -1,0 +1,16 @@
+@import url('../../styles/variables.css');
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* расстояние между группами */
+  width: 1020px;
+  min-height: 2200px;
+}
+
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}

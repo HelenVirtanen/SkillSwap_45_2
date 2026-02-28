@@ -1,0 +1,55 @@
+.formWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 556px;
+  max-height: 692px;
+  padding: 111px 60px;
+  background-color: var(--clr-ui-surface, #ffffff);
+  border-radius: var(--border-radius, 12px);
+}
+
+.buttonSocialWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  padding-block-end: 28px;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  padding-block-start: 31px;
+}
+
+.loginButtonsWrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 33px;
+}
+
+.orSeparator {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orSeparator::before,
+.orSeparator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 46%;
+  height: 1px;
+  background-color: var(--clr-ui-disabled, #e4e8df);
+}
+
+.orSeparator::before {
+  left: 0;
+}
+
+.orSeparator::after {
+  right: 0;
+}

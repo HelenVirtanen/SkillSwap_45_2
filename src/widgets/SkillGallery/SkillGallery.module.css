@@ -1,0 +1,111 @@
+@import url('../../styles/variables.css');
+
+.root {
+  display: flex;
+  width: 440px;
+  height: 324px;
+  gap: 24px;
+}
+
+/*Левая колонка (основное фото)*/
+.main {
+  position: relative;
+  width: 324px;
+  height: 324px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.main :global(.swiper) {
+  width: 100%;
+  height: 100%;
+}
+
+.main :global(.swiper-slide) {
+  height: 100%;
+}
+
+/*Навигационные кнопки*/
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+
+  background: var(--clr-ui-disabled);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2;
+}
+
+.navButton svg {
+  width: 16px;
+  height: 16px;
+}
+
+.prev {
+  left: 16px;
+}
+
+.next {
+  right: 16px;
+}
+
+/*Правая колонка (превью) */
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.previewItem {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.previewItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.5); /* 50% белого поверх */
+  color: var(--clr-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  border-radius: 12px;
+}
+/* Скрываем стандартные кнопки Swiper */
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-button-prev:after,
+.swiper-button-next:after,
+.swiper-button-disabled {
+  display: none !important;
+}

@@ -1,0 +1,183 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 20px;
+  width: 324px;
+  min-height: 444px;
+  background: var(--clr-ui-surface, #ffffff);
+  border-radius: 12px;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  overflow: hidden;
+  color: var(--clr-text-primary, #253017); 
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+  width: 100%;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+/* Локальные стили для компонентов внутри карточки */
+.avatarWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  width: 100%; 
+  height: 100px;
+  position: relative;
+}
+
+.avatarContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  max-width: calc(100% - 112px); 
+}
+
+.userName {
+  font-family: 'Jost', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: -0.011em;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.userDetails {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.about {
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  margin: 0;
+  padding: 0;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+  
+  /* Обрезаем описание до 3 строк */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skillsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 23px;
+  width: 100%; 
+  flex: none;
+  order: 2;
+  align-self: stretch;
+  flex-grow: 0;
+  margin-block-start: 4px;
+}
+
+.skillSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 14px;
+  width: 100%;
+}
+
+.skillTitle {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.skillsRow {
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Скрываем сердечко по умолчанию */
+.favoriteButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+/* Показываем сердечко только когда есть класс showFavorite */
+.showFavorite .favoriteButton {
+  display: flex;
+}

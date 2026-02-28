@@ -1,0 +1,39 @@
+.tag {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: var(--fs-caption, 12px);
+  font-weight: var(--fw-regular, 400);
+  line-height: var(--lh-caption, 16px);
+  white-space: nowrap;
+}
+
+/* категории */
+
+.business {
+  background: var(--clr-pastel-violet, #eee7f7);
+}
+
+.languages {
+  background: var(--clr-pastel-sand, #ebe5c5);
+}
+
+.home {
+  background: var(--clr-pastel-peach, #f7ebe5);
+}
+
+.art {
+  background: var(--clr-pastel-pink, #f7e7f2);
+}
+
+.education {
+  background: var(--clr-pastel-sky, #e7f2f6);
+}
+
+.health {
+  background: var(--clr-pastel-mint, #e9f7e7);
+}
+
+.other {
+  background: var(--clr-pastel-blue, #e8ecf7);
+}

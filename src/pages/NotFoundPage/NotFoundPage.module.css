@@ -1,0 +1,9 @@
+.errorPage404 {
+    margin-top: 68px;
+    margin-bottom: 52px;
+}
+
+.errorPage404 .errorImage {
+  width: 460px;
+  height: 304px;
+}

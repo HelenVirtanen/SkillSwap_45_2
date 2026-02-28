@@ -1,0 +1,54 @@
+@import url('../../../styles/variables.css');
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 284px;
+  min-height: 288px;
+}
+
+.title {
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3);
+  font-family: var(--ff-heading);
+  font-style: medium;
+  line-height: var(--lh-h3);
+  letter-spacing: -0.242px;
+  vertical-align: middle;
+}
+
+.list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.dropdownButton {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  color: var(--clr-primary-pressed, #508826);
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-h4, 16px);
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  white-space: nowrap;
+  background-color: transparent;
+  border: none;
+}
+
+.dropdownButton::after {
+  width: 24px;
+  height: 24px;
+  margin-left: 4px;
+  background-image: url('src/assets/icons/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: '';
+  transition: transform 0.3s ease;
+}
+
+.dropdownButton.opened::after {
+  transform: rotate(180deg); /* ← поворот */
+}

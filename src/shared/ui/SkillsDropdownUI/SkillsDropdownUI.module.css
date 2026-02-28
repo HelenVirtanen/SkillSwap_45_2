@@ -1,0 +1,97 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownButton {
+  display: flex;
+  background-color: transparent;
+  color: var(--clr-text-primary, #253017);
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-h4, 16px);
+  white-space: nowrap;
+  align-items: center;
+  justify-content: start;
+  border: none;
+  background-image: url('src/assets/icons/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 29px;
+  margin-inline-start: -14px;
+}
+
+.dropdownContent {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  outline: var(--border-width, 1px) solid var(--clr-text-secondary, #69735d);
+  border-radius: var(--border-radius, 12px);
+  margin-block-start: 24px;
+  background-color: var(--clr-ui-surface, #ffffff);
+  z-index: 3;
+  padding: 60px;
+  gap: 40px;
+  left: -300px;
+  min-width: 1136px;
+  max-height: 1100px;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.closed {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.categoryTitle {
+  font-family: var(
+    --ff-heading,
+    'Jost',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    roboto,
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-medium, 500);
+  font-style: bold;
+  font-size: var(--lh-body, 24px);
+  letter-spacing: -0.02em;
+}
+
+.category {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: min-content;
+  column-gap: 11px;
+  min-width: 488px;
+}
+
+.skillList {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 12px;
+  grid-column: 2;
+  line-height: 1.5;
+}
+
+.skillItem {
+  font-family: var(--ff-body, 'Roboto', sans-serif);
+  font-weight: var(--fw-regular, 400);
+  font-size: var(--fs-h4, 16px);
+  letter-spacing: 0.02em;
+}

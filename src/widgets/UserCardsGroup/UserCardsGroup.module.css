@@ -1,0 +1,78 @@
+/* Section */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Grid - десктоп: 3 колонки */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 324px);
+  gap: 24px;
+  width: 100%;
+}
+
+/* Планшет: 2 колонки */
+@media (max-width: 1024px) {
+  .section {
+    max-width: 900px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Маленький планшет: 2 колонки */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Мобильный: 1 колонка */
+@media (max-width: 640px) {
+  .section {
+    max-width: 324px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Empty state */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+
+  width: 100%;
+  min-height: 300px;
+
+  background: #F9FAF7;
+  border-radius: 16px;
+}
+
+.emptyText {
+  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+
+  color: #69735D;
+
+  margin: 0;
+}

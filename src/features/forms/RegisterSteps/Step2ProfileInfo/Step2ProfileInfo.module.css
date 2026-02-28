@@ -1,0 +1,50 @@
+.form {
+  padding: 50px 60px 40px;
+  background-color: var(--clr-ui-surface, #ffffff);
+  min-width: 556px;
+  max-height: 692px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--border-radius, 12px);
+}
+
+.inLineDataAndGender {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding-block-end: 20px;
+}
+
+.inLineButtons {
+  display: flex;
+  gap: 20px;
+  
+}
+
+.avatarWrapper {
+  align-self: center;
+}
+
+.nameInput {
+  padding-block-start: 20px;
+  padding-block-end: 16px;
+}
+
+.dataPicker {
+  max-width: 206px;
+}
+
+.dropDownUI {
+  min-width: 206px;
+}
+
+.autoCompleteUI {
+  padding-block-end: 16px;
+}
+
+.multiSelectDropdownUI {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-block-end: 32px;
+}

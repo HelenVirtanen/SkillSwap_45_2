@@ -1,0 +1,16 @@
+.themeToggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.themeToggleIcon {
+  width: 24px;
+  height: 24px;
+}

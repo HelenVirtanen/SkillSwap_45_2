@@ -1,0 +1,15 @@
+.header {
+  width: 100%;
+  padding: 36px 36px 20px;
+  background: var(--clr-ui-background, #f9faf7);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttonWrapper {
+  display: inline-flex;
+}

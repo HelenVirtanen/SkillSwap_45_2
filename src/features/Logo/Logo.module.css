@@ -1,0 +1,34 @@
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 159px;
+  height: 40px;
+  text-decoration: none;
+}
+
+/* Стили для иконки внутри логотипа */
+
+.logoIcon {
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  background: var(--clr-primary, #abd27a);
+  border-radius: 60px;
+  object-fit: contain;
+}
+
+/* Стили для текста логотипа */
+
+.logoText {
+  display: flex;
+  align-items: center;
+  width: 107px;
+  height: 28px;
+  color: var(--clr-ui-logo, #0C0C0C);
+  font-weight: 600;
+  font-size: 24px;
+  font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 32px;
+  letter-spacing: -1.1%;
+}

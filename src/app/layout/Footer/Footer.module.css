@@ -1,0 +1,30 @@
+.footer {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  padding: 32px 36px;
+  background-color: var(--clr-ui-surface, #ffffff);
+}
+
+.nav {
+  align-self: flex-end;
+  margin: 20px 0 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: repeat(3, 324px);
+  grid-auto-flow: column;
+  gap: 12px 24px;
+}
+
+.grid li {
+  list-style: none;
+  position: relative;
+  padding-left: 14px;
+}
+
+.footer__copyright {
+  font-size: var(--fs-caption);
+}

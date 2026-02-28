@@ -1,0 +1,28 @@
+.mainContainer {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  flex-direction: column;
+  margin-block-start: -16px;
+}
+
+.containerWrapper {
+  display: flex;
+  gap: 24px;
+}
+
+.login {
+  font-family: var(
+    --ff-heading,
+    'Jost',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    roboto,
+    arial,
+    sans-serif
+  );
+  font-weight: var(--fw-medium, 500);
+  font-size: var(--lh-h3, 24px);
+  letter-spacing: 0.01em;
+}
